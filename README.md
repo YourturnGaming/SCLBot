@@ -1,6 +1,6 @@
 # titanmusic (source)
 
-[![Slack](https://tittanmusic.slack.com/badge.svg)](https://goo.gl/Im3pBR/) [![facebook group](https://img.shields.io/badge/facebook-group-3b5998.svg?style=flat)](https://goo.gl/3EybNI) [![twitter](https://img.shields.io/twitter/follow/TittanMusic.svg?style=social)](https://goo.gl/0jzhuz)
+[![Slack](https://tittanmusic.herokuapp.com/badge.svg)](https://tittanmusic.herokuapp.com/) [![facebook group](https://img.shields.io/badge/facebook-group-3b5998.svg?style=flat)](https://goo.gl/3EybNI) [![twitter](https://img.shields.io/twitter/follow/TittanMusic.svg?style=social)](https://goo.gl/0jzhuz)
 
 Email enquiries: [hi [at] MistlandsDeveloper [dot] io](estmercyclan@gmail.com)
 
