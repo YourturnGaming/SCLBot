@@ -36,7 +36,7 @@ basicBot Chrome Extension
 
 Developers
 ----------
- - [MistlandsDeveloper](https://github.com/MistlandsDeveloper) __(Maintainer)__
+ - [TitanMusicDev](https://github.com/MistlandsDeveloper) __(Maintainer)__
 
 
 
