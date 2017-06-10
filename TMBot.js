@@ -235,9 +235,9 @@
     var botCreatorIDs = ["3851534", "4105209"];
 
     var basicBot = {
-        version: "2.9.2",
+        version: "2.9.3",
         status: false,
-        name: "basicBot",
+        name: "TMBot",
         loggedInID: null,
         scriptLink: "https://rawgit.com/basicBot/source/master/basicBot.js",
         cmdLink: "http://git.io/245Ppg",
@@ -247,7 +247,7 @@
         retrieveSettings: retrieveSettings,
         retrieveFromStorage: retrieveFromStorage,
         settings: {
-            botName: "basicBot",
+            botName: "TMBot",
             language: "english",
             chatLink: "https://rawgit.com/basicBot/source/master/lang/en.json",
             scriptLink: "https://rawgit.com/basicBot/source/master/basicBot.js",
@@ -293,7 +293,7 @@
             afkRankCheck: "ambassador",
             motdEnabled: false,
             motdInterval: 5,
-            motd: "Temporary Message of the Day",
+            motd: "Check our website: http://titanmusic.ml/ and forum: https://goo.gl/iRuyfw and follow us social meida: https://goo.gl/rEkDti and https://goo.gl/0jzhuz and https://goo.gl/Blw9dV and https://goo.gl/vLoJ4X and join our slack: https://goo.gl/Im3pBR",
             filterChat: true,
             etaRestriction: false,
             welcome: true,
