@@ -9,7 +9,7 @@ Usage
 Bookmark the following code. To run the bot, run the bookmark.
 `javascript:(function(){$.getScript('https://rawgit.com/titanmusic/source/master/basicBot.js');})();`
 
-If this does not work, go to https://raw.githubusercontent.com/basicBot/source/master/basicBot.js and copy paste its content into your console (accessible in chrome by pressing F12) when on plug.dj in your community.
+If this does not work, go to https://raw.githubusercontent.com/TitanMusicDev/titanmusic/master/TMBot.js and copy paste its content into your console (accessible in chrome by pressing F12) when on plug.dj in your community.
 
 
 Commands
@@ -25,7 +25,7 @@ You can add blacklists in the settings of the bot via the methods given in that 
 
 Extending functionality and custom default settings
 ---------------------------------------------------
-basicBot can be customized to fit your needs. Please refer to [the customization repository](https://github.com/basicBot/custom) for more info.
+basicBot can be customized to fit your needs. Please refer to [the customization repository](https://github.com/TitanMusicDev/titanmusic) for more info.
 Please do not try to if you are not confident in your javascript capabilities.
 
 
@@ -56,7 +56,7 @@ I would like to thank the following people:
 ||[]()|
 ||[]()|
 
-__I would also like to thank everyone who contributed in translating the bot via the [translation centre](https://basicbot.oneskyapp.com/admin/collaborators)__
+__I would also like to thank everyone who contributed in translating the bot via the [translation centre]()__
 
 
 ### Copyright
