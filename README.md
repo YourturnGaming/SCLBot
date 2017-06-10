@@ -14,12 +14,12 @@ If this does not work, go to https://raw.githubusercontent.com/basicBot/source/m
 
 Commands
 --------
-These can be found in [the commands file](https://github.com/basicBot/source/blob/master/commands.md).
+These can be found in [the commands file](github.com/TitanMusicDev/titanmusic/blob/master/commands.md).
 
 
 Blacklists
 ----------
-Examples of blacklists can be found in [the customization repository](https://github.com/basicBot/custom/tree/master/blacklists).
+Examples of blacklists can be found in [the customization repository]().
 You can add blacklists in the settings of the bot via the methods given in that same repository. See below for more information.
 
 
@@ -36,8 +36,10 @@ basicBot Chrome Extension
 
 Developers
 ----------
- - [TitanMusicDev](https://github.com/MistlandsDeveloper) __(Maintainer)__
+ - [TitanMusicDev](https://github.com/TitanMusicDev) __(Maintainer)__
 
+ - [M4E ♥Raimps] __(Helper)__
+ - [Trigstur] __(Helper)__
 
 
 Credits
