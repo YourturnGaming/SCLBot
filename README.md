@@ -1,4 +1,4 @@
-# titanmusic bot (source)
+# TMBot (source)
 
 [![Slack](https://basicbot.herokuapp.com/badge.svg)](https://goo.gl/j5R3cB) [![facebook group](https://img.shields.io/badge/facebook-group-3b5998.svg?style=flat)](https://goo.gl/3EybNI) [![twitter](https://img.shields.io/twitter/follow/TittanMusic.svg?style=social)](https://goo.gl/0jzhuz)
 
@@ -25,7 +25,7 @@ You can add blacklists in the settings of the bot via the methods given in that 
 
 Extending functionality and custom default settings
 ---------------------------------------------------
-basicBot can be customized to fit your needs. Please refer to [the customization repository](https://github.com/TitanMusicDev/titanmusic) for more info.
+TMBot can be customized to fit your needs. Please refer to [the customization repository](https://github.com/TitanMusicDev/titanmusic) for more info.
 Please do not try to if you are not confident in your javascript capabilities.
 
 
@@ -61,7 +61,7 @@ __I would also like to thank everyone who contributed in translating the bot via
 
 ### Copyright
 
-Copyright &copy; 2017 TitanMusicBot
+Copyright &copy; 2017 TMBot
 
 Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
 This software is not for profit, any extension, or unauthorised person providing this software is not authorised to be in a position of any monetary gain from this use of this software. Any and all money gained under the use of the software (which includes donations) must be passed on to the original author.
