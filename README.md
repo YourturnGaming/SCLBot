@@ -14,7 +14,7 @@ If this does not work, go to https://raw.githubusercontent.com/TitanMusicDev/tit
 
 Commands
 --------
-These can be found in [the commands file](github.com/TitanMusicDev/titanmusic/blob/master/commands.md).
+These can be found in [the commands file](https://rawgit.com/TitanMusicDev/titanmusic/master/commands.md).
 
 
 Blacklists
@@ -29,17 +29,17 @@ basicBot can be customized to fit your needs. Please refer to [the customization
 Please do not try to if you are not confident in your javascript capabilities.
 
 
-basicBot Chrome Extension
+TMBot Chrome Extension
 -------------------------
-[Get the Official basicBot Chrome Extension](https://chrome.google.com/webstore/detail/basicbot/bjinmbkeneigmkkkpcmcokphbjkepeie)
+[Get the Official TMBot Chrome Extension is coming]()
 
 
 Developers
 ----------
  - [TitanMusicDev](https://github.com/TitanMusicDev) __(Maintainer)__
 
- - [M4E ♥Raimps] __(Helper)__
- - [Trigstur] __(Helper)__
+ - [M4E ♥Raimps]() __(Helper)__
+ - [Trigstur]() __(Helper)__
 
 
 Credits
