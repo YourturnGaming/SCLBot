@@ -91,7 +91,7 @@
 |:-------:|:---------:|:-----------:|
 | !8ball | (message) | ask the bot a question, the bot will return random variations of a yes or no answer. |
 | !autowoot | — | links to PlugCubed, the advised script/plugin to use for autowooting. |
-| !autowoot | — | links to RCS, the advised script/plugin to use for autowooting. |
+| !autowoot rcs | — | links to RCS, the advised script/plugin to use for autowooting. |
 | !ba | — | explains the Brand Ambassador rank. |
 | !commands | — | gives a link to the commands. |
 | !cookie | (@user) | give a cookie to user. |
@@ -102,13 +102,11 @@
 | !ghostbuster | @user | checks if user is ghosting. |
 | !gif | (message) | returns gif (from giphy) related to the tag provided. Returns a random gif if no tags are provided. |
 | !help | — | links to an image to help get people started on plug. |
-| !join | — | join the roulette if it's up. |
-| !leave | — | leave the roulette if you joined. |
 | !link | — | when the user is the DJ, give a link to the current song. |
-| !op | — | links to the OverPlayed list (if set in the settings). |
+| !op | — | links to the OverPlayed list (). |
 | !ping | — | Returns pong! |
-| !rules | — | links to the rules (if set in the settings). |
-| !theme | — | links to the room's theme (if set in the settings). |
+| !rules | — | links to the rules (). |
+| !theme | — | links to the room's theme (). |
 | !thor | — | users get moved to position 1 in the waitlist if they're worthy of Thor's hammer. |
-| !website | — | links to the room's website (if set in the settings). |
-| !youtube | — | links to the room's youtube page (if set in the settings). |
+| !website | — | links to the room's website (). |
+| !youtube | — | links to the room's youtube page (). |
