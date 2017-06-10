@@ -235,7 +235,7 @@
     var botCreatorIDs = ["3669054"];
 
     var basicBot = {
-        version: "2.9.3",
+        version: "2.9.4",
         status: false,
         name: "TMBot",
         loggedInID: null,
