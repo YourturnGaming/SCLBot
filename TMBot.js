@@ -230,9 +230,9 @@
         return str;
     };
 
-    var botCreator = "Yemasthui";
-    var botMaintainer = "Benzi"
-    var botCreatorIDs = ["3851534", "4105209"];
+    var botCreator = "TitanMusic | Developer";
+    var botMaintainer = "TitanMusicDev"
+    var botCreatorIDs = ["3669054"];
 
     var basicBot = {
         version: "2.9.3",
@@ -240,7 +240,7 @@
         name: "TMBot",
         loggedInID: null,
         scriptLink: "https://rawgit.com/basicBot/source/master/basicBot.js",
-        cmdLink: "http://git.io/245Ppg",
+        cmdLink: "https://goo.gl/bmnkSw",
         chatLink: "https://rawgit.com/basicBot/source/master/lang/en.json",
         chat: null,
         loadChat: loadChat,
