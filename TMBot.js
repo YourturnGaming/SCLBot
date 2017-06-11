@@ -99,7 +99,7 @@
         if (!cb) cb = function () {
         };
         $.get("https://rawgit.com/basicBot/source/master/lang/langIndex.json", function (json) {
-            var link = basicBot.chatLink;
+            var link = TMBot.chatLink;
             if (json !== null && typeof json !== "undefined") {
                 langIndex = json;
                 link = langIndex[basicBot.settings.language.toLowerCase()];
@@ -108,7 +108,7 @@
                 }
                 else {
                     if (typeof link === "undefined") {
-                        link = basicBot.chatLink;
+                        link = TMBot.chatLink;
                     }
                 }
                 $.get(link, function (json) {
@@ -241,7 +241,7 @@
         loggedInID: null,
         scriptLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js",
         cmdLink: "https://goo.gl/SpGpmi",
-        chatLink: "https://rawgit.com/basicBot/source/master/lang/en.json",
+        chatLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/lang",
         chat: null,
         loadChat: loadChat,
         retrieveSettings: retrieveSettings,
@@ -249,7 +249,7 @@
         settings: {
             botName: "TMBot",
             language: "english",
-            chatLink: "https://rawgit.com/basicBot/source/master/lang/en.json",
+            chatLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/lang",
             scriptLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js",
             roomLock: false, // Requires an extension to re-load the script
             startupCap: 1, // 1-200
