@@ -240,7 +240,7 @@
         name: "TMBot",
         loggedInID: null,
         scriptLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js",
-        cmdLink: "https://goo.gl/Gc89ZP",
+        cmdLink: "https://goo.gl/SpGpmi",
         chatLink: "https://rawgit.com/basicBot/source/master/lang/en.json",
         chat: null,
         loadChat: loadChat,
@@ -308,9 +308,9 @@
             songstats: true,
             commandLiteral: "!",
             blacklists: {
-                NSFW: "https://rawgit.com/basicBot/custom/master/blacklists/NSFWlist.json",
-                OP: "https://rawgit.com/basicBot/custom/master/blacklists/OPlist.json",
-                BANNED: "https://rawgit.com/basicBot/custom/master/blacklists/BANNEDlist.json"
+                NSFW: "",
+                OP: "",
+                BANNED: ""
             }
         },
         room: {
@@ -1287,7 +1287,7 @@
                 'hueh', 'hu3', 'brbr', 'heu', 'brbr', 'kkkk', 'spoder', 'mafia', 'zuera', 'zueira',
                 'zueria', 'aehoo', 'aheu', 'alguem', 'algum', 'brazil', 'zoeira', 'fuckadmins', 'affff', 'vaisefoder', 'huenaarea',
                 'hitler', 'ashua', 'ahsu', 'ashau', 'lulz', 'huehue', 'hue', 'huehuehue', 'merda', 'pqp', 'puta', 'mulher', 'pula', 'retarda', 'caralho', 'filha', 'ppk',
-                'gringo', 'fuder', 'foder', 'hua', 'ahue', 'modafuka', 'modafoka', 'mudafuka', 'mudafoka', 'ooooooooooooooo', 'foda'
+                'gringo', 'fuder', 'foder', 'hua', 'ahue', 'modafuka', 'modafoka', 'mudafuka', 'mudafoka', 'vittu', 'foda'
             ],
             curses: [
                 'nigger', 'faggot', 'nigga', 'niqqa', 'motherfucker', 'modafocka'
@@ -2149,16 +2149,6 @@
                         var ch = '/me @' + name + ' ';
                         switch(lang){
                             case 'en': break;
-                            case 'da': ch += 'Vær venlig at tale engelsk.'; break;
-                            case 'de': ch += 'Bitte sprechen Sie Englisch.'; break;
-                            case 'es': ch += 'Por favor, hable Inglés.'; break;
-                            case 'fr': ch += 'Parlez anglais, s\'il vous plaît.'; break;
-                            case 'nl': ch += 'Spreek Engels, alstublieft.'; break;
-                            case 'pl': ch += 'Proszę mówić po angielsku.'; break;
-                            case 'pt': ch += 'Por favor, fale Inglês.'; break;
-                            case 'sk': ch += 'Hovorte po anglicky, prosím.'; break;
-                            case 'cs': ch += 'Mluvte prosím anglicky.'; break;
-                            case 'sr': ch += 'Молим Вас, говорите енглески.'; break;
                         }
                         ch += ' English please.';
                         API.sendChat(ch);
