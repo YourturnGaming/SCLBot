@@ -14,7 +14,7 @@ If this does not work, go to https://raw.githubusercontent.com/TitanMusicDev/tit
 
 Commands
 --------
-These can be found in [the commands file](https://goo.gl/Gc89ZP).
+These can be found in [the commands file](https://goo.gl/SpGpmi).
 
 
 Blacklists
