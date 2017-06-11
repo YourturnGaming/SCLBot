@@ -98,13 +98,13 @@
     var loadChat = function (cb) {
         if (!cb) cb = function () {
         };
-        $.get("https://rawgit.com/basicBot/source/master/lang/langIndex.json", function (json) {
+        $.get("https://rawgit.com/TitanMusicDev/titanmusic/master/lang", function (json) {
             var link = TMBot.chatLink;
             if (json !== null && typeof json !== "undefined") {
                 langIndex = json;
-                link = langIndex[basicBot.settings.language.toLowerCase()];
-                if (basicBot.settings.chatLink !== basicBot.chatLink) {
-                    link = basicBot.settings.chatLink;
+                link = langIndex[TMBot.settings.language.toLowerCase()];
+                if (TMBot.settings.chatLink !== TMBot.chatLink) {
+                    link = TMBot.settings.chatLink;
                 }
                 else {
                     if (typeof link === "undefined") {
