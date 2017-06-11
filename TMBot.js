@@ -8,7 +8,7 @@
 (function () {
 
     /*window.onerror = function() {
-        var room = JSON.parse(localStorage.getItem("TitanMusicRoom"));
+        var room = JSON.parse(localStorage.getItem("basicBotRoom"));
         window.location = 'https://plug.dj' + room.name;
     };*/
 
@@ -70,12 +70,12 @@
     };*/
 
     var storeToStorage = function () {
-        localStorage.setItem("TMBotsettings", JSON.stringify(basicBot.settings));
-        localStorage.setItem("TMBotRoom", JSON.stringify(basicBot.room));
+        localStorage.setItem("basicBotsettings", JSON.stringify(basicBot.settings));
+        localStorage.setItem("basicBotRoom", JSON.stringify(basicBot.room));
         var basicBotStorageInfo = {
             time: Date.now(),
             stored: true,
-            version: TMBot.version
+            version: basicBot.version
         };
         localStorage.setItem("basicBotStorageInfo", JSON.stringify(basicBotStorageInfo));
     };
@@ -167,7 +167,7 @@
         var json_sett = null;
         var roominfo = document.getElementById("room-settings");
         info = roominfo.textContent;
-        var ref_bot = "@TMBot=";
+        var ref_bot = "@basicBot=";
         var ind_ref = info.indexOf(ref_bot);
         if (ind_ref > 0) {
             var link = info.substring(ind_ref + ref_bot.length, info.length);
@@ -232,16 +232,16 @@
 
     var botCreator = "TitanMusic | Developer";
     var botMaintainer = "TitanMusicDev"
-    var botCreatorIDs = ["3669054"];
+    var botCreatorIDs = ["3669054", "4105209"];
 
-    var TMBot = {
+    var basicBot = {
         version: "2.9.4",
         status: false,
         name: "TMBot",
         loggedInID: null,
         scriptLink: "https://rawgit.com/basicBot/source/master/basicBot.js",
-        cmdLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/commands.md",
-        chatLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/lang",
+        cmdLink: "http://git.io/245Ppg",
+        chatLink: "https://rawgit.com/basicBot/source/master/lang/en.json",
         chat: null,
         loadChat: loadChat,
         retrieveSettings: retrieveSettings,
@@ -249,8 +249,8 @@
         settings: {
             botName: "TMBot",
             language: "english",
-            chatLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/lang",
-            scriptLink: "https://rawgit.com/basicBot/source/master/basicBot.js",
+            chatLink: "https://rawgit.com/basicBot/source/master/lang/en.json",
+            scriptLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js",
             roomLock: false, // Requires an extension to re-load the script
             startupCap: 1, // 1-200
             startupVolume: 0, // 0-100
@@ -293,7 +293,7 @@
             afkRankCheck: "ambassador",
             motdEnabled: false,
             motdInterval: 5,
-            motd: "Check our website: http://titanmusic.ml/ and forum: https://goo.gl/iRuyfw and follow us social meida: https://goo.gl/rEkDti and https://goo.gl/0jzhuz and https://goo.gl/Blw9dV and https://goo.gl/vLoJ4X and join our slack: https://goo.gl/Im3pBR",
+            motd: "null",
             filterChat: true,
             etaRestriction: false,
             welcome: true,
@@ -1264,9 +1264,9 @@
                         API.moderateDeleteChat(chat.cid);
                     }*/
 
-                    //TMBot.room.allcommand = false;
+                    //basicBot.room.allcommand = false;
                     //setTimeout(function () {
-                        TMBot.room.allcommand = true;
+                        basicBot.room.allcommand = true;
                     //}, 5 * 1000);
                 }
                 return executed;
@@ -1287,7 +1287,7 @@
                 'hueh', 'hu3', 'brbr', 'heu', 'brbr', 'kkkk', 'spoder', 'mafia', 'zuera', 'zueira',
                 'zueria', 'aehoo', 'aheu', 'alguem', 'algum', 'brazil', 'zoeira', 'fuckadmins', 'affff', 'vaisefoder', 'huenaarea',
                 'hitler', 'ashua', 'ahsu', 'ashau', 'lulz', 'huehue', 'hue', 'huehuehue', 'merda', 'pqp', 'puta', 'mulher', 'pula', 'retarda', 'caralho', 'filha', 'ppk',
-                'gringo', 'fuder', 'foder', 'hua', 'ahue', 'modafuka', 'modafoka', 'mudafuka', 'mudafoka', 'foda'
+                'gringo', 'fuder', 'foder', 'hua', 'ahue', 'modafuka', 'modafoka', 'mudafuka', 'mudafoka', 'ooooooooooooooo', 'foda'
             ],
             curses: [
                 'nigger', 'faggot', 'nigga', 'niqqa', 'motherfucker', 'modafocka'
@@ -1357,7 +1357,7 @@
             basicBot.room.name = window.location.pathname;
             var Check;
 
-            console.log(TitanMusic.room.name);
+            console.log(basicBot.room.name);
 
             var detect = function(){
                 if(basicBot.room.name != window.location.pathname){
@@ -1505,7 +1505,7 @@
 
             activeCommand: {
                 command: 'active',
-                rank: 'Manager',
+                rank: 'bouncer',
                 type: 'startsWith',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
@@ -2149,6 +2149,16 @@
                         var ch = '/me @' + name + ' ';
                         switch(lang){
                             case 'en': break;
+                            case 'da': ch += 'Vær venlig at tale engelsk.'; break;
+                            case 'de': ch += 'Bitte sprechen Sie Englisch.'; break;
+                            case 'es': ch += 'Por favor, hable Inglés.'; break;
+                            case 'fr': ch += 'Parlez anglais, s\'il vous plaît.'; break;
+                            case 'nl': ch += 'Spreek Engels, alstublieft.'; break;
+                            case 'pl': ch += 'Proszę mówić po angielsku.'; break;
+                            case 'pt': ch += 'Por favor, fale Inglês.'; break;
+                            case 'sk': ch += 'Hovorte po anglicky, prosím.'; break;
+                            case 'cs': ch += 'Mluvte prosím anglicky.'; break;
+                            case 'sr': ch += 'Молим Вас, говорите енглески.'; break;
                         }
                         ch += ' English please.';
                         API.sendChat(ch);
@@ -3642,6 +3652,24 @@
                                 var rawlang = API.getUser(id).language;
                                 if (rawlang == "en"){
                                     var language = "English";
+                                } else if (rawlang == "bg"){
+                                    var language = "Bulgarian";
+                                } else if (rawlang == "cs"){
+                                    var language = "Czech";
+                                } else if (rawlang == "fi"){
+                                    var language = "Finnish"
+                                } else if (rawlang == "fr"){
+                                    var language = "French"
+                                } else if (rawlang == "pt"){
+                                    var language = "Portuguese"
+                                } else if (rawlang == "zh"){
+                                    var language = "Chinese"
+                                } else if (rawlang == "sk"){
+                                    var language = "Slovak"
+                                } else if (rawlang == "nl"){
+                                    var language = "Dutch"
+                                } else if (rawlang == "ms"){
+                                    var language = "Malay"
                                 }
                                 var rawrank = API.getUser(id).role;
                                 if (rawrank == "0"){
