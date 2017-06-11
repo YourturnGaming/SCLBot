@@ -1367,7 +1367,7 @@
                     setTimeout(function () {
                         kill();
                     }, 1000);
-                    if (TMBot.settings.roomLock){
+                    if (basicBot.settings.roomLock){
                         window.location = TMBot.room.name;
                     }
                     else {
