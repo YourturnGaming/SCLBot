@@ -135,7 +135,7 @@
         var settings = JSON.parse(localStorage.getItem("basicBotsettings"));
         if (settings !== null) {
             for (var prop in settings) {
-                basicBot.settings[prop] = settings[prop];
+                TMBot.settings[prop] = settings[prop];
             }
         }
     };
@@ -235,7 +235,7 @@
     var botCreatorIDs = ["3669054", "4766242"];
 
     var TMBot = {
-        version: "2.9.5",
+        version: "2.9.6",
         status: false,
         name: "TMBot",
         loggedInID: null,
@@ -905,7 +905,7 @@
             }
         },
         eventVoteupdate: function (obj) {
-            for (var i = 0; i < basicBot.room.users.length; i++) {
+            for (var i = 0; i < TMBot.room.users.length; i++) {
                 if (basicBot.room.users[i].id === obj.user.id) {
                     if (obj.vote === 1) {
                         basicBot.room.users[i].votes.woot++;
