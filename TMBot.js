@@ -232,15 +232,15 @@
 
     var botCreator = "TitanMusic | Developer";
     var botMaintainer = "TitanMusicDev"
-    var botCreatorIDs = ["3669054", "4105209"];
+    var botCreatorIDs = ["3669054", "4766242"];
 
-    var basicBot = {
-        version: "2.9.4",
+    var TMBot = {
+        version: "2.9.5",
         status: false,
         name: "TMBot",
         loggedInID: null,
-        scriptLink: "https://rawgit.com/basicBot/source/master/basicBot.js",
-        cmdLink: "http://git.io/245Ppg",
+        scriptLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js",
+        cmdLink: "https://goo.gl/Gc89ZP",
         chatLink: "https://rawgit.com/basicBot/source/master/lang/en.json",
         chat: null,
         loadChat: loadChat,
