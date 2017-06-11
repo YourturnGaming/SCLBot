@@ -1360,15 +1360,15 @@
             console.log(TMBot.room.name);
 
             var detect = function(){
-                if(basicBot.room.name != window.location.pathname){
+                if(TMBot.room.name != window.location.pathname){
                     console.log("Killing bot after room change.");
                     storeToStorage();
-                    basicBot.disconnectAPI();
+                    TMBot.disconnectAPI();
                     setTimeout(function () {
                         kill();
                     }, 1000);
-                    if (basicBot.settings.roomLock){
-                        window.location = basicBot.room.name;
+                    if (TMBot.settings.roomLock){
+                        window.location = TMBot.room.name;
                     }
                     else {
                         clearInterval(Check);
