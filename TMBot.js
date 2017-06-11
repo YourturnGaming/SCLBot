@@ -1344,9 +1344,9 @@
                 return 'Function.'
             };
             var u = API.getUser();
-            if (basicBot.userUtilities.getPermission(u) < 2) return API.chatLog(basicBot.chat.greyuser);
-            if (basicBot.userUtilities.getPermission(u) === 2) API.chatLog(basicBot.chat.bouncer);
-            basicBot.connectAPI();
+            if (TMBot.userUtilities.getPermission(u) < 2) return API.chatLog(TMBot.chat.greyuser);
+            if (TMBot.userUtilities.getPermission(u) === 2) API.chatLog(TMBot.chat.bouncer);
+            TMBot.connectAPI();
             API.moderateDeleteChat = function (cid) {
                 $.ajax({
                     url: "/_/chat/" + cid,
