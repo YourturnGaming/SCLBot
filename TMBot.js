@@ -1354,10 +1354,10 @@
                 })
             };
 
-            basicBot.room.name = window.location.pathname;
+            TMBot.room.name = window.location.pathname;
             var Check;
 
-            console.log(basicBot.room.name);
+            console.log(TMBot.room.name);
 
             var detect = function(){
                 if(basicBot.room.name != window.location.pathname){
