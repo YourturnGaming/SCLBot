@@ -114,16 +114,16 @@
                 $.get(link, function (json) {
                     if (json !== null && typeof json !== "undefined") {
                         if (typeof json === "string") json = JSON.parse(json);
-                        basicBot.chat = json;
+                        TMBot.chat = json;
                         cb();
                     }
                 });
             }
             else {
-                $.get(basicBot.chatLink, function (json) {
+                $.get(TMBot.chatLink, function (json) {
                     if (json !== null && typeof json !== "undefined") {
                         if (typeof json === "string") json = JSON.parse(json);
-                        basicBot.chat = json;
+                        TMBot.chat = json;
                         cb();
                     }
                 });
@@ -3708,6 +3708,6 @@
             }
         }
     };
-
+    
     loadChat(TMBot.startup);
 }).call(this);
