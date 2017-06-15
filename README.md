@@ -66,7 +66,7 @@ __I would also like to thank everyone who contributed in translating the bot via
 
 Copyright &copy; 2017 TMBot
 
-Modifications (including forks) of the code to fit personal needs are allowed only for personal use.
+Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
 
 
 Disclaimer
