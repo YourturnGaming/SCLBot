@@ -41,8 +41,9 @@ Developers
 ----------
  - [TitanMusicDev](https://github.com/TitanMusicDev) __(Maintainer)__
 
- - [M4E ♥Raimps]() __(Helper)__
+ - [keekz🐺 Hardstyle 2017 ♫]() __(Helper)__
  - [Trigstur]() __(Helper)__
+ - [Proditor]() __(Helper)__
 
 
 Credits
@@ -50,9 +51,9 @@ Credits
 
 I would like to thank the following people:
 
-- Fungus: His Tastybot has been a source of inspiration for most of the features, and his help with coding problems has been invaluable to make this bot.
-- TAT, Origin and other Litebot contributors: Their Litebot has inspired features like Roulette.
-- Henchman: Never knew this undertaking would give me a friend too.
+- ProditorMagnus: His TMBot has been a source of inspiration for most of the features, and his help with coding problems has been invaluable to make this bot.
+- Trigstur, and other TMBot contributors: Their TMBot has inspired features like Roulette.
+- TitanMusic | Developer: Never knew this undertaking would give me a friend too.
 
 |Language | Translator|
 |:------:|:---------:|
