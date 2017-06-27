@@ -96,8 +96,7 @@
 | Command | Arguments | Description |
 |:-------:|:---------:|:-----------:|
 | !8ball / !ask | (message) | ask the bot a question, the bot will return random variations of a yes or no answer. |
-| !autowoot plugcubed | — | links to PlugCubed, the advised script/plugin to use for autowooting. |
-| !autowoot rcs | — | links to RCS, the advised script/plugin to use for autowooting. |
+| !autowoot | — | links to PlugCubed, the advised script/plugin to use for autowooting. |
 | !ba | — | explains the Brand Ambassador rank. |
 | !commands | — | gives a link to the commands. |
 | !cookie | (@user) | give a cookie to user. |
@@ -114,7 +113,7 @@
 | !op | — | links to the OverPlayed list (if set in the settings). |
 | !ping | — | returns pong! |
 | !rules | — | links to the rules (if set in the settings). |
-| !source | — | returns a link to the basicBot repository on GitHub. |
+| !source | — | returns a link to the titanmusic repository on GitHub. |
 | !theme | — | links to the room's theme (if set in the settings). |
 | !thor | — | users get moved to position 1 in the waitlist if they're worthy of Thor's hammer. |
 | !website | — | links to the room's website (if set in the settings). |
