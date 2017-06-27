@@ -1,11 +1,11 @@
 /**
 
- *Copyright 2017 TMBot
+*Copyright 2017 TMBot
  
- *Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
- *This software is not for profit, any extension, or unauthorised person providing this software is not authorised to be in a position of any monetary gain from this use of this software. Any and all money gained under the use of the software (which includes donations) must be passed on to the original author.
+*Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
+*This software is not for profit, any extension, or unauthorised person providing this software is not authorised to be in a position of any monetary gain from this use of this software. Any and all money gained under the use of the software (which includes donations) must be passed on to the original author.
  
- */
+*/
 
 (function() {
 
@@ -246,7 +246,7 @@
     var botCreatorIDs = ['3669054', '5712221'];
 
     var basicBot = {
-        version: '2.11.2',
+        version: '2.11.3',
         status: false,
         name: 'TitanMusicBot',
         loggedInID: null,
