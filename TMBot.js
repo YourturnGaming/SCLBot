@@ -246,7 +246,7 @@
     var botCreatorIDs = ['3669054', '5712221'];
 
     var basicBot = {
-        version: '2.11.3',
+        version: '2.11.5',
         status: false,
         name: 'TitanMusicBot',
         loggedInID: null,
@@ -304,7 +304,7 @@
             afkRankCheck: 'ambassador',
             motdEnabled: false,
             motdInterval: 5,
-            motd: 'Check our website: http://titanmusic.ml/ and forum: https://goo.gl/iRuyfw and follow us social meida: https://goo.gl/rEkDti and https://goo.gl/0jzhuz and https://goo.gl/Blw9dV and https://goo.gl/vLoJ4X and join our slack: https://goo.gl/Im3',
+            motd: 'Check our website: http://titanmusic.ml/ forum: https://goo.gl/iRuyfw follow us social meida: https://goo.gl/rEkDti and https://goo.gl/0jzhuz and https://goo.gl/Blw9dV and https://goo.gl/vLoJ4X join our slack: https://goo.gl/GPMLb4 join our discord: https://discord.gg/hvWTZrZ',
             filterChat: true,
             etaRestriction: false,
             welcome: true,
@@ -1333,10 +1333,10 @@
                 basicBot.room.roomstats.chatmessages++;
             },
             spam: [
-                'hueh', 'hu3', 'brbr', 'heu', 'brbr', 'kkkk', 'spoder', 'mafia', 'zuera', 'zueira',
+                'hueh', 'hu3', 'brbr', 'heu', 'spoder', 'mafia', 'zuera', 'zueira',
                 'zueria', 'aehoo', 'aheu', 'alguem', 'algum', 'brazil', 'zoeira', 'fuckadmins', 'affff', 'vaisefoder', 'huenaarea',
-                'hitler', 'ashua', 'ahsu', 'ashau', 'lulz', 'huehue', 'hue', 'huehuehue', 'merda', 'pqp', 'puta', 'mulher', 'pula', 'retarda', 'caralho', 'filha', 'ppk',
-                'gringo', 'fuder', 'foder', 'hua', 'ahue', 'modafuka', 'modafoka', 'mudafuka', 'mudafoka', 'ooooooooooooooo', 'foda'
+                'hitler', 'ashua', 'ahsu', 'ashau', 'huehue', 'hue', 'huehuehue', 'merda', 'pqp', 'puta', 'mulher', 'pula', 'retarda', 'caralho', 'filha', 'ppk',
+                'gringo', 'fuder', 'foder', 'hua', 'ahue', 'modafuka', 'modafoka', 'mudafuka', 'mudafoka', 'foda'
             ],
             curses: [
                 'nigger', 'faggot', 'nigga', 'niqqa', 'motherfucker', 'modafocka'
@@ -3043,7 +3043,15 @@
                     }
                 }
             },
-
+            
+            stayCommand: {
+                Level: 0,
+                execute: function(arg) {
+                API.sendChat('Enjoy your stay in Titan Music!');
+                    }
+                }
+            },
+            
             moveCommand: {
                 command: 'move',
                 rank: 'mod',
