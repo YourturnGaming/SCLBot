@@ -3045,9 +3045,11 @@
             },
             
             stayCommand: {
-                Level: 0,
-                execute: function(arg) {
+                command: '!stay',
+                rank: 'Resident dj',
                 API.sendChat('Enjoy your stay in Titan Music!');
+                            }));
+                        }
                     }
                 }
             },
