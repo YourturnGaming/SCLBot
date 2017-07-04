@@ -3047,7 +3047,15 @@
             stayCommand: {
                 command: '!stay',
                 rank: 'Resident dj',
-                API.sendChat('Enjoy your stay in Titan Music!');
+                type: 'startsWith',
+                functionality: function(chat, cmd) {
+                    if (this.type === 'startsWith' && chat.message.length !== cmd.length) return void(0);
+                    if (!titanmusic.commands.executable(this.rank, chat)) return void(0);
+                    else {
+                        if (typeof titanmusic.settings.stay === 'string')
+                            return API.sendChat(subChat(tianmusic.chat.stay, {
+                            API.sendChat('Enjoy your stay in Titan Music!');
+                                console.log(data);
                             }));
                         }
                     }
