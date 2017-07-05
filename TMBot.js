@@ -1,6 +1,6 @@
 /**
 
-*Copyright 2017 TMBot
+*Copyright 2017 TitanMusicBot
  
 *Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
 *This software is not for profit, any extension, or unauthorised person providing this software is not authorised to be in a position of any monetary gain from this use of this software. Any and all money gained under the use of the software (which includes donations) must be passed on to the original author.
@@ -284,7 +284,7 @@
             voteSkipLimit: 10,
             historySkip: false,
             timeGuard: true,
-            maximumSongLength: 10,
+            maximumSongLength: 8,
             autodisable: false,
             commandCooldown: 30,
             usercommandsEnabled: true,
@@ -304,24 +304,24 @@
             afkRankCheck: 'ambassador',
             motdEnabled: false,
             motdInterval: 5,
-            motd: 'Check our website: http://titanmusic.ml/ forum: https://goo.gl/iRuyfw follow us social meida: https://goo.gl/rEkDti and https://goo.gl/0jzhuz and https://goo.gl/Blw9dV and https://goo.gl/vLoJ4X join our slack: https://goo.gl/GPMLb4 join our discord: https://discord.gg/hvWTZrZ',
+            motd: 'Check our social media and follow us, forum: https://goo.gl/iRuyfw https://goo.gl/rEkDti https://goo.gl/0jzhuz join our slack: https://goo.gl/GPMLb4 join our discord: https://discord.gg/hvWTZrZ',
             filterChat: true,
             etaRestriction: false,
             welcome: true,
             opLink: null,
-            rulesLink: null,
+            rulesLink: 'Titan Music rules: https://goo.gl/I4NaZf,
             themeLink: null,
-            fbLink: null,
+            fbLink: 'Our fb page: https://goo.gl/vLoJ4X and fb group: https://goo.gl/Blw9dV',
             youtubeLink: null,
-            website: null,
+            website: Check our website http://titanmusic.ml/,
             intervalMessages: [],
             messageInterval: 5,
             songstats: true,
             commandLiteral: '!',
             blacklists: {
-                NSFW: 'https://rawgit.com/basicBot/custom/master/blacklists/NSFWlist.json',
-                OP: 'https://rawgit.com/basicBot/custom/master/blacklists/OPlist.json',
-                BANNED: 'https://rawgit.com/basicBot/custom/master/blacklists/BANNEDlist.json'
+                NSFW: '',
+                OP: '',
+                BANNED: ''
             }
         },
         room: {
