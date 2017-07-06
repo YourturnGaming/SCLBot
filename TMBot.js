@@ -3045,7 +3045,7 @@
             },
             
             discordCommand: {
-                command: '!discord',
+                command: 'discord',
                 rank: 'user',
                 type: 'exact',
                 functionality: function (chat, cmd) {
