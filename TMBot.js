@@ -3051,8 +3051,10 @@
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    }));
                     else {
                             API.sendChat("/me Titan Music public discord: https://discord.gg/hvWTZrZ");
+                            }));
                     }
                 }
             },
@@ -3651,7 +3653,9 @@
                         if (typeof basicBot.settings.themeLink === 'string')
                             API.sendChat(subChat(basicBot.chat.genres, {
                                 link: basicBot.settings.themeLink
-                            }));
+                                }));
+                            )
+                        )
                     }
                 }
             },
@@ -3863,7 +3867,7 @@
                             }));
                             API.moderateUnbanUser(bannedUser.id);
                             console.log('Unbanned:', name);
-                        });
+                        }));
                     }
                 }
             },
@@ -3877,6 +3881,7 @@
                     if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         basicBot.roomUtilities.booth.unlockBooth();
+                        }));
                     }
                 }
             },
