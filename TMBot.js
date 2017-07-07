@@ -246,7 +246,7 @@
     var botCreatorIDs = ['3669054', '5712221'];
 
     var basicBot = {
-        version: '2.11.7',
+        version: '2.11.8',
         status: false,
         name: 'TitanMusicBot',
         loggedInID: null,
