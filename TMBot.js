@@ -246,7 +246,7 @@
     var botCreatorIDs = ['3669054', '5712221'];
 
     var basicBot = {
-        version: '2.11.8',
+        version: '2.11.9',
         status: false,
         name: 'TitanMusicBot',
         loggedInID: null,
@@ -3053,6 +3053,19 @@
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
                     else {
                             API.sendChat("/me Titan Music public discord: https://discord.gg/hvWTZrZ");
+                    }
+                }
+            },
+         
+            stayCommand: {
+                command: 'stay',
+                rank: 'bouncer',
+                type: 'exact',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("Enjoy your stay in Titan Music!");
                     }
                 }
             },
