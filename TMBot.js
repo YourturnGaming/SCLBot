@@ -3838,11 +3838,11 @@
                 command: 'unban',
                 rank: 'bouncer',
                 type: 'startsWith',
-                functionality: function(chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                        $.getJSON('/_/bans', function(json) {
+                        $.getJSON('/_/bans', function (json){
                             var msg = chat.message;
                             if (msg.length === cmd.length) return;
                             var name = msg.substring(cmd.length + 2);
@@ -3856,12 +3856,10 @@
                                     found = true;
                                 }
                             }
-                            if (!found) return API.sendChat(subChat(basicBot.chat.notbanned, {
-                                name: chat.un
-                            }));
+                            if (!found) return API.sendChat(subChat(basicBot.chat.notbanned, {name: chat.un}));
                             API.moderateUnbanUser(bannedUser.id);
                             console.log('Unbanned:', name);
-                        }));
+                        });
                     }
                 }
             },
@@ -3875,7 +3873,6 @@
                     if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         basicBot.roomUtilities.booth.unlockBooth();
-                        }));
                     }
                 }
             },
@@ -4211,7 +4208,7 @@
                 }
             }
         }
-    },
+    };
 
     loadChat(basicBot.startup);
 }).call(this);
