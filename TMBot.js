@@ -3651,8 +3651,6 @@
                             API.sendChat(subChat(basicBot.chat.genres, {
                                 link: basicBot.settings.themeLink
                                 }));
-                            )
-                        )
                     }
                 }
             },
