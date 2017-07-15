@@ -113,7 +113,7 @@
     var loadChat = function(cb) {
         if (!cb) cb = function() {};
         $.get('https://rawgit.com/basicBot/source/master/lang/langIndex.json', function(json) {
-            var link = basicBot.chatLink;
+            var link = TMBot.chatLink;
             if (json !== null && typeof json !== 'undefined') {
                 langIndex = json;
                 link = langIndex[basicBot.settings.language.toLowerCase()];
