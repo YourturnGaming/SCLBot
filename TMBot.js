@@ -245,11 +245,11 @@
     var botMaintainer = 'TitanMusicDev'
     var botCreatorIDs = ['3669054', '5712221'];
 
-    var basicBot = {
-        version: '2.11.9',
+    var TianMusicBot = {
+        version: '2.12.1',
         status: false,
         name: 'TitanMusicBot',
-        loggedInID: null,
+        loggedInID: '20168147',
         scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
         cmdLink: 'https://goo.gl/SpGpmi',
         chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/lang',
