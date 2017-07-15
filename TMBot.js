@@ -241,15 +241,15 @@
         return str;
     };
 
-    var botCreator = 'TitanMusic | Developer';
+    var botCreator = 'MsiGaming | Developer';
     var botMaintainer = 'TitanMusicDev'
-    var botCreatorIDs = ['3669054', '5712221'];
+    var botCreatorIDs = ['3669054', '20168147'];
 
-    var TianMusicBot = {
+    var TMBot = {
         version: '2.12.1',
         status: false,
-        name: 'TitanMusicBot',
-        loggedInID: '20168147',
+        name: 'TMBot',
+        loggedInID: null,
         scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
         cmdLink: 'https://goo.gl/SpGpmi',
         chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/lang',
@@ -258,7 +258,7 @@
         retrieveSettings: retrieveSettings,
         retrieveFromStorage: retrieveFromStorage,
         settings: {
-            botName: 'TitanMusicBot',
+            botName: 'TMBot',
             language: 'english',
             chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/lang',
             scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
@@ -4223,5 +4223,5 @@
         }
     };
 
-    loadChat(TitanMusicBot.startup);
+    loadChat(TMBot.startup);
 }).call(this);
