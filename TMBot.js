@@ -4223,5 +4223,5 @@
         }
     };
 
-    loadChat(basicBot.startup);
+    loadChat(TitanMusicBot.startup);
 }).call(this);
