@@ -85,14 +85,14 @@
     */
 
     var storeToStorage = function() {
-        localStorage.setItem('basicBotsettings', JSON.stringify(basicBot.settings));
-        localStorage.setItem('basicBotRoom', JSON.stringify(basicBot.room));
-        var basicBotStorageInfo = {
+        localStorage.setItem('TMBotsettings', JSON.stringify(TMBot.settings));
+        localStorage.setItem('TMBotRoom', JSON.stringify(TMBot.room));
+        var TMBotStorageInfo = {
             time: Date.now(),
             stored: true,
-            version: basicBot.version
+            version: TMBot.version
         };
-        localStorage.setItem('basicBotStorageInfo', JSON.stringify(basicBotStorageInfo));
+        localStorage.setItem('TMBotStorageInfo', JSON.stringify(TMBotStorageInfo));
     };
 
     var subChat = function(chat, obj) {
@@ -112,30 +112,30 @@
 
     var loadChat = function(cb) {
         if (!cb) cb = function() {};
-        $.get('https://rawgit.com/basicBot/source/master/lang/langIndex.json', function(json) {
+        $.get('https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json', function(json) {
             var link = TMBot.chatLink;
             if (json !== null && typeof json !== 'undefined') {
                 langIndex = json;
-                link = langIndex[basicBot.settings.language.toLowerCase()];
-                if (basicBot.settings.chatLink !== basicBot.chatLink) {
-                    link = basicBot.settings.chatLink;
+                link = langIndex[TMBot.settings.language.toLowerCase()];
+                if (TMBot.settings.chatLink !== TMBot.chatLink) {
+                    link = TMBot.settings.chatLink;
                 } else {
                     if (typeof link === 'undefined') {
-                        link = basicBot.chatLink;
+                        link = TMBot.chatLink;
                     }
                 }
                 $.get(link, function(json) {
                     if (json !== null && typeof json !== 'undefined') {
                         if (typeof json === 'string') json = JSON.parse(json);
-                        basicBot.chat = json;
+                        TMBot.chat = json;
                         cb();
                     }
                 });
             } else {
-                $.get(basicBot.chatLink, function(json) {
+                $.get(TMBot.chatLink, function(json) {
                     if (json !== null && typeof json !== 'undefined') {
                         if (typeof json === 'string') json = JSON.parse(json);
-                        basicBot.chat = json;
+                        TMBot.chat = json;
                         cb();
                     }
                 });
