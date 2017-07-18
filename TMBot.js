@@ -1303,34 +1303,34 @@
                 }
 
                 if (executed && userPerm === 0) {
-                    basicBot.room.usercommand = false;
+                    TMBot.room.usercommand = false;
                     setTimeout(function() {
-                        basicBot.room.usercommand = true;
-                    }, basicBot.settings.commandCooldown * 1000);
+                        TMBot.room.usercommand = true;
+                    }, TMBot.settings.commandCooldown * 1000);
                 }
                 if (executed) {
-                    /*if (basicBot.settings.cmdDeletion) {
+                    /*if (TMBot.settings.cmdDeletion) {
                         API.moderateDeleteChat(chat.cid);
                     }*/
 
-                    //basicBot.room.allcommand = false;
+                    //TMBot.room.allcommand = false;
                     //setTimeout(function () {
-                    basicBot.room.allcommand = true;
+                    TMBot.room.allcommand = true;
                     //}, 5 * 1000);
                 }
                 return executed;
             },
             action: function(chat) {
-                var user = basicBot.userUtilities.lookupUser(chat.uid);
+                var user = TMBot.userUtilities.lookupUser(chat.uid);
                 if (chat.type === 'message') {
-                    for (var j = 0; j < basicBot.room.users.length; j++) {
-                        if (basicBot.userUtilities.getUser(basicBot.room.users[j]).id === chat.uid) {
-                            basicBot.userUtilities.setLastActivity(basicBot.room.users[j]);
+                    for (var j = 0; j < TMBot.room.users.length; j++) {
+                        if (TMBot.userUtilities.getUser(TMBot.room.users[j]).id === chat.uid) {
+                            TMBot.userUtilities.setLastActivity(TMBot.room.users[j]);
                         }
 
                     }
                 }
-                basicBot.room.roomstats.chatmessages++;
+                TMBot.room.roomstats.chatmessages++;
             },
             spam: [
                 'hueh', 'hu3', 'brbr', 'heu', 'spoder', 'mafia', 'zuera', 'zueira',
@@ -1390,9 +1390,9 @@
         },
         startup: function() {
             var u = API.getUser();
-            if (basicBot.userUtilities.getPermission(u) < 2) return API.chatLog(basicBot.chat.greyuser);
-            if (basicBot.userUtilities.getPermission(u) === 2) API.chatLog(basicBot.chat.bouncer);
-            basicBot.connectAPI();
+            if (TMBot.userUtilities.getPermission(u) < 2) return API.chatLog(TMBot.chat.greyuser);
+            if (TMBot.userUtilities.getPermission(u) === 2) API.chatLog(TMBot.chat.bouncer);
+            TMBot.connectAPI();
             API.moderateDeleteChat = function(cid) {
                 $.ajax({
                     url: '/_/chat/' + cid,
@@ -1400,21 +1400,21 @@
                 })
             };
 
-            basicBot.room.name = window.location.pathname;
+            TMBot.room.name = window.location.pathname;
             var Check;
 
-            console.log(basicBot.room.name);
+            console.log(TMBot.room.name);
 
             var detect = function() {
-                if (basicBot.room.name != window.location.pathname) {
+                if (TMBot.room.name != window.location.pathname) {
                     console.log('Killing bot after room change.');
                     storeToStorage();
-                    basicBot.disconnectAPI();
+                    TMBot.disconnectAPI();
                     setTimeout(function() {
                         kill();
                     }, 1000);
-                    if (basicBot.settings.roomLock) {
-                        window.location = basicBot.room.name;
+                    if (TMBot.settings.roomLock) {
+                        window.location = TMBot.room.name;
                     } else {
                         clearInterval(Check);
                     }
@@ -1543,7 +1543,7 @@
                 type: 'startsWith/exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
 
                     }
@@ -1557,14 +1557,14 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var now = Date.now();
                         var chatters = 0;
                         var time;
 
-                        var launchT = basicBot.room.roomstats.launchTime;
+                        var launchT = TMBot.room.roomstats.launchTime;
                         var durationOnline = Date.now() - launchT;
                         var since = durationOnline / 1000;
 
