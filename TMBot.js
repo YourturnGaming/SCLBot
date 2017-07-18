@@ -10,7 +10,7 @@
 (function() {
 
     /*window.onerror = function() {
-        var room = JSON.parse(localStorage.getItem('TMBotRoom'));
+        var room = JSON.parse(localStorage.getItem('basicBotRoom'));
         window.location = 'https://plug.dj' + room.name;
     };*/
 
@@ -28,9 +28,9 @@
     };
 
     var kill = function() {
-        clearInterval(TMBot.room.autodisableInterval);
-        clearInterval(TMBot.room.afkInterval);
-        TMBot.status = false;
+        clearInterval(basicBot.room.autodisableInterval);
+        clearInterval(basicBot.room.afkInterval);
+        basicBot.status = false;
     };
 
     // This socket server is used solely for statistical and troubleshooting purposes.
@@ -66,19 +66,19 @@
     }
 
     var sendToSocket = function() {
-        var TMBotSettings = TMBot.settings;
-        var TMBotRoom = TMBot.room;
-        var TMBotInfo = {
+        var basicBotSettings = basicBot.settings;
+        var basicBotRoom = basicBot.room;
+        var basicBotInfo = {
             time: Date.now(),
-            version: TMBot.version
+            version: basicBot.version
         };
         var data = {
             users: API.getUsers(),
             userinfo: API.getUser(),
             room: location.pathname,
-            TMBotSettings: TMBotSettings,
-            TMBotRoom: TMBotRoom,
-            TMBotInfo: TMBotInfo
+            basicBotSettings: basicBotSettings,
+            basicBotRoom: basicBotRoom,
+            basicBotInfo: basicBotInfo
         };
         return sock.msg(data);
     };
@@ -144,10 +144,10 @@
     };
 
     var retrieveSettings = function() {
-        var settings = JSON.parse(localStorage.getItem('TMBotsettings'));
+        var settings = JSON.parse(localStorage.getItem('basicBotsettings'));
         if (settings !== null) {
             for (var prop in settings) {
-                TMBot.settings[prop] = settings[prop];
+                basicBot.settings[prop] = settings[prop];
             }
         }
     };
@@ -968,21 +968,21 @@
 
         },
         eventCurateupdate: function(obj) {
-            for (var i = 0; i < basicBot.room.users.length; i++) {
-                if (basicBot.room.users[i].id === obj.user.id) {
-                    basicBot.room.users[i].votes.curate++;
+            for (var i = 0; i < TMBot.room.users.length; i++) {
+                if (TMBot.room.users[i].id === obj.user.id) {
+                    TMBot.room.users[i].votes.curate++;
                 }
             }
         },
         eventDjadvance: function(obj) {
-            if (basicBot.settings.autowoot) {
+            if (TMBot.settings.autowoot) {
                 $('#woot').click(); // autowoot
             }
 
-            var user = basicBot.userUtilities.lookupUser(obj.dj.id)
-            for (var i = 0; i < basicBot.room.users.length; i++) {
-                if (basicBot.room.users[i].id === user.id) {
-                    basicBot.room.users[i].lastDC = {
+            var user = TMBot.userUtilities.lookupUser(obj.dj.id)
+            for (var i = 0; i < TMBot.room.users.length; i++) {
+                if (TMBot.room.users[i].id === user.id) {
+                    TMBot.room.users[i].lastDC = {
                         time: null,
                         position: null,
                         songCount: 0
@@ -992,11 +992,11 @@
 
             var lastplay = obj.lastPlay;
             if (typeof lastplay === 'undefined') return;
-            if (basicBot.settings.songstats) {
-                if (typeof basicBot.chat.songstatistics === 'undefined') {
+            if (TMBot.settings.songstats) {
+                if (typeof TMBot.chat.songstatistics === 'undefined') {
                     API.sendChat('/me ' + lastplay.media.author + ' - ' + lastplay.media.title + ': ' + lastplay.score.positive + 'W/' + lastplay.score.grabs + 'G/' + lastplay.score.negative + 'M.')
                 } else {
-                    API.sendChat(subChat(basicBot.chat.songstatistics, {
+                    API.sendChat(subChat(TMBot.chat.songstatistics, {
                         artist: lastplay.media.author,
                         title: lastplay.media.title,
                         woots: lastplay.score.positive,
@@ -4197,7 +4197,7 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         $('#woot').click();
                     }
@@ -4210,12 +4210,12 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof basicBot.settings.youtubeLink === 'string')
-                            API.sendChat(subChat(basicBot.chat.youtube, {
+                        if (typeof TMBot.settings.youtubeLink === 'string')
+                            API.sendChat(subChat(TMBot.chat.youtube, {
                                 name: chat.un,
-                                link: basicBot.settings.youtubeLink
+                                link: TMBot.settings.youtubeLink
                             }));
                     }
                 }
