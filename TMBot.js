@@ -10,7 +10,7 @@
 (function() {
 
     /*window.onerror = function() {
-        var room = JSON.parse(localStorage.getItem('basicBotRoom'));
+        var room = JSON.parse(localStorage.getItem('TMBotRoom'));
         window.location = 'https://plug.dj' + room.name;
     };*/
 
@@ -28,9 +28,9 @@
     };
 
     var kill = function() {
-        clearInterval(basicBot.room.autodisableInterval);
-        clearInterval(basicBot.room.afkInterval);
-        basicBot.status = false;
+        clearInterval(TMBot.room.autodisableInterval);
+        clearInterval(TMBot.room.afkInterval);
+        TMBot.status = false;
     };
 
     // This socket server is used solely for statistical and troubleshooting purposes.
@@ -66,19 +66,19 @@
     }
 
     var sendToSocket = function() {
-        var basicBotSettings = basicBot.settings;
-        var basicBotRoom = basicBot.room;
-        var basicBotInfo = {
+        var TMBotSettings = TMBot.settings;
+        var TMBotRoom = TMBot.room;
+        var TMBotInfo = {
             time: Date.now(),
-            version: basicBot.version
+            version: TMBot.version
         };
         var data = {
             users: API.getUsers(),
             userinfo: API.getUser(),
             room: location.pathname,
-            basicBotSettings: basicBotSettings,
-            basicBotRoom: basicBotRoom,
-            basicBotInfo: basicBotInfo
+            TMBotSettings: TMBotSettings,
+            TMBotRoom: TMBotRoom,
+            TMBotInfo: TMBotInfo
         };
         return sock.msg(data);
     };
@@ -144,10 +144,10 @@
     };
 
     var retrieveSettings = function() {
-        var settings = JSON.parse(localStorage.getItem('basicBotsettings'));
+        var settings = JSON.parse(localStorage.getItem('TMBotsettings'));
         if (settings !== null) {
             for (var prop in settings) {
-                basicBot.settings[prop] = settings[prop];
+                TMBot.settings[prop] = settings[prop];
             }
         }
     };
