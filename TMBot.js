@@ -1014,14 +1014,14 @@
 
             var blacklistSkip = setTimeout(function() {
                 var mid = obj.media.format + ':' + obj.media.cid;
-                for (var bl in basicBot.room.blacklists) {
-                    if (basicBot.settings.blacklistEnabled) {
-                        if (basicBot.room.blacklists[bl].indexOf(mid) > -1) {
-                            API.sendChat(subChat(basicBot.chat.isblacklisted, {
+                for (var bl in TMBot.room.blacklists) {
+                    if (TMBot.settings.blacklistEnabled) {
+                        if (TMBot.room.blacklists[bl].indexOf(mid) > -1) {
+                            API.sendChat(subChat(TMBot.chat.isblacklisted, {
                                 blacklist: bl
                             }));
-                            if (basicBot.settings.smartSkip) {
-                                return basicBot.roomUtilities.smartSkip();
+                            if (TMBot.settings.smartSkip) {
+                                return TMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1031,14 +1031,14 @@
             }, 2000);
             var newMedia = obj.media;
             var timeLimitSkip = setTimeout(function() {
-                if (basicBot.settings.timeGuard && newMedia.duration > basicBot.settings.maximumSongLength * 60 && !basicBot.room.roomevent) {
+                if (TMBot.settings.timeGuard && newMedia.duration > TMBot.settings.maximumSongLength * 60 && !TMBot.room.roomevent) {
                     var name = obj.dj.username;
-                    API.sendChat(subChat(basicBot.chat.timelimit, {
+                    API.sendChat(subChat(TMBot.chat.timelimit, {
                         name: name,
-                        maxlength: basicBot.settings.maximumSongLength
+                        maxlength: TMBot.settings.maximumSongLength
                     }));
-                    if (basicBot.settings.smartSkip) {
-                        return basicBot.roomUtilities.smartSkip();
+                    if (TMBot.settings.smartSkip) {
+                        return TMBot.roomUtilities.smartSkip();
                     } else {
                         return API.moderateForceSkip();
                     }
@@ -1051,11 +1051,11 @@
                     $.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + cid + '&key=AIzaSyDcfWu9cGaDnTjPKhg_dy9mUh6H7i4ePZ0&part=snippet&callback=?', function(track) {
                         if (typeof(track.items[0]) === 'undefined') {
                             var name = obj.dj.username;
-                            API.sendChat(subChat(basicBot.chat.notavailable, {
+                            API.sendChat(subChat(TMBot.chat.notavailable, {
                                 name: name
                             }));
-                            if (basicBot.settings.smartSkip) {
-                                return basicBot.roomUtilities.smartSkip();
+                            if (TMBot.settings.smartSkip) {
+                                return TMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1065,11 +1065,11 @@
                     var checkSong = SC.get('/tracks/' + cid, function(track) {
                         if (typeof track.title === 'undefined') {
                             var name = obj.dj.username;
-                            API.sendChat(subChat(basicBot.chat.notavailable, {
+                            API.sendChat(subChat(TMBot.chat.notavailable, {
                                 name: name
                             }));
-                            if (basicBot.settings.smartSkip) {
-                                return basicBot.roomUtilities.smartSkip();
+                            if (TMBot.settings.smartSkip) {
+                                return TMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1078,41 +1078,41 @@
                 }
             }, 2000);
             clearTimeout(historySkip);
-            if (basicBot.settings.historySkip) {
+            if (TMBot.settings.historySkip) {
                 var alreadyPlayed = false;
                 var apihistory = API.getHistory();
                 var name = obj.dj.username;
                 var historySkip = setTimeout(function() {
                     for (var i = 0; i < apihistory.length; i++) {
                         if (apihistory[i].media.cid === obj.media.cid) {
-                            basicBot.room.historyList[i].push(+new Date());
+                            TMBot.room.historyList[i].push(+new Date());
                             alreadyPlayed = true;
-                            API.sendChat(subChat(basicBot.chat.songknown, {
+                            API.sendChat(subChat(TMBot.chat.songknown, {
                                 name: name
                             }));
-                            if (basicBot.settings.smartSkip) {
-                                return basicBot.roomUtilities.smartSkip();
+                            if (TMBot.settings.smartSkip) {
+                                return TMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
                         }
                     }
                     if (!alreadyPlayed) {
-                        basicBot.room.historyList.push([obj.media.cid, +new Date()]);
+                        TMBot.room.historyList.push([obj.media.cid, +new Date()]);
                     }
                 }, 2000);
             }
             if (user.ownSong) {
-                API.sendChat(subChat(basicBot.chat.permissionownsong, {
+                API.sendChat(subChat(TMBot.chat.permissionownsong, {
                     name: user.username
                 }));
                 user.ownSong = false;
             }
-            clearTimeout(basicBot.room.autoskipTimer);
-            if (basicBot.settings.autoskip) {
+            clearTimeout(TMBot.room.autoskipTimer);
+            if (TMBot.settings.autoskip) {
                 var remaining = obj.media.duration * 1000;
                 var startcid = API.getMedia().cid;
-                basicBot.room.autoskipTimer = setTimeout(function() {
+                TMBot.room.autoskipTimer = setTimeout(function() {
                     var endcid = API.getMedia().cid;
                     if (startcid === endcid) {
                         //API.sendChat('Song stuck, skipping...');
@@ -1125,37 +1125,37 @@
         },
         eventWaitlistupdate: function(users) {
             if (users.length < 50) {
-                if (basicBot.room.queue.id.length > 0 && basicBot.room.queueable) {
-                    basicBot.room.queueable = false;
+                if (TMBot.room.queue.id.length > 0 && TMBot.room.queueable) {
+                    TMBot.room.queueable = false;
                     setTimeout(function() {
-                        basicBot.room.queueable = true;
+                        TMBot.room.queueable = true;
                     }, 500);
-                    basicBot.room.queueing++;
+                    TMBot.room.queueing++;
                     var id, pos;
                     setTimeout(
                         function() {
-                            id = basicBot.room.queue.id.splice(0, 1)[0];
-                            pos = basicBot.room.queue.position.splice(0, 1)[0];
+                            id = TMBot.room.queue.id.splice(0, 1)[0];
+                            pos = TMBot.room.queue.position.splice(0, 1)[0];
                             API.moderateAddDJ(id, pos);
                             setTimeout(
                                 function(id, pos) {
                                     API.moderateMoveDJ(id, pos);
-                                    basicBot.room.queueing--;
-                                    if (basicBot.room.queue.id.length === 0) setTimeout(function() {
-                                        basicBot.roomUtilities.booth.unlockBooth();
+                                    TMBot.room.queueing--;
+                                    if (TMBot.room.queue.id.length === 0) setTimeout(function() {
+                                        TMBot.roomUtilities.booth.unlockBooth();
                                     }, 1000);
                                 }, 1000, id, pos);
-                        }, 1000 + basicBot.room.queueing * 2500);
+                        }, 1000 + TMBot.room.queueing * 2500);
                 }
             }
             for (var i = 0; i < users.length; i++) {
-                var user = basicBot.userUtilities.lookupUser(users[i].id);
-                basicBot.userUtilities.updatePosition(user, API.getWaitListPosition(users[i].id) + 1);
+                var user = TMBot.userUtilities.lookupUser(users[i].id);
+                TMBot.userUtilities.updatePosition(user, API.getWaitListPosition(users[i].id) + 1);
             }
         },
         chatcleaner: function(chat) {
-            if (!basicBot.settings.filterChat) return false;
-            if (basicBot.userUtilities.getPermission(chat.uid) > 1) return false;
+            if (!TMBot.settings.filterChat) return false;
+            if (TMBot.userUtilities.getPermission(chat.uid) > 1) return false;
             var msg = chat.message;
             var containsLetters = false;
             for (var i = 0; i < msg.length; i++) {
@@ -1174,21 +1174,21 @@
                 if (ch >= 'A' && ch <= 'Z') capitals++;
             }
             if (capitals >= 40) {
-                API.sendChat(subChat(basicBot.chat.caps, {
+                API.sendChat(subChat(TMBot.chat.caps, {
                     name: chat.un
                 }));
                 return true;
             }
             msg = msg.toLowerCase();
             if (msg === 'skip') {
-                API.sendChat(subChat(basicBot.chat.askskip, {
+                API.sendChat(subChat(TMBot.chat.askskip, {
                     name: chat.un
                 }));
                 return true;
             }
-            for (var j = 0; j < basicBot.chatUtilities.spam.length; j++) {
-                if (msg === basicBot.chatUtilities.spam[j]) {
-                    API.sendChat(subChat(basicBot.chat.spam, {
+            for (var j = 0; j < TMBot.chatUtilities.spam.length; j++) {
+                if (msg === TMBot.chatUtilities.spam[j]) {
+                    API.sendChat(subChat(TMBot.chat.spam, {
                         name: chat.un
                     }));
                     return true;
@@ -1199,34 +1199,34 @@
         chatUtilities: {
             chatFilter: function(chat) {
                 var msg = chat.message;
-                var perm = basicBot.userUtilities.getPermission(chat.uid);
-                var user = basicBot.userUtilities.lookupUser(chat.uid);
+                var perm = TMBot.userUtilities.getPermission(chat.uid);
+                var user = TMBot.userUtilities.lookupUser(chat.uid);
                 var isMuted = false;
-                for (var i = 0; i < basicBot.room.mutedUsers.length; i++) {
-                    if (basicBot.room.mutedUsers[i] === chat.uid) isMuted = true;
+                for (var i = 0; i < TMBot.room.mutedUsers.length; i++) {
+                    if (TMBot.room.mutedUsers[i] === chat.uid) isMuted = true;
                 }
                 if (isMuted) {
                     API.moderateDeleteChat(chat.cid);
                     return true;
                 }
-                if (basicBot.settings.lockdownEnabled) {
+                if (TMBot.settings.lockdownEnabled) {
                     if (perm === 0) {
                         API.moderateDeleteChat(chat.cid);
                         return true;
                     }
                 }
-                if (basicBot.chatcleaner(chat)) {
+                if (TMBot.chatcleaner(chat)) {
                     API.moderateDeleteChat(chat.cid);
                     return true;
                 }
-                if (basicBot.settings.cmdDeletion && msg.startsWith(basicBot.settings.commandLiteral)) {
+                if (TMBot.settings.cmdDeletion && msg.startsWith(TMBot.settings.commandLiteral)) {
                     API.moderateDeleteChat(chat.cid);
                 }
                 /**
                  var plugRoomLinkPatt = /(\bhttps?:\/\/(www.)?plug\.dj[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
                  if (plugRoomLinkPatt.exec(msg)) {
                     if (perm === 0) {
-                        API.sendChat(subChat(basicBot.chat.roomadvertising, {name: chat.un}));
+                        API.sendChat(subChat(TMBot.chat.roomadvertising, {name: chat.un}));
                         API.moderateDeleteChat(chat.cid);
                         return true;
                     }
