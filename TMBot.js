@@ -1234,7 +1234,7 @@
                  **/
                 if (msg.indexOf('http://adf.ly/') > -1) {
                     API.moderateDeleteChat(chat.cid);
-                    API.sendChat(subChat(basicBot.chat.adfly, {
+                    API.sendChat(subChat(TMBot.chat.adfly, {
                         name: chat.un
                     }));
                     return true;
@@ -1244,8 +1244,8 @@
                     return true;
                 }
 
-                var rlJoinChat = basicBot.chat.roulettejoin;
-                var rlLeaveChat = basicBot.chat.rouletteleave;
+                var rlJoinChat = TMBot.chat.roulettejoin;
+                var rlLeaveChat = TMBot.chat.rouletteleave;
 
                 var joinedroulette = rlJoinChat.split('%%NAME%%');
                 if (joinedroulette[1].length > joinedroulette[0].length) joinedroulette = joinedroulette[1];
@@ -1255,7 +1255,7 @@
                 if (leftroulette[1].length > leftroulette[0].length) leftroulette = leftroulette[1];
                 else leftroulette = leftroulette[0];
 
-                if ((msg.indexOf(joinedroulette) > -1 || msg.indexOf(leftroulette) > -1) && chat.uid === basicBot.loggedInID) {
+                if ((msg.indexOf(joinedroulette) > -1 || msg.indexOf(leftroulette) > -1) && chat.uid === TMBot.loggedInID) {
                     setTimeout(function(id) {
                         API.moderateDeleteChat(id);
                     }, 5 * 1000, chat.cid);
@@ -1265,21 +1265,21 @@
             },
             commandCheck: function(chat) {
                 var cmd;
-                if (chat.message.charAt(0) === basicBot.settings.commandLiteral) {
+                if (chat.message.charAt(0) === TMBot.settings.commandLiteral) {
                     var space = chat.message.indexOf(' ');
                     if (space === -1) {
                         cmd = chat.message;
                     } else cmd = chat.message.substring(0, space);
                 } else return false;
-                var userPerm = basicBot.userUtilities.getPermission(chat.uid);
+                var userPerm = TMBot.userUtilities.getPermission(chat.uid);
                 //console.log('name: ' + chat.un + ', perm: ' + userPerm);
-                if (chat.message !== basicBot.settings.commandLiteral + 'join' && chat.message !== basicBot.settings.commandLiteral + 'leave') {
-                    if (userPerm === 0 && !basicBot.room.usercommand) return void(0);
-                    if (!basicBot.room.allcommand) return void(0);
+                if (chat.message !== TMBot.settings.commandLiteral + 'join' && chat.message !== TMBot.settings.commandLiteral + 'leave') {
+                    if (userPerm === 0 && !TMBot.room.usercommand) return void(0);
+                    if (!TMBot.room.allcommand) return void(0);
                 }
-                if (chat.message === basicBot.settings.commandLiteral + 'eta' && basicBot.settings.etaRestriction) {
+                if (chat.message === TMBot.settings.commandLiteral + 'eta' && TMBot.settings.etaRestriction) {
                     if (userPerm < 2) {
-                        var u = basicBot.userUtilities.lookupUser(chat.uid);
+                        var u = TMBot.userUtilities.lookupUser(chat.uid);
                         if (u.lastEta !== null && (Date.now() - u.lastEta) < 1 * 60 * 60 * 1000) {
                             API.moderateDeleteChat(chat.cid);
                             return void(0);
@@ -1288,14 +1288,14 @@
                 }
                 var executed = false;
 
-                for (var comm in basicBot.commands) {
-                    var cmdCall = basicBot.commands[comm].command;
+                for (var comm in TMBot.commands) {
+                    var cmdCall = TMBot.commands[comm].command;
                     if (!Array.isArray(cmdCall)) {
                         cmdCall = [cmdCall]
                     }
                     for (var i = 0; i < cmdCall.length; i++) {
-                        if (basicBot.settings.commandLiteral + cmdCall[i] === cmd) {
-                            basicBot.commands[comm].functionality(chat, basicBot.settings.commandLiteral + cmdCall[i]);
+                        if (TMBot.settings.commandLiteral + cmdCall[i] === cmd) {
+                            TMBot.commands[comm].functionality(chat, TMBot.settings.commandLiteral + cmdCall[i]);
                             executed = true;
                             break;
                         }
@@ -1333,10 +1333,7 @@
                 TMBot.room.roomstats.chatmessages++;
             },
             spam: [
-                'hueh', 'hu3', 'brbr', 'heu', 'spoder', 'mafia', 'zuera', 'zueira',
-                'zueria', 'aehoo', 'aheu', 'alguem', 'algum', 'brazil', 'zoeira', 'fuckadmins', 'affff', 'vaisefoder', 'huenaarea',
-                'hitler', 'ashua', 'ahsu', 'ashau', 'huehue', 'hue', 'huehuehue', 'merda', 'pqp', 'puta', 'mulher', 'pula', 'retarda', 'caralho', 'filha', 'ppk',
-                'gringo', 'fuder', 'foder', 'hua', 'ahue', 'modafuka', 'modafoka', 'mudafuka', 'mudafoka', 'foda'
+                'fuckadmins', 'retard', 'modafuka', 'modafoka', 'mudafuka', 'mudafoka'
             ],
             curses: [
                 'nigger', 'faggot', 'nigga', 'niqqa', 'motherfucker', 'modafocka'
@@ -1495,7 +1492,7 @@
         commands: {
             executable: function(minRank, chat) {
                 var id = chat.uid;
-                var perm = basicBot.userUtilities.getPermission(id);
+                var perm = TMBot.userUtilities.getPermission(id);
                 var minPerm;
                 switch (minRank) {
                     case 'admin':
@@ -1514,7 +1511,7 @@
                         minPerm = 3;
                         break;
                     case 'mod':
-                        if (basicBot.settings.bouncerPlus) {
+                        if (TMBot.settings.bouncerPlus) {
                             minPerm = 2;
                         } else {
                             minPerm = 3;
