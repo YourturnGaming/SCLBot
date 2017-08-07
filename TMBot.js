@@ -3044,7 +3044,7 @@
             discordCommand: {
                 command: 'discord',
                 rank: 'user',
-                type: 'exact',
+                type: 'startsWith',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
@@ -3057,7 +3057,7 @@
             stayCommand: {
                 command: 'stay',
                 rank: 'bouncer',
-                type: 'exact',
+                type: 'startsWith',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
@@ -3067,6 +3067,19 @@
                 }
             },
             
+            eventCommand: {
+                command: 'event',
+                rank: 'bouncer',
+                type: 'startsWith',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("Soon have coming events!");
+                    }
+                }
+            },        
+
             moveCommand: {
                 command: 'move',
                 rank: 'mod',
@@ -3208,9 +3221,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(basicBot.chat.pong)
+                        API.sendChat(TMBot.chat.pong)
                     }
                 }
             },
@@ -3221,11 +3234,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         //sendToSocket();
                         storeToStorage();
-                        basicBot.disconnectAPI();
+                        TMBot.disconnectAPI();
                         setTimeout(function() {
                             window.location.reload(false);
                         }, 1000);
