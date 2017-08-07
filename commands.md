@@ -49,6 +49,7 @@
 | Command | Arguments | Description |
 |:-------:|:---------:|:-----------:|
 | !stay | — | bot says that enjoy your stay in Titan Music.
+| !event | — | bot says that Soon have coming events.
 | !active | (X) | shows how many users chatted in the past X minutes. If no X specified, 60 is set as default. |
 | !afkreset | @user | resets the AFK time of user. |
 | !afktime | @user | shows how long user has been AFK. |
