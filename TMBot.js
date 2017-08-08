@@ -1647,23 +1647,23 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (basicBot.settings.afkRemoval) {
-                            basicBot.settings.afkRemoval = !basicBot.settings.afkRemoval;
-                            clearInterval(basicBot.room.afkInterval);
-                            API.sendChat(subChat(basicBot.chat.toggleoff, {
+                        if (TMBot.settings.afkRemoval) {
+                            TMBot.settings.afkRemoval = !TMBot.settings.afkRemoval;
+                            clearInterval(TMBot.room.afkInterval);
+                            API.sendChat(subChat(TMBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': basicBot.chat.afkremoval
+                                'function': TMBot.chat.afkremoval
                             }));
                         } else {
-                            basicBot.settings.afkRemoval = !basicBot.settings.afkRemoval;
-                            basicBot.room.afkInterval = setInterval(function() {
-                                basicBot.roomUtilities.afkCheck()
+                            TMBot.settings.afkRemoval = !TMBot.settings.afkRemoval;
+                            TMBot.room.afkInterval = setInterval(function() {
+                                TMBot.roomUtilities.afkCheck()
                             }, 2 * 1000);
-                            API.sendChat(subChat(basicBot.chat.toggleon, {
+                            API.sendChat(subChat(TMBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': basicBot.chat.afkremoval
+                                'function': TMBot.chat.afkremoval
                             }));
                         }
                     }
@@ -1676,19 +1676,19 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = basicBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
+                        var user = TMBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        basicBot.userUtilities.setLastActivity(user);
-                        API.sendChat(subChat(basicBot.chat.afkstatusreset, {
+                        TMBot.userUtilities.setLastActivity(user);
+                        API.sendChat(subChat(TMBot.chat.afkstatusreset, {
                             name: chat.un,
                             username: name
                         }));
@@ -1702,32 +1702,32 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = basicBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
+                        var user = TMBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        var lastActive = basicBot.userUtilities.getLastActivity(user);
+                        var lastActive = TMBot.userUtilities.getLastActivity(user);
                         var inactivity = Date.now() - lastActive;
-                        var time = basicBot.roomUtilities.msToStr(inactivity);
+                        var time = TMBot.roomUtilities.msToStr(inactivity);
 
-                        var launchT = basicBot.room.roomstats.launchTime;
+                        var launchT = TMBot.room.roomstats.launchTime;
                         var durationOnline = Date.now() - launchT;
 
                         if (inactivity == durationOnline) {
-                            API.sendChat(subChat(basicBot.chat.inactivelonger, {
-                                botname: basicBot.settings.botName,
+                            API.sendChat(subChat(TMBot.chat.inactivelonger, {
+                                botname: TMBot.settings.botName,
                                 name: chat.un,
                                 username: name
                             }));
                         } else {
-                            API.sendChat(subChat(basicBot.chat.inactivefor, {
+                            API.sendChat(subChat(TMBot.chat.inactivefor, {
                                 name: chat.un,
                                 username: name,
                                 time: time
@@ -1743,19 +1743,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (basicBot.settings.autodisable) {
-                            basicBot.settings.autodisable = !basicBot.settings.autodisable;
-                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
+                        if (TMBot.settings.autodisable) {
+                            TMBot.settings.autodisable = !TMBot.settings.autodisable;
+                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': basicBot.chat.autodisable
+                                'function': TMBot.chat.autodisable
                             }));
                         } else {
-                            basicBot.settings.autodisable = !basicBot.settings.autodisable;
-                            return API.sendChat(subChat(basicBot.chat.toggleon, {
+                            TMBot.settings.autodisable = !TMBot.settings.autodisable;
+                            return API.sendChat(subChat(TMBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': basicBot.chat.autodisable
+                                'function': TMBot.chat.autodisable
                             }));
                         }
 
@@ -1769,20 +1769,20 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (basicBot.settings.autoskip) {
-                            basicBot.settings.autoskip = !basicBot.settings.autoskip;
-                            clearTimeout(basicBot.room.autoskipTimer);
-                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
+                        if (TMBot.settings.autoskip) {
+                            TMBot.settings.autoskip = !TMBot.settings.autoskip;
+                            clearTimeout(TMBot.room.autoskipTimer);
+                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': basicBot.chat.autoskip
+                                'function': TMBot.chat.autoskip
                             }));
                         } else {
-                            basicBot.settings.autoskip = !basicBot.settings.autoskip;
-                            return API.sendChat(subChat(basicBot.chat.toggleon, {
+                            TMBot.settings.autoskip = !TMBot.settings.autoskip;
+                            return API.sendChat(subChat(TMBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': basicBot.chat.autoskip
+                                'function': TMBot.chat.autoskip
                             }));
                         }
                     }
@@ -1795,9 +1795,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(basicBot.chat.autowoot);
+                        API.sendChat(TMBot.chat.autowoot);
                     }
                 }
             },
