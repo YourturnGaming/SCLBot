@@ -994,7 +994,7 @@
             if (typeof lastplay === 'undefined') return;
             if (TMBot.settings.songstats) {
                 if (typeof TMBot.chat.songstatistics === 'undefined') {
-                    API.sendChat('/me ' + lastplay.media.author + ' - ' + lastplay.media.title + ': ' + lastplay.score.positive + 'W/' + lastplay.score.grabs + 'G/' + lastplay.score.negative + 'M.')
+                    API.sendChat('/me ' + lastplay.media.author + ' - ' + lastplay.media.title + ': ' + lastplay.score.positive + ':thumbsup:/' + lastplay.score.grabs + ':purple_heart: /' + lastplay.score.negative + ':thumbsdown:.')
                 } else {
                     API.sendChat(subChat(TMBot.chat.songstatistics, {
                         artist: lastplay.media.author,
