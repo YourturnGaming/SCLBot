@@ -1,6 +1,6 @@
 # TMBot (source)
 
-[![Discord](https://basicbot.herokuapp.com/badge.svg)](https://discord.gg/hvWTZrZ) [![facebook group](https://img.shields.io/badge/facebook-group-3b5998.svg?style=flat)](https://goo.gl/3EybNI) [![twitter](https://img.shields.io/twitter/follow/TittanMusic.svg?style=social)](https://goo.gl/0jzhuz)
+[![Discord](http://is1.mzstatic.com/image/thumb/Purple117/v4/a1/d8/3a/a1d83a42-e84e-5965-c006-610fb8a1fd45/source/300x300bb.jpg)](https://discord.gg/hvWTZrZ) [![facebook group](https://img.shields.io/badge/facebook-group-3b5998.svg?style=flat)](https://goo.gl/3EybNI) [![twitter](https://img.shields.io/twitter/follow/TittanMusic.svg?style=social)](https://goo.gl/0jzhuz)
 
 Email enquiries: [hi [at] TitanMusicDev [dot] io](estmercyclan@gmail.com)
 
