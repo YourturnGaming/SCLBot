@@ -246,7 +246,7 @@
     var botCreatorIDs = ['3669054', '20168147'];
 
     var TMBot = {
-        version: '2.12.5',
+        version: '2.12.6',
         status: false,
         name: 'TMBot',
         loggedInID: null,
@@ -2438,15 +2438,15 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(subChat(basicBot.chat.forceskip, {
+                        API.sendChat(subChat(TMBot.chat.forceskip, {
                             name: chat.un
                         }));
                         API.moderateForceSkip();
-                        basicBot.room.skippable = false;
+                        TMBot.room.skippable = false;
                         setTimeout(function() {
-                            basicBot.room.skippable = true
+                            TMBot.room.skippable = true
                         }, 5 * 1000);
                     }
                 }
@@ -2458,7 +2458,7 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var name;
@@ -2466,13 +2466,13 @@
                         else {
                             name = msg.substr(cmd.length + 2);
                         }
-                        var user = basicBot.userUtilities.lookupUserName(name);
+                        var user = TMBot.userUtilities.lookupUserName(name);
                         if (user === false || !user.inRoom) {
-                            return API.sendChat(subChat(basicBot.chat.ghosting, {
+                            return API.sendChat(subChat(TMBot.chat.ghosting, {
                                 name1: chat.un,
                                 name2: name
                             }));
-                        } else API.sendChat(subChat(basicBot.chat.notghosting, {
+                        } else API.sendChat(subChat(TMBot.chat.notghosting, {
                             name1: chat.un,
                             name2: name
                         }));
@@ -2486,7 +2486,7 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         if (msg.length !== cmd.length) {
@@ -2510,13 +2510,13 @@
                             var commatag = tag.replace(/ /g, ', ');
                             get_id(api_key, tag, function(id) {
                                 if (typeof id !== 'undefined') {
-                                    API.sendChat(subChat(basicBot.chat.validgiftags, {
+                                    API.sendChat(subChat(TMBot.chat.validgiftags, {
                                         name: chat.un,
                                         id: id,
                                         tags: commatag
                                     }));
                                 } else {
-                                    API.sendChat(subChat(basicBot.chat.invalidgiftags, {
+                                    API.sendChat(subChat(TMBot.chat.invalidgiftags, {
                                         name: chat.un,
                                         tags: commatag
                                     }));
@@ -2539,12 +2539,12 @@
                             var rating = 'pg-13'; // PG 13 gifs
                             get_random_id(api_key, function(id) {
                                 if (typeof id !== 'undefined') {
-                                    API.sendChat(subChat(basicBot.chat.validgifrandom, {
+                                    API.sendChat(subChat(TMBot.chat.validgifrandom, {
                                         name: chat.un,
                                         id: id
                                     }));
                                 } else {
-                                    API.sendChat(subChat(basicBot.chat.invalidgifrandom, {
+                                    API.sendChat(subChat(TMBot.chat.invalidgifrandom, {
                                         name: chat.un
                                     }));
                                 }
@@ -2560,10 +2560,10 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var link = '(Updated link coming soon)';
-                        API.sendChat(subChat(basicBot.chat.starterhelp, {
+                        API.sendChat(subChat(TMBot.chat.starterhelp, {
                             link: link
                         }));
                     }
@@ -2576,19 +2576,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (basicBot.settings.historySkip) {
-                            basicBot.settings.historySkip = !basicBot.settings.historySkip;
-                            API.sendChat(subChat(basicBot.chat.toggleoff, {
+                        if (TMBot.settings.historySkip) {
+                            TMBot.settings.historySkip = !TMBot.settings.historySkip;
+                            API.sendChat(subChat(TMBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': basicBot.chat.historyskip
+                                'function': TMBot.chat.historyskip
                             }));
                         } else {
-                            basicBot.settings.historySkip = !basicBot.settings.historySkip;
-                            API.sendChat(subChat(basicBot.chat.toggleon, {
+                            TMBot.settings.historySkip = !TMBot.settings.historySkip;
+                            API.sendChat(subChat(TMBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': basicBot.chat.historyskip
+                                'function': TMBot.chat.historyskip
                             }));
                         }
                     }
@@ -2601,11 +2601,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (basicBot.room.roulette.rouletteStatus && basicBot.room.roulette.participants.indexOf(chat.uid) < 0) {
-                            basicBot.room.roulette.participants.push(chat.uid);
-                            API.sendChat(subChat(basicBot.chat.roulettejoin, {
+                        if (TMBot.room.roulette.rouletteStatus && TMBot.room.roulette.participants.indexOf(chat.uid) < 0) {
+                            TMBot.room.roulette.participants.push(chat.uid);
+                            API.sendChat(subChat(TMBot.chat.roulettejoin, {
                                 name: chat.un
                             }));
                         }
