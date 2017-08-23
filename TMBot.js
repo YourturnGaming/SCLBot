@@ -2000,13 +2000,13 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var currentchat = $('#chat-messages').children();
                         for (var i = 0; i < currentchat.length; i++) {
                             API.moderateDeleteChat(currentchat[i].getAttribute('data-cid'));
                         }
-                        return API.sendChat(subChat(basicBot.chat.chatcleared, {
+                        return API.sendChat(subChat(TMBot.chat.chatcleared, {
                             name: chat.un
                         }));
                     }
@@ -2019,7 +2019,7 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         localStorage.clear();
                         API.chatLog('Cleared localstorage, please refresh the page!');
@@ -2033,19 +2033,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (basicBot.settings.cmdDeletion) {
-                            basicBot.settings.cmdDeletion = !basicBot.settings.cmdDeletion;
-                            API.sendChat(subChat(basicBot.chat.toggleoff, {
+                        if (TMBot.settings.cmdDeletion) {
+                            TMBot.settings.cmdDeletion = !TMBot.settings.cmdDeletion;
+                            API.sendChat(subChat(TMBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': basicBot.chat.cmddeletion
+                                'function': TMBot.chat.cmddeletion
                             }));
                         } else {
-                            basicBot.settings.cmdDeletion = !basicBot.settings.cmdDeletion;
-                            API.sendChat(subChat(basicBot.chat.toggleon, {
+                            TMBot.settings.cmdDeletion = !TMBot.settings.cmdDeletion;
+                            API.sendChat(subChat(TMBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': basicBot.chat.cmddeletion
+                                'function': TMBot.chat.cmddeletion
                             }));
                         }
                     }
@@ -2058,11 +2058,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(subChat(basicBot.chat.commandslink, {
-                            botname: basicBot.settings.botName,
-                            link: basicBot.cmdLink
+                        API.sendChat(subChat(TMBot.chat.commandslink, {
+                            botname: TMBot.settings.botName,
+                            link: TMBot.cmdLink
                         }));
                     }
                 }
@@ -2073,32 +2073,32 @@
                 rank: 'user',
                 type: 'startsWith',
                 getCookie: function(chat) {
-                    var c = Math.floor(Math.random() * basicBot.chat.cookies.length);
-                    return basicBot.chat.cookies[c];
+                    var c = Math.floor(Math.random() * TMBot.chat.cookies.length);
+                    return TMBot.chat.cookies[c];
                 },
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
 
                         var space = msg.indexOf(' ');
                         if (space === -1) {
-                            API.sendChat(basicBot.chat.eatcookie);
+                            API.sendChat(TMBot.chat.eatcookie);
                             return false;
                         } else {
                             var name = msg.substring(space + 2);
-                            var user = basicBot.userUtilities.lookupUserName(name);
+                            var user = TMBot.userUtilities.lookupUserName(name);
                             if (user === false || !user.inRoom) {
-                                return API.sendChat(subChat(basicBot.chat.nousercookie, {
+                                return API.sendChat(subChat(TMBot.chat.nousercookie, {
                                     name: name
                                 }));
                             } else if (user.username === chat.un) {
-                                return API.sendChat(subChat(basicBot.chat.selfcookie, {
+                                return API.sendChat(subChat(TMBot.chat.selfcookie, {
                                     name: name
                                 }));
                             } else {
-                                return API.sendChat(subChat(basicBot.chat.cookie, {
+                                return API.sendChat(subChat(TMBot.chat.cookie, {
                                     nameto: user.username,
                                     namefrom: chat.un,
                                     cookie: this.getCookie()
