@@ -2115,9 +2115,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        basicBot.roomUtilities.changeDJCycle();
+                        TMBot.roomUtilities.changeDJCycle();
                     }
                 }
             },
@@ -2128,19 +2128,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (basicBot.settings.cycleGuard) {
-                            basicBot.settings.cycleGuard = !basicBot.settings.cycleGuard;
-                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
+                        if (TMBot.settings.cycleGuard) {
+                            TMBot.settings.cycleGuard = !TMBot.settings.cycleGuard;
+                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': basicBot.chat.cycleguard
+                                'function': TMBot.chat.cycleguard
                             }));
                         } else {
-                            basicBot.settings.cycleGuard = !basicBot.settings.cycleGuard;
-                            return API.sendChat(subChat(basicBot.chat.toggleon, {
+                            TMBot.settings.cycleGuard = !TMBot.settings.cycleGuard;
+                            return API.sendChat(subChat(TMBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': basicBot.chat.cycleguard
+                                'function': TMBot.chat.cycleguard
                             }));
                         }
 
@@ -2154,17 +2154,17 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var cycleTime = msg.substring(cmd.length + 1);
                         if (!isNaN(cycleTime) && cycleTime !== '') {
-                            basicBot.settings.maximumCycletime = cycleTime;
-                            return API.sendChat(subChat(basicBot.chat.cycleguardtime, {
+                            TMBot.settings.maximumCycletime = cycleTime;
+                            return API.sendChat(subChat(TMBot.chat.cycleguardtime, {
                                 name: chat.un,
-                                time: basicBot.settings.maximumCycletime
+                                time: TMBot.settings.maximumCycletime
                             }));
-                        } else return API.sendChat(subChat(basicBot.chat.invalidtime, {
+                        } else return API.sendChat(subChat(TMBot.chat.invalidtime, {
                             name: chat.un
                         }));
 
@@ -2178,23 +2178,23 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var name;
                         if (msg.length === cmd.length) name = chat.un;
                         else {
                             name = msg.substring(cmd.length + 2);
-                            var perm = basicBot.userUtilities.getPermission(chat.uid);
-                            if (perm < 2) return API.sendChat(subChat(basicBot.chat.dclookuprank, {
+                            var perm = TMBot.userUtilities.getPermission(chat.uid);
+                            if (perm < 2) return API.sendChat(subChat(TMBot.chat.dclookuprank, {
                                 name: chat.un
                             }));
                         }
-                        var user = basicBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
+                        var user = TMBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        var toChat = basicBot.userUtilities.dclookup(user.id);
+                        var toChat = TMBot.userUtilities.dclookup(user.id);
                         API.sendChat(toChat);
                     }
                 }
@@ -2208,13 +2208,13 @@
                 type: 'startsWith',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void (0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {name: chat.un}));
+                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {name: chat.un}));
                         var name = msg.substring(cmd.length + 2);
-                        var user = basicBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {name: chat.un}));
+                        var user = TMBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {name: chat.un}));
                         var chats = $('.from');
                         var message = $('.message');
                         var emote = $('.emote');
@@ -2241,7 +2241,7 @@
                                 }
                             }
                         }
-                        API.sendChat(subChat(basicBot.chat.deletechat, {name: chat.un, username: name}));
+                        API.sendChat(subChat(TMBot.chat.deletechat, {name: chat.un, username: name}));
                     }
                 }
             },
@@ -2253,24 +2253,24 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = basicBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
+                        var user = TMBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        for (var i = 1; i < basicBot.room.chatMessages.length; i++) {
-                            if (basicBot.room.chatMessages[i].indexOf(user.id) > -1) {
-                                API.moderateDeleteChat(basicBot.room.chatMessages[i][0]);
-                                basicBot.room.chatMessages[i].splice(0);
+                        for (var i = 1; i < TMBot.room.chatMessages.length; i++) {
+                            if (TMBot.room.chatMessages[i].indexOf(user.id) > -1) {
+                                API.moderateDeleteChat(TMBot.room.chatMessages[i][0]);
+                                TMBot.room.chatMessages[i].splice(0);
                             }
                         }
-                        API.sendChat(subChat(basicBot.chat.deletechat, {
+                        API.sendChat(subChat(TMBot.chat.deletechat, {
                             name: chat.un,
                             username: name
                         }));
@@ -2284,10 +2284,10 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var link = 'http://www.emoji-cheat-sheet.com/';
-                        API.sendChat(subChat(basicBot.chat.emojilist, {
+                        API.sendChat(subChat(TMBot.chat.emojilist, {
                             link: link
                         }));
                     }
@@ -2300,13 +2300,13 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         if (chat.message.length === cmd.length) return API.sendChat('/me No user specified.');
                         var name = chat.message.substring(cmd.length + 2);
-                        var user = basicBot.userUtilities.lookupUserName(name);
+                        var user = TMBot.userUtilities.lookupUserName(name);
                         if (typeof user === 'boolean') return API.sendChat('/me Invalid user specified.');
-                        var lang = basicBot.userUtilities.getUser(user).language;
+                        var lang = TMBot.userUtilities.getUser(user).language;
                         var ch = '/me @' + name + ' ';
                         switch (lang) {
                             case 'en':
@@ -2354,9 +2354,9 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        var perm = basicBot.userUtilities.getPermission(chat.uid);
+                        var perm = TMBot.userUtilities.getPermission(chat.uid);
                         var msg = chat.message;
                         var dj = API.getDJ().username;
                         var name;
@@ -2364,25 +2364,25 @@
                             if (perm < 2) return void(0);
                             name = msg.substring(cmd.length + 2);
                         } else name = chat.un;
-                        var user = basicBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
+                        var user = TMBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
                         var pos = API.getWaitListPosition(user.id);
                         var realpos = pos + 1;
-                        if (name == dj) return API.sendChat(subChat(basicBot.chat.youaredj, {
+                        if (name == dj) return API.sendChat(subChat(TMBot.chat.youaredj, {
                             name: name
                         }));
-                        if (pos < 0) return API.sendChat(subChat(basicBot.chat.notinwaitlist, {
+                        if (pos < 0) return API.sendChat(subChat(TMBot.chat.notinwaitlist, {
                             name: name
                         }));
-                        if (pos == 0) return API.sendChat(subChat(basicBot.chat.youarenext, {
+                        if (pos == 0) return API.sendChat(subChat(TMBot.chat.youarenext, {
                             name: name
                         }));
                         var timeRemaining = API.getTimeRemaining();
                         var estimateMS = ((pos + 1) * 4 * 60 + timeRemaining) * 1000;
-                        var estimateString = basicBot.roomUtilities.msToStr(estimateMS);
-                        API.sendChat(subChat(basicBot.chat.eta, {
+                        var estimateString = TMBot.roomUtilities.msToStr(estimateMS);
+                        API.sendChat(subChat(TMBot.chat.eta, {
                             name: name,
                             time: estimateString,
                             position: realpos
@@ -2397,11 +2397,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof basicBot.settings.fbLink === 'string')
-                            API.sendChat(subChat(basicBot.chat.facebook, {
-                                link: basicBot.settings.fbLink
+                        if (typeof TMBot.settings.fbLink === 'string')
+                            API.sendChat(subChat(TMBot.chat.facebook, {
+                                link: TMBot.settings.fbLink
                             }));
                     }
                 }
@@ -2413,19 +2413,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (basicBot.settings.filterChat) {
-                            basicBot.settings.filterChat = !basicBot.settings.filterChat;
-                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
+                        if (TMBot.settings.filterChat) {
+                            TMBot.settings.filterChat = !TMBot.settings.filterChat;
+                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': basicBot.chat.chatfilter
+                                'function': TMBot.chat.chatfilter
                             }));
                         } else {
-                            basicBot.settings.filterChat = !basicBot.settings.filterChat;
-                            return API.sendChat(subChat(basicBot.chat.toggleon, {
+                            TMBot.settings.filterChat = !TMBot.settings.filterChat;
+                            return API.sendChat(subChat(TMBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': basicBot.chat.chatfilter
+                                'function': TMBot.chat.chatfilter
                             }));
                         }
                     }
