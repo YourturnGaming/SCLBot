@@ -246,7 +246,7 @@
     var botCreatorIDs = ['3669054', '20168147'];
 
     var TMBot = {
-        version: '2.12.7',
+        version: '2.12.8.1',
         status: false,
         name: 'TMBot',
         loggedInID: null,
@@ -3500,65 +3500,65 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var from = chat.un;
                         var msg = '[@' + from + '] ';
 
-                        msg += basicBot.chat.afkremoval + ': ';
-                        if (basicBot.settings.afkRemoval) msg += 'ON';
+                        msg += TMBot.chat.afkremoval + ': ';
+                        if (TMBot.settings.afkRemoval) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
-                        msg += basicBot.chat.afksremoved + ': ' + basicBot.room.afkList.length + '. ';
-                        msg += basicBot.chat.afklimit + ': ' + basicBot.settings.maximumAfk + '. ';
+                        msg += TMBot.chat.afksremoved + ': ' + TMBot.room.afkList.length + '. ';
+                        msg += TMBot.chat.afklimit + ': ' + TMBot.settings.maximumAfk + '. ';
 
                         msg += 'Bouncer+: ';
-                        if (basicBot.settings.bouncerPlus) msg += 'ON';
+                        if (TMBot.settings.bouncerPlus) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += basicBot.chat.blacklist + ': ';
-                        if (basicBot.settings.blacklistEnabled) msg += 'ON';
+                        msg += TMBot.chat.blacklist + ': ';
+                        if (TMBot.settings.blacklistEnabled) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += basicBot.chat.lockguard + ': ';
-                        if (basicBot.settings.lockGuard) msg += 'ON';
+                        msg += TMBot.chat.lockguard + ': ';
+                        if (TMBot.settings.lockGuard) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += basicBot.chat.cycleguard + ': ';
-                        if (basicBot.settings.cycleGuard) msg += 'ON';
+                        msg += TMBot.chat.cycleguard + ': ';
+                        if (TMBot.settings.cycleGuard) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += basicBot.chat.timeguard + ': ';
-                        if (basicBot.settings.timeGuard) msg += 'ON';
+                        msg += TMBot.chat.timeguard + ': ';
+                        if (TMBot.settings.timeGuard) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += basicBot.chat.chatfilter + ': ';
-                        if (basicBot.settings.filterChat) msg += 'ON';
+                        msg += TMBot.chat.chatfilter + ': ';
+                        if (TMBot.settings.filterChat) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += basicBot.chat.historyskip + ': ';
-                        if (basicBot.settings.historySkip) msg += 'ON';
+                        msg += TMBot.chat.historyskip + ': ';
+                        if (TMBot.settings.historySkip) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += basicBot.chat.voteskip + ': ';
-                        if (basicBot.settings.voteSkip) msg += 'ON';
+                        msg += TMBot.chat.voteskip + ': ';
+                        if (TMBot.settings.voteSkip) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += basicBot.chat.cmddeletion + ': ';
-                        if (basicBot.settings.cmdDeletion) msg += 'ON';
+                        msg += TMBot.chat.cmddeletion + ': ';
+                        if (TMBot.settings.cmdDeletion) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += basicBot.chat.autoskip + ': ';
-                        if (basicBot.settings.autoskip) msg += 'ON';
+                        msg += TMBot.chat.autoskip + ': ';
+                        if (TMBot.settings.autoskip) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
@@ -3610,52 +3610,52 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var firstSpace = msg.indexOf(' ');
                         var lastSpace = msg.lastIndexOf(' ');
                         var name1 = msg.split('@')[1].trim();
                         var name2 = msg.split('@')[2].trim();
-                        var user1 = basicBot.userUtilities.lookupUserName(name1);
-                        var user2 = basicBot.userUtilities.lookupUserName(name2);
-                        if (typeof user1 === 'boolean' || typeof user2 === 'boolean') return API.sendChat(subChat(basicBot.chat.swapinvalid, {
+                        var user1 = TMBot.userUtilities.lookupUserName(name1);
+                        var user2 = TMBot.userUtilities.lookupUserName(name2);
+                        if (typeof user1 === 'boolean' || typeof user2 === 'boolean') return API.sendChat(subChat(TMBot.chat.swapinvalid, {
                             name: chat.un
                         }));
-                        if (user1.id === basicBot.loggedInID || user2.id === basicBot.loggedInID) return API.sendChat(subChat(basicBot.chat.addbottowaitlist, {
+                        if (user1.id === TMBot.loggedInID || user2.id === TMBot.loggedInID) return API.sendChat(subChat(TMBot.chat.addbottowaitlist, {
                             name: chat.un
                         }));
                         var p1 = API.getWaitListPosition(user1.id) + 1;
                         var p2 = API.getWaitListPosition(user2.id) + 1;
-                        if (p1 < 0 && p2 < 0) return API.sendChat(subChat(basicBot.chat.swapwlonly, {
+                        if (p1 < 0 && p2 < 0) return API.sendChat(subChat(TMBot.chat.swapwlonly, {
                             name: chat.un
                         }));
-                        API.sendChat(subChat(basicBot.chat.swapping, {
+                        API.sendChat(subChat(TMBot.chat.swapping, {
                             'name1': name1,
                             'name2': name2
                         }));
                         if (p1 === -1) {
                             API.moderateRemoveDJ(user2.id);
                             setTimeout(function(user1, p2) {
-                                basicBot.userUtilities.moveUser(user1.id, p2, true);
+                                TMBot.userUtilities.moveUser(user1.id, p2, true);
                             }, 2000, user1, p2);
                         } else if (p2 === -1) {
                             API.moderateRemoveDJ(user1.id);
                             setTimeout(function(user2, p1) {
-                                basicBot.userUtilities.moveUser(user2.id, p1, true);
+                                TMBot.userUtilities.moveUser(user2.id, p1, true);
                             }, 2000, user2, p1);
                         } else if (p1 < p2) {
-                            basicBot.userUtilities.moveUser(user2.id, p1, false);
+                            TMBot.userUtilities.moveUser(user2.id, p1, false);
                             setTimeout(function(user1, p2) {
-                                basicBot.userUtilities.moveUser(user1.id, p2, false);
+                                TMBot.userUtilities.moveUser(user1.id, p2, false);
                             }, 2000, user1, p2);
                         } else {
-                            basicBot.userUtilities.moveUser(user1.id, p2, false);
+                            TMBot.userUtilities.moveUser(user1.id, p2, false);
                             setTimeout(function(user2, p1) {
-                                basicBot.userUtilities.moveUser(user2.id, p1, false);
+                                TMBot.userUtilities.moveUser(user2.id, p1, false);
                             }, 2000, user2, p1);
                         }
                     }
