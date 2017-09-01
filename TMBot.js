@@ -246,12 +246,12 @@
     var botCreatorIDs = ['3669054', '20168147'];
 
     var TMBot = {
-        version: '2.12.8.8',
+        version: '2.12.8.9',
         status: false,
         name: 'TMBot',
         loggedInID: null,
         scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
-        cmdLink: 'https://goo.gl/SpGpmi',
+        cmdLink: 'https://goo.gl/U282vG',
         chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/lang',
         chat: null,
         loadChat: loadChat,
