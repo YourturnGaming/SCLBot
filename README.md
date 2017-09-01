@@ -17,7 +17,7 @@ If this does not work, go to https://raw.githubusercontent.com/TitanMusicDev/tit
 
 Commands
 --------
-These can be found in [the commands file](commands.md).
+These can be found in [the commands file](https://github.com/TitanMusicDev/titanmusic/blob/master/commands.md).
 
 
 Blacklists
