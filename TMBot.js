@@ -246,7 +246,7 @@
     var botCreatorIDs = ['3669054', '20168147'];
 
     var TMBot = {
-        version: '2.12.8.9',
+        version: '2.12.9.0',
         status: false,
         name: 'TMBot',
         loggedInID: null,
