@@ -251,7 +251,7 @@
         name: 'TMBot',
         loggedInID: null,
         scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
-        cmdLink: 'https://goo.gl/3aZPKf',
+        cmdLink: 'https://github.com/TitanMusicDev/titanmusic/blob/master/commands.md',
         chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/lang',
         chat: null,
         loadChat: loadChat,
