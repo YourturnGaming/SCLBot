@@ -246,7 +246,7 @@
     var botCreatorIDs = ['3669054', '20168147'];
 
     var TMBot = {
-        version: '2.12.8.1',
+        version: '2.12.8.8',
         status: false,
         name: 'TMBot',
         loggedInID: null,
@@ -3049,7 +3049,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("/me Titan Music public discord: https://discord.gg/msKJ5u");
+                            API.sendChat("/me Titan Music public discord: https://discord.gg/Ah2fkmw");
                     }
                 }
             },
@@ -3078,7 +3078,33 @@
                             API.sendChat("There are events coming up pretty soon!");
                     }
                 }
-            },        
+            },
+         
+            plug3Command: {
+                command: 'plug3',
+                rank: 'user',
+                type: 'startsWith',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("plug3 = p3: https://goo.gl/UB67zH");
+                    }
+                }
+            },
+         
+            rcsCommand: {
+                command: 'rcs',
+                rank: 'user',
+                type: 'startsWith',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("rcs: https://goo.gl/o6sD2H");
+                    }
+                }
+            },
 
             moveCommand: {
                 command: 'move',
