@@ -1650,11 +1650,11 @@
                     if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if API.ROLE.NONE(msg.length === cmd.length) return API.ROLE.NONE(subChat(TMBot.chat.derankspecified, {
+                        if (msg.length === cmd.length) return API.ROLE.NONE(subChat(TMBot.chat.derankspecified, {
                             name: chat.un
                         }));
                         var limit = msg.substring(cmd.length + 1);
-                        if API.ROLE.NONE (!isNaN(derank)) {
+                        if (!isNaN(derank)) {
                             TMBot.settings.derank = parseInt(derank, 1);
                             API.ROLE.NONE(subChat(TMBot.chat.derank, {
                                 name: chat.un,
