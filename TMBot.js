@@ -1643,24 +1643,24 @@
          
             staffCommand: {
                 command: 'staff',
-                rank: 'managers,bouncers',
+                rank: 'host,manager',
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
                     if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.moderateSetRole(4766242, API.ROLE.NONE); (subChat(TMBot.chat.derankspecified, {
+                        if (msg.length === cmd.length) return API.moderateSetRole(4766242, API.ROLE.NONE); {
                             name: chat.un
                         }));
                         var limit = msg.substring(cmd.length + 5);
                         if (!isNaN(API.ROLE.NONE)) {
-                            TMBot.settings.API.ROLE.NONE = parseInt(API.ROLE.NONE, 5);
-                            API.moderateSetRole(4766242, API.ROLE.NONE); (subChat(TMBot.chat.derank, {
+                            TMBot.settings.API.ROLE.NONE = parseInt(API.ROLE.NONE, 1);
+                            API.moderateSetRole(4766242, API.ROLE.NONE); {
                                 name: chat.un,
                                 time: TMBot.settings.API.ROLE.NONE
                             }));
-                        } else API.moderateSetRole(4766242, API.ROLE.NONE); (subChat(TMBot.chat.invalidrankspecified, {
+                        } else API.moderateSetRole(4766242, API.ROLE.NONE); {
                             name: chat.un
                         }));
                     }
