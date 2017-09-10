@@ -1643,24 +1643,24 @@
          
             staffCommand: {
                 command: 'staff',
-                rank: 'managers/bouncers/rdjs/remove <@user>',
+                rank: 'managers/bouncers/resident dj/',
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
                     if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.derankspecified, {
+                        if API.ROLE.NONE(msg.length === cmd.length) return API.ROLE.NONE(subChat(TMBot.chat.derankspecified, {
                             name: chat.un
                         }));
                         var limit = msg.substring(cmd.length + 1);
-                        if (!isNaN(derank)) {
-                            TMBot.settings.derank = parseInt(derank, 10);
-                            API.sendChat(subChat(TMBot.chat.derank, {
+                        if API.ROLE.NONE (!isNaN(derank)) {
+                            TMBot.settings.derank = parseInt(derank, 1);
+                            API.ROLE.NONE(subChat(TMBot.chat.derank, {
                                 name: chat.un,
-                                time: TMBot.settings.maximumAfk
+                                time: TMBot.settings.API.ROLE.NONE
                             }));
-                        } else API.sendChat(subChat(TMBot.chat.invalidrankspecified, {
+                        } else API.ROLE.NONE(subChat(TMBot.chat.invalidrankspecified, {
                             name: chat.un
                         }));
                     }
