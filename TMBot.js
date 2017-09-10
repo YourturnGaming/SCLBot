@@ -1640,6 +1640,32 @@
                     }
                 }
             },
+         
+            rankCommand: {
+                command: 'rank',
+                rank: 'host/co-host',
+                type: 'startsWith',
+                functionality: function(chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    else {
+                        var msg = chat.message;
+                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.derankspecified, {
+                            name: chat.un
+                        }));
+                        var limit = msg.substring(cmd.length + 1);
+                        if someone laeve then remove he derank (!isNaN(derank)) {
+                            TMBot.settings.derank = parseInt(limit, 10);
+                            API.sendChat(subChat(TMBot.chat.derank, {
+                                name: chat.un,
+                                time: TMBot.settings.maximumAfk
+                            }));
+                        } else API.sendChat(subChat(TMBot.chat.invalidrankspecified, {
+                            name: chat.un
+                        }));
+                    }
+                }
+            },
 
             afkremovalCommand: {
                 command: 'afkremoval',
