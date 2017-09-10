@@ -1641,9 +1641,9 @@
                 }
             },
          
-            rankCommand: {
-                command: 'rank',
-                rank: 'host/co-host',
+            staffCommand: {
+                command: 'staff',
+                rank: 'managers/bouncers/rdjs/remove <@user>',
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
@@ -1655,7 +1655,7 @@
                         }));
                         var limit = msg.substring(cmd.length + 1);
                         if (!isNaN(derank)) {
-                            TMBot.settings.derank = parseInt(limit, 10);
+                            TMBot.settings.derank = parseInt(derank, 10);
                             API.sendChat(subChat(TMBot.chat.derank, {
                                 name: chat.un,
                                 time: TMBot.settings.maximumAfk
