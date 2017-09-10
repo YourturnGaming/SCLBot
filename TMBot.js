@@ -241,12 +241,14 @@
         return str;
     };
 
-    var botCreator = 'MsiGaming | Developer';
+    var botCreator = 'xUndisputed';
     var botMaintainer = 'TitanMusicDev'
     var botCreatorIDs = ['3669054', '20168147'];
-
+    var resdjs = ['',''];
+    var bouncers = ['',''];
+    var managers = ['',''];
     var TMBot = {
-        version: '2.12.9.0',
+        version: '2.12.9.3',
         status: false,
         name: 'TMBot',
         loggedInID: null,
@@ -918,6 +920,13 @@
                             name: user.username
                         }));
                     }, 1 * 1000, user);
+                    if (resdjs.indexOf(API.getUser(user.id))) {
+                API.moderateSetRole(user.id, 1);
+            } else if (bouncers.indexOf(API.getUser(user.id))) {
+                API.moderateSetRole(user.id, 2);
+            } else if (managers.indexOf(API.getUser(user.id))) {
+                API.moderateSetRole(user.id, 3);
+            }
             }
         },
         eventUserleave: function(user) {
@@ -931,6 +940,9 @@
                         TMBot.userUtilities.updatePosition(user, 0);
                         user.lastDC.time = null;
                         user.lastDC.position = user.lastKnownPosition;
+                         if (API.getUser(user.id).role > 0){
+                            API.moderateSetRole(user.id, API.ROLE.NONE);
+                        }
                     }
                 }
             }
