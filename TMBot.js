@@ -1654,7 +1654,7 @@
                             name: chat.un
                         }));
                         var limit = msg.substring(cmd.length + 1);
-                        if someone laeve then remove he derank (!isNaN(derank)) {
+                        if (!isNaN(derank)) {
                             TMBot.settings.derank = parseInt(limit, 10);
                             API.sendChat(subChat(TMBot.chat.derank, {
                                 name: chat.un,
