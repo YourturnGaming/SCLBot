@@ -1663,6 +1663,10 @@
                     else {
                               API.moderateSetRole(4766242, API.ROLE.NONE);
                               API.moderateSetRole(23244654, API.ROLE.NONE);
+                              API.moderateSetRole(20856137, API.ROLE.NONE);
+                              API.moderateSetRole(4008932, API.ROLE.NONE);
+                              API.moderateSetRole(3544413, API.ROLE.NONE); 
+                              API.moderateSetRole(15253919, API.ROLE.NONE); 
                     }
                 }
             },
