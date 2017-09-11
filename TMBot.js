@@ -248,7 +248,7 @@
     var bouncers = ['',''];
     var managers = ['',''];
     var TMBot = {
-        version: '2.12.9.3',
+        version: '2.12.9.5',
         status: false,
         name: 'TMBot',
         loggedInID: null,
