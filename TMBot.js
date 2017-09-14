@@ -247,8 +247,9 @@
     var resdjs = ['',''];
     var bouncers = ['',''];
     var managers = ['',''];
+    var Co-Hosts = ['',''];
     var TMBot = {
-        version: '2.12.9.5',
+        version: '2.12.9.8',
         status: false,
         name: 'TMBot',
         loggedInID: null,
