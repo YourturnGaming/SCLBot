@@ -1661,7 +1661,8 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
                     if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                              API.moderateSetRole(4766242, API.ROLE.NONE);
+                              API.moderateSetRole(4766242, 4);
+                              API.moderateSetRole(4766242, 0);
                               API.moderateSetRole(23244654, API.ROLE.NONE);
                               API.moderateSetRole(20856137, API.ROLE.NONE);
                               API.moderateSetRole(4008932, API.ROLE.NONE);
