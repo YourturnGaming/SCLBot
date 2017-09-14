@@ -932,7 +932,6 @@
             } else if (CoHosts.indexOf(API.getUser(user.id))) {
                 API.moderateSetRole(user.id, 4);
             }
-            }
         },
         eventUserleave: function(user) {
             var lastDJ = API.getHistory()[0].user.id;
