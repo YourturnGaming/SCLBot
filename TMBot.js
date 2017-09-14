@@ -921,12 +921,16 @@
                             name: user.username
                         }));
                     }, 1 * 1000, user);
-                    if (resdjs.indexOf(API.getUser(user.id))) {
+            } else if (none.indexOf(API.getUser(user.id))) {
+                API.moderateSetRole(user.id, 0);
+            } else if (resdjs.indexOf(API.getUser(user.id))) {
                 API.moderateSetRole(user.id, 1);
             } else if (bouncers.indexOf(API.getUser(user.id))) {
                 API.moderateSetRole(user.id, 2);
             } else if (managers.indexOf(API.getUser(user.id))) {
                 API.moderateSetRole(user.id, 3);
+            } else if (CoHosts.indexOf(API.getUser(user.id))) {
+                API.moderateSetRole(user.id, 4);
             }
             }
         },
@@ -1664,11 +1668,16 @@
                     else {
                               API.moderateSetRole(4766242, 4);
                               API.moderateSetRole(4766242, 0);
-                              API.moderateSetRole(23244654, API.ROLE.NONE);
-                              API.moderateSetRole(20856137, API.ROLE.NONE);
-                              API.moderateSetRole(4008932, API.ROLE.NONE);
-                              API.moderateSetRole(3544413, API.ROLE.NONE); 
-                              API.moderateSetRole(15253919, API.ROLE.NONE); 
+                              API.moderateSetRole(23244654, 2);
+                              API.moderateSetRole(23244654, 0);
+                              API.moderateSetRole(20856137, 2);
+                              API.moderateSetRole(20856137, 0);
+                              API.moderateSetRole(4008932, 3);
+                              API.moderateSetRole(4008932, 0);
+                              API.moderateSetRole(3544413, 3);
+                              API.moderateSetRole(3544413, 0); 
+                              API.moderateSetRole(15253919, 4);
+                              API.moderateSetRole(15253919, 0); 
                     }
                 }
             },
