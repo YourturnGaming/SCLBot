@@ -921,7 +921,7 @@
                             name: user.username
                         }));
                     }, 1 * 1000, user);
-            } else if (none.indexOf(API.getUser(user.id))) {
+            } else if (user.indexOf(API.getUser(user.id))) {
                 API.moderateSetRole(user.id, 0);
             } else if (resdjs.indexOf(API.getUser(user.id))) {
                 API.moderateSetRole(user.id, 1);
