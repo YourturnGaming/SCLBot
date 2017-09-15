@@ -1676,7 +1676,11 @@
                               API.moderateSetRole(3544413, 3);
                               API.moderateSetRole(3544413, 0); 
                               API.moderateSetRole(15253919, 4);
-                              API.moderateSetRole(15253919, 0); 
+                              API.moderateSetRole(15253919, 0);
+                              API.moderateSetRole(13776276, 1);
+                              API.moderateSetRole(13776276, 0);
+                              API.moderateSetRole(13776276, API.ROLE.dj);
+                              API.moderateRemoveDJ(13776276)             
                     }
                 }
             },
