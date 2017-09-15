@@ -1665,22 +1665,11 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
                     if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                              API.moderateSetRole(4766242, 4);
-                              API.moderateSetRole(4766242, 0);
-                              API.moderateSetRole(23244654, 2);
-                              API.moderateSetRole(23244654, 0);
-                              API.moderateSetRole(20856137, 2);
-                              API.moderateSetRole(20856137, 0);
-                              API.moderateSetRole(4008932, 3);
-                              API.moderateSetRole(4008932, 0);
-                              API.moderateSetRole(3544413, 3);
-                              API.moderateSetRole(3544413, 0); 
-                              API.moderateSetRole(15253919, 4);
-                              API.moderateSetRole(15253919, 0);
-                              API.moderateSetRole(13776276, 1);
-                              API.moderateRemoveDJ(13776276);             
+                       if (API.getUser(chat.uid) === 23244654) return API.moderateSetRole(23244654, 2);
+                        } else (API.getUser(chat.uid) === 20856137) return API.moderateSetRole(20856137, 2);
                     }
-                }
+            },            
+         
             },
 
             afkremovalCommand: {
