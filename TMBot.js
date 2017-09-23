@@ -1657,19 +1657,14 @@
                 }
             },
         
-            staffCommand: {
-                command: 'staff',
+            staffCommmand: {
+                command:'staff',
                 rank: 'bouncer',
-                type: 'startsWith',
-                functionality: function(chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
-                    else {
-                       if (API.getUser(chat.uid) === 23244654) return API.moderateSetRole(23244654, 2);
-                        } else (API.getUser(chat.uid) === 20856137) return API.moderateSetRole(20856137, 2);
-                    }
-            },            
-         
+                type: 'startwith',
+                functionality: function(chat, cmd){
+                     if (this.type === 'exact' && chat.message.length !== cmd.length || !TMbot.commands.executable(this.rank, chat)) return void(0);
+                    else if (API.getUser(chat.uid) === 23244654 && API.getUser(chat.uid) === 20856137) return API.moderateSetRole(API.getUser(chat.uid) , 2);
+                }
             },
 
             afkremovalCommand: {
