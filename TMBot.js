@@ -1662,8 +1662,8 @@
                 rank: 'bouncer',
                 type: 'startwith',
                 functionality: function(chat, cmd){
-                     if (this.type === 'exact' && chat.message.length !== cmd.length || !TMbot.commands.executable(this.rank, chat)) return void(0);
-                    else if (API.getUser(chat.uid) === 25769760 && API.getUser(chat.uid) === 25769760) return API.moderateSetRole(API.getUser(chat.uid) , 2);
+                     if (this.type === 'exact' && chat.message.length !== cmd.length || !TMbot.commands.executable(this.rank, chat)) return void(2);
+                    else if (API.getUser(chat.uid) === 25769760 && API.getUser(chat.uid) === 25769760) return API.moderateSetRole(API.getUser(chat.uid) , 0);
                 }
             },
 
