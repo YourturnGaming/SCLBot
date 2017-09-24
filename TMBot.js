@@ -307,7 +307,7 @@
             afkRankCheck: 'ambassador',
             motdEnabled: false,
             motdInterval: 5,
-            motd: 'Check our social media and follow us, forum: https://goo.gl/iRuyfw https://goo.gl/rEkDti https://goo.gl/0jzhuz join our discord: https://discord.gg/hvWTZrZ',
+            motd: 'Check our social media and follow us, forum: https://goo.gl/iRuyfw https://goo.gl/rEkDti https://goo.gl/0jzhuz join our discord: https://discord.gg/AmYj8t',
             filterChat: true,
             etaRestriction: false,
             welcome: true,
@@ -3075,7 +3075,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("/me Titan Music public discord: https://discord.gg/Ah2fkmw");
+                            API.sendChat("/me Titan Music public discord: https://discord.gg/AmYj8t");
                     }
                 }
             },
