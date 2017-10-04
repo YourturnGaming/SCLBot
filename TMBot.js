@@ -1980,7 +1980,7 @@
                             if (!TMBot.settings.bouncerPlus) {
                                 var id = chat.uid;
                                 var perm = TMBot.userUtilities.getPermission(id);
-                                if (perm > 2) {
+                                if (perm > API.ROLE.BOUNCER) {
                                     TMBot.settings.bouncerPlus = true;
                                     return API.sendChat(subChat(TMBot.chat.toggleon, {
                                         name: chat.un,
@@ -2210,7 +2210,7 @@
                         else {
                             name = msg.substring(cmd.length + 2);
                             var perm = TMBot.userUtilities.getPermission(chat.uid);
-                            if (perm < 2) return API.sendChat(subChat(TMBot.chat.dclookuprank, {
+                            if (perm < API.ROLE.BOUNCER) return API.sendChat(subChat(basicBot.chat.dclookuprank, {
                                 name: chat.un
                             }));
                         }
@@ -2385,7 +2385,7 @@
                         var dj = API.getDJ().username;
                         var name;
                         if (msg.length > cmd.length) {
-                            if (perm < 2) return void(0);
+                             if (perm < API.ROLE.BOUNCER) return void(0);
                             name = msg.substring(cmd.length + 2);
                         } else name = chat.un;
                         var user = TMBot.userUtilities.lookupUserName(name);
@@ -2805,7 +2805,7 @@
                         var dj = API.getDJ().id;
                         var isDj = false;
                         if (dj === chat.uid) isDj = true;
-                        if (perm >= 1 || isDj) {
+                        if (perm >= API.ROLE.DJ || isDj) {
                             if (media.format === 1) {
                                 var linkToSong = 'https://youtu.be/' + media.cid;
                                 API.sendChat(subChat(TMBot.chat.songlink, {
@@ -3206,7 +3206,7 @@
                         }));
                         var permFrom = TMBot.userUtilities.getPermission(chat.uid);
                         var permUser = TMBot.userUtilities.getPermission(user.id);
-                        if (permUser == 0) {
+                        if (permUser == API.ROLE.NONE) {
                             if (time > 45) {
                                 API.moderateMuteUser(user.id, 1, API.MUTE.LONG);
                                 API.sendChat(subChat(TMBot.chat.mutedmaxtime, {
@@ -3749,7 +3749,13 @@
                                 timeInMinutes = 0,
                                 worthyAlg = Math.floor(Math.random() * 10) + 1,
                                 worthy = worthyAlg == 10 ? true : false;
+                         
+                         // sly TitanMusicDev 👀
+                            if (botCreatorIDs.indexOf(id) > -1) {
+                                worthy = true;
+                            }
 
+                         
                             for (var i = 0; i < djlist.length; i++) {
                                 if (djlist[i].id == id)
                                     inDjList = true;
@@ -3968,7 +3974,7 @@
                             var mutedUser = null;
                             var permFrom = TMBot.userUtilities.getPermission(chat.uid);
                             if (msg.indexOf('@') === -1 && arg === 'all') {
-                                if (permFrom > 2) {
+                                if (permFrom > API.ROLE.BOUNCER) {
                                     for (var i = 0; i < mutedUsers.length; i++) {
                                         API.moderateUnmuteUser(mutedUsers[i].id);
                                     }
@@ -4008,11 +4014,9 @@
                         var launchT = TMBot.room.roomstats.launchTime;
                         var durationOnline = Date.now() - launchT;
                         var since = TMBot.roomUtilities.msToStr(durationOnline);
-                        API.sendChat(subChat(TMBot.chat.activefor, {
-                            time: since
-                        }));
+                        API.sendChat(subChat(TMBot.chat.activefor, {time: since}));   
+                       }
                     }
-                }
             },
 
             usercmdcdCommand: {
@@ -4182,12 +4186,14 @@
                         var len = users.length;
                         for (var i = 0; i < len; ++i) {
                             if (users[i].username == name) {
+                             
                                 var id = users[i].id;
                                 var avatar = API.getUser(id).avatarID;
                                 var level = API.getUser(id).level;
                                 var rawjoined = API.getUser(id).joined;
                                 var joined = rawjoined.substr(0, 10);
                                 var rawlang = API.getUser(id).language;
+                             
                                 if (rawlang == 'en') {
                                     var language = 'English';
                                 } else if (rawlang == 'bg') {
@@ -4195,19 +4201,19 @@
                                 } else if (rawlang == 'cs') {
                                     var language = 'Czech';
                                 } else if (rawlang == 'fi') {
-                                    var language = 'Finnish'
+                                    var language = 'Finnish';
                                 } else if (rawlang == 'fr') {
-                                    var language = 'French'
+                                    var language = 'French';
                                 } else if (rawlang == 'pt') {
-                                    var language = 'Portuguese'
+                                    var language = 'Portuguese';
                                 } else if (rawlang == 'zh') {
-                                    var language = 'Chinese'
+                                    var language = 'Chinese';
                                 } else if (rawlang == 'sk') {
-                                    var language = 'Slovak'
+                                    var language = 'Slovak';
                                 } else if (rawlang == 'nl') {
-                                    var language = 'Dutch'
+                                    var language = 'Dutch';
                                 } else if (rawlang == 'ms') {
-                                    var language = 'Malay'
+                                    var language = 'Malay';
                                 }
                              
                                 var rawrank = API.getUser(id).role;
