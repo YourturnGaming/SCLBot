@@ -4237,7 +4237,7 @@
                                } else if ([5, 5000].indexOf(rawrank.gRole) > -1) {
                                     var rank = 'Admin';
                                }
-}
+                             
                                 var slug = API.getUser(id).slug;
                                 if (typeof slug !== 'undefined') {
                                     var profile = 'https://plug.dj/@/' + slug;
