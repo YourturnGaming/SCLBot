@@ -242,14 +242,14 @@
     };
 
     var botCreator = 'xUndisputed';
-    var botMaintainer = 'TitanMusicDev'
-    var botCreatorIDs = ['3669054', '20168147'];
+    var botMaintainer = 'TitanMusicDev';
+    var botCreatorIDs = [3669054, 20168147];
     var resdjs = ['',''];
     var bouncers = ['',''];
     var managers = ['',''];
     var CoHosts = ['',''];
     var TMBot = {
-        version: '2.13.0.4',
+        version: '2.14.2.1',
         status: false,
         name: 'TMBot',
         loggedInID: null,
@@ -293,7 +293,7 @@
             usercommandsEnabled: true,
             thorCommand: false,
             thorCooldown: 10,
-            skipPosition: 3,
+            skipPosition: 1,
             skipReasons: [
                 ['theme', 'This song does not fit the room theme. '],
                 ['op', 'This song is on the OP list. '],
@@ -307,7 +307,7 @@
             afkRankCheck: 'ambassador',
             motdEnabled: false,
             motdInterval: 5,
-            motd: 'Check our social media and follow us, forum: https://goo.gl/iRuyfw https://goo.gl/rEkDti https://goo.gl/0jzhuz join our discord: https://discord.gg/AmYj8t',
+            motd: 'Check our social media and follow us, forum: https://goo.gl/iRuyfw https://goo.gl/rEkDti https://goo.gl/0jzhuz',
             filterChat: true,
             etaRestriction: false,
             welcome: true,
@@ -355,6 +355,7 @@
             roomstats: {
                 accountName: null,
                 totalWoots: 0,
+                totalGrabs: 0,
                 totalCurates: 0,
                 totalMehs: 0,
                 launchTime: null,
@@ -481,24 +482,21 @@
                 return votes;
 
             },
-            getPermission: function(obj) { //1 requests
+            getPermission: function(obj) {
                 var u;
                 if (typeof obj === 'object') u = obj;
                 else u = API.getUser(obj);
-                for (var i = 0; i < botCreatorIDs.length; i++) {
-                    if (botCreatorIDs[i].indexOf(u.id) > -1) return 10;
-                }
-                if (u.gRole < 2) return u.role;
+                if (botCreatorIDs.indexOf(u.id) > -1) return 9999;
+
+                if (u.gRole == 0) return u.role;
                 else {
                     switch (u.gRole) {
-                        case 2:
-                            return 7;
                         case 3:
-                            return 8;
-                        case 4:
-                            return 9;
+                        case 3000:
+                            return (1*(API.ROLE.HOST-API.ROLE.COHOST))+API.ROLE.HOST;
                         case 5:
-                            return 10;
+                        case 5000:
+                            return (2*(API.ROLE.HOST-API.ROLE.COHOST))+API.ROLE.HOST;
                     }
                 }
                 return 0;
@@ -1171,7 +1169,7 @@
         },
         chatcleaner: function(chat) {
             if (!TMBot.settings.filterChat) return false;
-            if (TMBot.userUtilities.getPermission(chat.uid) > 1) return false;
+            if (TMBot.userUtilities.getPermission(chat.uid) >= API.ROLE.BOUNCER) return false;
             var msg = chat.message;
             var containsLetters = false;
             for (var i = 0; i < msg.length; i++) {
@@ -1226,7 +1224,7 @@
                     return true;
                 }
                 if (TMBot.settings.lockdownEnabled) {
-                    if (perm === 0) {
+                    if (perm === API.ROLE.NONE) {
                         API.moderateDeleteChat(chat.cid);
                         return true;
                     }
@@ -1241,7 +1239,7 @@
                 /**
                  var plugRoomLinkPatt = /(\bhttps?:\/\/(www.)?plug\.dj[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
                  if (plugRoomLinkPatt.exec(msg)) {
-                    if (perm === 0) {
+                    if (perm === API.ROLE.NONE) {
                         API.sendChat(subChat(TMBot.chat.roomadvertising, {name: chat.un}));
                         API.moderateDeleteChat(chat.cid);
                         return true;
@@ -1290,11 +1288,11 @@
                 var userPerm = TMBot.userUtilities.getPermission(chat.uid);
                 //console.log('name: ' + chat.un + ', perm: ' + userPerm);
                 if (chat.message !== TMBot.settings.commandLiteral + 'join' && chat.message !== TMBot.settings.commandLiteral + 'leave') {
-                    if (userPerm === 0 && !TMBot.room.usercommand) return void(0);
+                    if (userPerm === API.ROLE.NONE && !TMBot.room.usercommand) return void(0);
                     if (!TMBot.room.allcommand) return void(0);
                 }
                 if (chat.message === TMBot.settings.commandLiteral + 'eta' && TMBot.settings.etaRestriction) {
-                    if (userPerm < 2) {
+                    if (userPerm < API.ROLE.BOUNCER) {
                         var u = TMBot.userUtilities.lookupUser(chat.uid);
                         if (u.lastEta !== null && (Date.now() - u.lastEta) < 1 * 60 * 60 * 1000) {
                             API.moderateDeleteChat(chat.cid);
@@ -1318,7 +1316,7 @@
                     }
                 }
 
-                if (executed && userPerm === 0) {
+                if (executed && userPerm === API.ROLE.NONE) {
                     TMBot.room.usercommand = false;
                     setTimeout(function() {
                         TMBot.room.usercommand = true;
@@ -1403,8 +1401,8 @@
         },
         startup: function() {
             var u = API.getUser();
-            if (TMBot.userUtilities.getPermission(u) < 2) return API.chatLog(TMBot.chat.greyuser);
-            if (TMBot.userUtilities.getPermission(u) === 2) API.chatLog(TMBot.chat.bouncer);
+            if (TMBot.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(basicBot.chat.greyuser);
+            if (TMBot.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(basicBot.chat.bouncer);
             TMBot.connectAPI();
             API.moderateDeleteChat = function(cid) {
                 $.ajax({
@@ -1512,35 +1510,35 @@
                 var minPerm;
                 switch (minRank) {
                     case 'admin':
-                        minPerm = 10;
+                        minPerm = (2*(API.ROLE.HOST-API.ROLE.COHOST))+API.ROLE.HOST;
                         break;
                     case 'ambassador':
-                        minPerm = 7;
+                        minPerm = (1*(API.ROLE.HOST-API.ROLE.COHOST))+API.ROLE.HOST;
                         break;
                     case 'host':
-                        minPerm = 5;
+                        minPerm = API.ROLE.HOST;
                         break;
                     case 'cohost':
-                        minPerm = 4;
+                        minPerm = API.ROLE.COHOST;
                         break;
                     case 'manager':
-                        minPerm = 3;
+                        minPerm = API.ROLE.MANAGER;
                         break;
                     case 'mod':
                         if (TMBot.settings.bouncerPlus) {
-                            minPerm = 2;
+                            minPerm = API.ROLE.BOUNCER;
                         } else {
-                            minPerm = 3;
+                            minPerm = API.ROLE.MANAGER;
                         }
                         break;
                     case 'bouncer':
-                        minPerm = 2;
+                        minPerm = API.ROLE.BOUNCER;
                         break;
                     case 'residentdj':
-                        minPerm = 1;
+                        minPerm = API.ROLE.DJ;
                         break;
                     case 'user':
-                        minPerm = 0;
+                        minPerm = API.ROLE.NONE;
                         break;
                     default:
                         API.chatLog('error assigning minimum permission');
@@ -3075,7 +3073,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("/me Titan Music public discord: https://discord.gg/AmYj8t");
+                            API.sendChat("/me Titan Music public discord: https://discord.gg/zq5RnBx");
                     }
                 }
             },
@@ -3114,7 +3112,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("plug3 = p3: https://goo.gl/UB67zH");
+                            API.sendChat("plug3: https://goo.gl/UB67zH");
                     }
                 }
             },
@@ -4211,24 +4209,29 @@
                                 } else if (rawlang == 'ms') {
                                     var language = 'Malay'
                                 }
+                             
                                 var rawrank = API.getUser(id).role;
-                                if (rawrank == '0') {
+                             
+                               if (rawrank.role == API.ROLE.NONE) {
                                     var rank = 'User';
-                                } else if (rawrank == '1') {
+                               } else if (rawrank.role == API.ROLE.DJ) {
                                     var rank = 'Resident DJ';
-                                } else if (rawrank == '2') {
+                               } else if (rawrank.role == API.ROLE.BOUNCER) {
                                     var rank = 'Bouncer';
-                                } else if (rawrank == '3') {
-                                    var rank = 'Manager'
-                                } else if (rawrank == '4') {
-                                    var rank = 'Co-Host'
-                                } else if (rawrank == '5') {
-                                    var rank = 'Host'
-                                } else if (rawrank == '7') {
-                                    var rank = 'Brand Ambassador'
-                                } else if (rawrank == '10') {
-                                    var rank = 'Admin'
-                                }
+                               } else if (rawrank.role == API.ROLE.MANAGER) {
+                                    var rank = 'Manager';
+                               } else if (rawrank.role == API.ROLE.COHOST) {
+                                    var rank = 'Co-Host';
+                               } else if (rawrank.role == API.ROLE.HOST) {
+                                    var rank = 'Host';
+                               }
+                             
+                               if ([3, 3000].indexOf(rawrank.gRole) > -1) {
+                                    var rank = 'Brand Ambassador';
+                               } else if ([5, 5000].indexOf(rawrank.gRole) > -1) {
+                                    var rank = 'Admin';
+                               }
+}
                                 var slug = API.getUser(id).slug;
                                 if (typeof slug !== 'undefined') {
                                     var profile = 'https://plug.dj/@/' + slug;
