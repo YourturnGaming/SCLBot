@@ -243,7 +243,7 @@
 
     var botCreator = 'xUndisputed';
     var botMaintainer = 'TitanMusicDev';
-    var botCreatorIDs = [3669054, 20168147];
+    var botCreatorIDs = ['3669054', '20168147'];
     var resdjs = ['',''];
     var bouncers = ['',''];
     var managers = ['',''];
