@@ -249,7 +249,7 @@
     var managers = ['',''];
     var CoHosts = ['',''];
     var TMBot = {
-        version: '2.14.2.4',
+        version: '2.14.2.6',
         status: false,
         name: 'TMBot',
         loggedInID: null,
@@ -273,9 +273,9 @@
             autoskip: true,
             smartSkip: true,
             cmdDeletion: true,
-            maximumAfk: 120,
+            maximumAfk: 50,
             afkRemoval: true,
-            maximumDc: 60,
+            maximumDc: 50,
             bouncerPlus: true,
             blacklistEnabled: true,
             lockdownEnabled: false,
@@ -283,7 +283,7 @@
             maximumLocktime: 10,
             cycleGuard: true,
             maximumCycletime: 10,
-            voteSkip: false,
+            voteSkip: true,
             voteSkipLimit: 10,
             historySkip: false,
             timeGuard: true,
@@ -305,7 +305,7 @@
             ],
             afkpositionCheck: 15,
             afkRankCheck: 'ambassador',
-            motdEnabled: false,
+            motdEnabled: true,
             motdInterval: 5,
             motd: 'Check our social media and follow us, forum: https://goo.gl/iRuyfw https://goo.gl/rEkDti https://goo.gl/0jzhuz',
             filterChat: true,
@@ -414,7 +414,8 @@
             this.votes = {
                 woot: 0,
                 meh: 0,
-                curate: 0
+                curate: 0,
+                grab: 0
             };
             this.lastEta = null;
             this.afkWarningCount = 0;
