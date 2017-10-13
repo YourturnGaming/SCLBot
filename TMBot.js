@@ -249,7 +249,7 @@
     var managers = ['',''];
     var CoHosts = ['',''];
     var TMBot = {
-        version: '2.14.2.1',
+        version: '2.14.2.4',
         status: false,
         name: 'TMBot',
         loggedInID: null,
@@ -270,7 +270,7 @@
             startupVolume: 0, // 0-100
             startupEmoji: false, // true or false
             autowoot: true,
-            autoskip: false,
+            autoskip: true,
             smartSkip: true,
             cmdDeletion: true,
             maximumAfk: 120,
