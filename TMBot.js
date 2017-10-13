@@ -3130,6 +3130,19 @@
                 }
             },
 
+            guideCommand: {
+                 command: 'guide',
+                 rank: 'user',
+                 type: 'exact',
+                 functionality: function(chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("plug.dj guide: http://i.imgur.com/ZeRR07N.png");
+                    }
+                 }
+            },
+            
             moveCommand: {
                 command: 'move',
                 rank: 'mod',
@@ -4292,20 +4305,7 @@
                 }
             }
         }
-    },
-     
-    guideCommand: {
-       command: 'guide',
-       rank: 'user',
-       type: 'exact',
-       functionality: function(chat, cmd) {
-           if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-           if (!bot.commands.executable(this.rank, chat)) return void (0);
-           else {
-                   API.sendChat("plug.dj guide: http://i.imgur.com/ZeRR07N.png");
-          )
-       )
-    ),   
+    };
 
     loadChat(TMBot.startup);
 }).call(this);
