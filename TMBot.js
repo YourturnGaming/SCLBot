@@ -249,7 +249,7 @@
     var managers = ['',''];
     var CoHosts = ['',''];
     var TMBot = {
-        version: '2.14.2.6',
+        version: '2.14.3.0',
         status: false,
         name: 'TMBot',
         loggedInID: null,
