@@ -97,6 +97,8 @@
 | Command | Arguments | Description |
 |:-------:|:---------:|:-----------:|
 | !rcs | link to rcs script/plugin to use for autowooting. |
+| !event | There are events coming up pretty soon!. |
+| !guide | plug.dj guide!. |
 | !8ball / !ask | (message) | ask the bot a question, the bot will return random variations of a yes or no answer. |
 | !autowoot | — | links to PlugCubed, the advised script/plugin to use for autowooting. |
 | !ba | — | explains the Brand Ambassador rank. |
