@@ -48,8 +48,7 @@
 
 | Command | Arguments | Description |
 |:-------:|:---------:|:-----------:|
-| !stay | — | bot says that enjoy your stay in Titan Music.
-| !event | — | bot says that Soon have coming events.
+| !stay |	— 	bot says that enjoy your stay in Titan Music. |
 | !active | (X) | shows how many users chatted in the past X minutes. If no X specified, 60 is set as default. |
 | !afkreset | @user | resets the AFK time of user. |
 | !afktime | @user | shows how long user has been AFK. |
@@ -97,12 +96,13 @@
 
 | Command | Arguments | Description |
 |:-------:|:---------:|:-----------:|
+| !rcs | link to rcs script/plugin to use for autowooting. |
 | !8ball / !ask | (message) | ask the bot a question, the bot will return random variations of a yes or no answer. |
 | !autowoot | — | links to PlugCubed, the advised script/plugin to use for autowooting. |
 | !ba | — | explains the Brand Ambassador rank. |
 | !commands | — | gives a link to the commands. |
 | !cookie | (@user) | give a cookie to user. |
-| !discord | — | Links an invite for the TitanMusic Discord
+| !discord | 	— 	Links an invite for the TitanMusic Discord |
 | !dclookup / !dc | — | use dclookup on yourself. |
 | !emoji | — | returns a link the emoji list. |
 | !eta | — | shows how long before you will reach the booth. |
@@ -116,7 +116,7 @@
 | !op | — | links to the OverPlayed list (if set in the settings). |
 | !ping | — | returns pong! |
 | !rules | — | links to the rules (if set in the settings). |
-| !source | — | returns a link to the titanmusic repository on GitHub. |
+| !source | — | returns a link to the basicBot repository on GitHub. |
 | !theme | — | links to the room's theme (if set in the settings). |
 | !thor | — | users get moved to position 1 in the waitlist if they're worthy of Thor's hammer. |
 | !website | — | links to the room's website (if set in the settings). |
