@@ -249,7 +249,7 @@
     var managers = ['',''];
     var CoHosts = ['',''];
     var TMBot = {
-        version: '2.14.3.4',
+        version: '2.14.3.7',
         status: false,
         name: 'TMBot',
         loggedInID: null,
@@ -270,12 +270,12 @@
             startupVolume: 0, // 0-100
             startupEmoji: false, // true or false
             autowoot: true,
-            autoskip: true,
+            autoskip: false,
             smartSkip: true,
             cmdDeletion: true,
-            maximumAfk: 50,
+            maximumAfk: 120,
             afkRemoval: true,
-            maximumDc: 50,
+            maximumDc: 60,
             bouncerPlus: true,
             blacklistEnabled: true,
             lockdownEnabled: false,
@@ -283,9 +283,9 @@
             maximumLocktime: 10,
             cycleGuard: true,
             maximumCycletime: 10,
-            voteSkip: true,
+            voteSkip: false,
             voteSkipLimit: 10,
-            historySkip: true,
+            historySkip: false,
             timeGuard: true,
             maximumSongLength: 10,
             autodisable: false,
@@ -293,7 +293,7 @@
             usercommandsEnabled: true,
             thorCommand: false,
             thorCooldown: 10,
-            skipPosition: 1,
+            skipPosition: 3,
             skipReasons: [
                 ['theme', 'This song does not fit the room theme. '],
                 ['op', 'This song is on the OP list. '],
@@ -315,7 +315,7 @@
             rulesLink: null,
             themeLink: null,
             fbLink: 'Our fb page: https://goo.gl/vLoJ4X and fb group: https://goo.gl/Blw9dV',
-            youtubeLink: null,
+            youtubeLink: 'https://www.youtube.com/channel/UCy0RpumtkdJVuseanqnrzsg',
             website: 'Our website is coming',
             intervalMessages: [],
             messageInterval: 5,
@@ -2226,53 +2226,6 @@
                 }
             },
 
-            /*
-            // This does not work anymore.
-            deletechatCommand: {
-                command: 'deletechat',
-                rank: 'mod',
-                type: 'startsWith',
-                functionality: function (chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                        var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {name: chat.un}));
-                        var name = msg.substring(cmd.length + 2);
-                        var user = TMBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {name: chat.un}));
-                        var chats = $('.from');
-                        var message = $('.message');
-                        var emote = $('.emote');
-                        var from = $('.un.clickable');
-                        for (var i = 0; i < chats.length; i++) {
-                            var n = from[i].textContent;
-                            if (name.trim() === n.trim()) {
-
-                                // var messagecid = $(message)[i].getAttribute('data-cid');
-                                // var emotecid = $(emote)[i].getAttribute('data-cid');
-                                // API.moderateDeleteChat(messagecid);
-
-                                // try {
-                                //     API.moderateDeleteChat(messagecid);
-                                // }
-                                // finally {
-                                //     API.moderateDeleteChat(emotecid);
-                                // }
-
-                                if (typeof $(message)[i].getAttribute('data-cid') == 'undefined'){
-                                    API.moderateDeleteChat($(emote)[i].getAttribute('data-cid')); // works well with normal messages but not with emotes due to emotes and messages are seperate.
-                                } else {
-                                    API.moderateDeleteChat($(message)[i].getAttribute('data-cid'));
-                                }
-                            }
-                        }
-                        API.sendChat(subChat(TMBot.chat.deletechat, {name: chat.un, username: name}));
-                    }
-                }
-            },
-            */
-
             deletechatCommand: {
                 command: 'deletechat',
                 rank: 'mod',
@@ -3307,6 +3260,7 @@
                         setTimeout(function() {
                             window.location.reload(false);
                         }, 1000);
+                     
                     }
                 }
             },
@@ -4235,23 +4189,23 @@
                              
                                 var rawrank = API.getUser(id).role;
                              
-                               if (rawrank.role == API.ROLE.NONE) {
+                                if (rawrank.role == API.ROLE.NONE) {
                                     var rank = 'User';
-                               } else if (rawrank.role == API.ROLE.DJ) {
+                                } else if (rawrank.role == API.ROLE.DJ) {
                                     var rank = 'Resident DJ';
-                               } else if (rawrank.role == API.ROLE.BOUNCER) {
+                                } else if (rawrank.role == API.ROLE.BOUNCER) {
                                     var rank = 'Bouncer';
-                               } else if (rawrank.role == API.ROLE.MANAGER) {
+                                } else if (rawrank.role == API.ROLE.MANAGER) {
                                     var rank = 'Manager';
-                               } else if (rawrank.role == API.ROLE.COHOST) {
+                                } else if (rawrank.role == API.ROLE.COHOST) {
                                     var rank = 'Co-Host';
-                               } else if (rawrank.role == API.ROLE.HOST) {
+                                } else if (rawrank.role == API.ROLE.HOST) {
                                     var rank = 'Host';
-                               }
+                                }
                              
-                               if ([3, 3000].indexOf(rawrank.gRole) > -1) {
+                               if (rawrank.gRole == 3000) {
                                     var rank = 'Brand Ambassador';
-                               } else if ([5, 5000].indexOf(rawrank.gRole) > -1) {
+                                } else if (rawrank.gRole == 5000) {
                                     var rank = 'Admin';
                                }
                              
