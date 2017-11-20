@@ -4295,5 +4295,5 @@
         }
     };
 
-    loadChat(basicBot.startup);
+    loadChat(TMBot.startup);
 }).call(this);
