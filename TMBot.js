@@ -1,16 +1,16 @@
 /**
 
-*Copyright 2017 TMBot
- 
-*Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
-*This software is not for profit, any extension, or unauthorised person providing this software is not authorised to be in a position of any monetary gain from this use of this software. Any and all money gained under the use of the software (which includes donations) must be passed on to the original author.
- 
-*/
+ Copyright © 2017 TMBot
+
+ Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
+ This software is not for profit, any extension, or unauthorised person providing this software is not authorised to be in a position of any monetary gain from this use of this software. Any and all money gained under the use of the software (which includes donations) must be passed on to the original author.
+
+ */
 
 (function() {
 
     /*window.onerror = function() {
-        var room = JSON.parse(localStorage.getItem('TMBotRoom'));
+        var room = JSON.parse(localStorage.getItem('basicBotRoom'));
         window.location = 'https://plug.dj' + room.name;
     };*/
 
@@ -26,11 +26,11 @@
         }
         return -1;
     };
- 
+
     var kill = function() {
-        clearInterval(TMBot.room.autodisableInterval);
-        clearInterval(TMBot.room.afkInterval);
-        TMBot.status = false;
+        clearInterval(basicBot.room.autodisableInterval);
+        clearInterval(basicBot.room.afkInterval);
+        basicBot.status = false;
     };
 
     // This socket server is used solely for statistical and troubleshooting purposes.
@@ -66,33 +66,33 @@
     }
 
     var sendToSocket = function() {
-        var TMBotSettings = TMBot.settings;
-        var TMBotRoom = TMBot.room;
-        var TMBotInfo = {
+        var basicBotSettings = basicBot.settings;
+        var basicBotRoom = basicBot.room;
+        var basicBotInfo = {
             time: Date.now(),
-            version: TMBot.version
+            version: basicBot.version
         };
         var data = {
             users: API.getUsers(),
             userinfo: API.getUser(),
             room: location.pathname,
-            TMBotSettings: TMBotSettings,
-            TMBotRoom: TMBotRoom,
-            TMBotInfo: TMBotInfo
+            basicBotSettings: basicBotSettings,
+            basicBotRoom: basicBotRoom,
+            basicBotInfo: basicBotInfo
         };
         return sock.msg(data);
     };
     */
 
     var storeToStorage = function() {
-        localStorage.setItem('TMBotsettings', JSON.stringify(TMBot.settings));
-        localStorage.setItem('TMBotRoom', JSON.stringify(TMBot.room));
-        var TMBotStorageInfo = {
+        localStorage.setItem('basicBotsettings', JSON.stringify(basicBot.settings));
+        localStorage.setItem('basicBotRoom', JSON.stringify(basicBot.room));
+        var basicBotStorageInfo = {
             time: Date.now(),
             stored: true,
-            version: TMBot.version
+            version: basicBot.version
         };
-        localStorage.setItem('TMBotStorageInfo', JSON.stringify(TMBotStorageInfo));
+        localStorage.setItem('basicBotStorageInfo', JSON.stringify(basicBotStorageInfo));
     };
 
     var subChat = function(chat, obj) {
@@ -112,30 +112,30 @@
 
     var loadChat = function(cb) {
         if (!cb) cb = function() {};
-        $.get('https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json', function(json) {
-            var link = TMBot.chatLink;
+        $.get('https://rawgit.com/basicBot/source/master/lang/langIndex.json', function(json) {
+            var link = basicBot.chatLink;
             if (json !== null && typeof json !== 'undefined') {
                 langIndex = json;
-                link = langIndex[TMBot.settings.language.toLowerCase()];
-                if (TMBot.settings.chatLink !== TMBot.chatLink) {
-                    link = TMBot.settings.chatLink;
+                link = langIndex[basicBot.settings.language.toLowerCase()];
+                if (basicBot.settings.chatLink !== basicBot.chatLink) {
+                    link = basicBot.settings.chatLink;
                 } else {
                     if (typeof link === 'undefined') {
-                        link = TMBot.chatLink;
+                        link = basicBot.chatLink;
                     }
                 }
                 $.get(link, function(json) {
                     if (json !== null && typeof json !== 'undefined') {
                         if (typeof json === 'string') json = JSON.parse(json);
-                        TMBot.chat = json;
+                        basicBot.chat = json;
                         cb();
                     }
                 });
             } else {
-                $.get(TMBot.chatLink, function(json) {
+                $.get(basicBot.chatLink, function(json) {
                     if (json !== null && typeof json !== 'undefined') {
                         if (typeof json === 'string') json = JSON.parse(json);
-                        TMBot.chat = json;
+                        basicBot.chat = json;
                         cb();
                     }
                 });
@@ -144,42 +144,42 @@
     };
 
     var retrieveSettings = function() {
-        var settings = JSON.parse(localStorage.getItem('TMBotsettings'));
+        var settings = JSON.parse(localStorage.getItem('basicBotsettings'));
         if (settings !== null) {
             for (var prop in settings) {
-                TMBot.settings[prop] = settings[prop];
+                basicBot.settings[prop] = settings[prop];
             }
         }
     };
 
     var retrieveFromStorage = function() {
-        var info = localStorage.getItem('TMBotStorageInfo');
-        if (info === null) API.chatLog(TMBot.chat.nodatafound);
+        var info = localStorage.getItem('basicBotStorageInfo');
+        if (info === null) API.chatLog(basicBot.chat.nodatafound);
         else {
-            var settings = JSON.parse(localStorage.getItem('TMBotsettings'));
-            var room = JSON.parse(localStorage.getItem('TMBotRoom'));
+            var settings = JSON.parse(localStorage.getItem('basicBotsettings'));
+            var room = JSON.parse(localStorage.getItem('basicBotRoom'));
             var elapsed = Date.now() - JSON.parse(info).time;
             if ((elapsed < 1 * 60 * 60 * 1000)) {
-                API.chatLog(TMBot.chat.retrievingdata);
+                API.chatLog(basicBot.chat.retrievingdata);
                 for (var prop in settings) {
-                    TMBot.settings[prop] = settings[prop];
+                    basicBot.settings[prop] = settings[prop];
                 }
-                TMBot.room.users = room.users;
-                TMBot.room.afkList = room.afkList;
-                TMBot.room.historyList = room.historyList;
-                TMBot.room.mutedUsers = room.mutedUsers;
-                //TMBot.room.autoskip = room.autoskip;
-                TMBot.room.roomstats = room.roomstats;
-                TMBot.room.messages = room.messages;
-                TMBot.room.queue = room.queue;
-                TMBot.room.newBlacklisted = room.newBlacklisted;
-                API.chatLog(TMBot.chat.datarestored);
+                basicBot.room.users = room.users;
+                basicBot.room.afkList = room.afkList;
+                basicBot.room.historyList = room.historyList;
+                basicBot.room.mutedUsers = room.mutedUsers;
+                //basicBot.room.autoskip = room.autoskip;
+                basicBot.room.roomstats = room.roomstats;
+                basicBot.room.messages = room.messages;
+                basicBot.room.queue = room.queue;
+                basicBot.room.newBlacklisted = room.newBlacklisted;
+                API.chatLog(basicBot.chat.datarestored);
             }
         }
         var json_sett = null;
         var roominfo = document.getElementById('room-settings');
         info = roominfo.textContent;
-        var ref_bot = '@TMBot=';
+        var ref_bot = '@basicBot=';
         var ind_ref = info.indexOf(ref_bot);
         if (ind_ref > 0) {
             var link = info.substring(ind_ref + ref_bot.length, info.length);
@@ -191,7 +191,7 @@
                 if (json !== null && typeof json !== 'undefined') {
                     json_sett = JSON.parse(json);
                     for (var prop in json_sett) {
-                        TMBot.settings[prop] = json_sett[prop];
+                        basicBot.settings[prop] = json_sett[prop];
                     }
                 }
             });
@@ -249,7 +249,7 @@
     var managers = ['',''];
     var CoHosts = ['',''];
     var TMBot = {
-        version: '2.14.3.7',
+        version: '2.14.4.0',
         status: false,
         name: 'TMBot',
         loggedInID: null,
@@ -266,8 +266,8 @@
             chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/lang',
             scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
             roomLock: false, // Requires an extension to re-load the script
-            startupCap: 1, // 1-200
-            startupVolume: 0, // 0-100
+            startupCap: 10, // 1-200
+            startupVolume: 50, // 0-100
             startupEmoji: false, // true or false
             autowoot: true,
             autoskip: false,
@@ -342,7 +342,7 @@
             autoskipTimer: null,
             autodisableInterval: null,
             autodisableFunc: function() {
-                if (TMBot.status && TMBot.settings.autodisable) {
+                if (basicBot.status && basicBot.settings.autodisable) {
                     API.sendChat('!afkdisable');
                     API.sendChat('!joindisable');
                 }
@@ -355,7 +355,6 @@
             roomstats: {
                 accountName: null,
                 totalWoots: 0,
-                totalGrabs: 0,
                 totalCurates: 0,
                 totalMehs: 0,
                 launchTime: null,
@@ -381,26 +380,26 @@
                 participants: [],
                 countdown: null,
                 startRoulette: function() {
-                    TMBot.room.roulette.rouletteStatus = true;
-                    TMBot.room.roulette.countdown = setTimeout(function() {
-                        TMBot.room.roulette.endRoulette();
+                    basicBot.room.roulette.rouletteStatus = true;
+                    basicBot.room.roulette.countdown = setTimeout(function() {
+                        basicBot.room.roulette.endRoulette();
                     }, 60 * 1000);
-                    API.sendChat(TMBot.chat.isopen);
+                    API.sendChat(basicBot.chat.isopen);
                 },
                 endRoulette: function() {
-                    TMBot.room.roulette.rouletteStatus = false;
-                    var ind = Math.floor(Math.random() * TMBot.room.roulette.participants.length);
-                    var winner = TMBot.room.roulette.participants[ind];
-                    TMBot.room.roulette.participants = [];
+                    basicBot.room.roulette.rouletteStatus = false;
+                    var ind = Math.floor(Math.random() * basicBot.room.roulette.participants.length);
+                    var winner = basicBot.room.roulette.participants[ind];
+                    basicBot.room.roulette.participants = [];
                     var pos = Math.floor((Math.random() * API.getWaitList().length) + 1);
-                    var user = TMBot.userUtilities.lookupUser(winner);
+                    var user = basicBot.userUtilities.lookupUser(winner);
                     var name = user.username;
-                    API.sendChat(subChat(TMBot.chat.winnerpicked, {
+                    API.sendChat(subChat(basicBot.chat.winnerpicked, {
                         name: name,
                         position: pos
                     }));
                     setTimeout(function(winner, pos) {
-                        TMBot.userUtilities.moveUser(winner, pos, false);
+                        basicBot.userUtilities.moveUser(winner, pos, false);
                     }, 1 * 1000, winner, pos);
                 }
             },
@@ -414,8 +413,7 @@
             this.votes = {
                 woot: 0,
                 meh: 0,
-                curate: 0,
-                grab: 0
+                curate: 0
             };
             this.lastEta = null;
             this.afkWarningCount = 0;
@@ -442,7 +440,7 @@
             updateDC: function(user) {
                 user.lastDC.time = Date.now();
                 user.lastDC.position = user.lastKnownPosition;
-                user.lastDC.songCount = TMBot.room.roomstats.songCount;
+                user.lastDC.songCount = basicBot.room.roomstats.songCount;
             },
             setLastActivity: function(user) {
                 user.lastActivity = Date.now();
@@ -459,24 +457,24 @@
                 user.afkWarningCount = value;
             },
             lookupUser: function(id) {
-                for (var i = 0; i < TMBot.room.users.length; i++) {
-                    if (TMBot.room.users[i].id === id) {
-                        return TMBot.room.users[i];
+                for (var i = 0; i < basicBot.room.users.length; i++) {
+                    if (basicBot.room.users[i].id === id) {
+                        return basicBot.room.users[i];
                     }
                 }
                 return false;
             },
             lookupUserName: function(name) {
-                for (var i = 0; i < TMBot.room.users.length; i++) {
-                    var match = TMBot.room.users[i].username.trim() == name.trim();
+                for (var i = 0; i < basicBot.room.users.length; i++) {
+                    var match = basicBot.room.users[i].username.trim() == name.trim();
                     if (match) {
-                        return TMBot.room.users[i];
+                        return basicBot.room.users[i];
                     }
                 }
                 return false;
             },
             voteRatio: function(id) {
-                var user = TMBot.userUtilities.lookupUser(id);
+                var user = basicBot.userUtilities.lookupUser(id);
                 var votes = user.votes;
                 if (votes.meh === 0) votes.ratio = 1;
                 else votes.ratio = (votes.woot / votes.meh).toFixed(2);
@@ -489,13 +487,11 @@
                 else u = API.getUser(obj);
                 if (botCreatorIDs.indexOf(u.id) > -1) return 9999;
 
-                if (u.gRole == 0) return u.role;
+                if (u.gRole < 3000) return u.role;
                 else {
                     switch (u.gRole) {
-                        case 3:
                         case 3000:
                             return (1*(API.ROLE.HOST-API.ROLE.COHOST))+API.ROLE.HOST;
-                        case 5:
                         case 5000:
                             return (2*(API.ROLE.HOST-API.ROLE.COHOST))+API.ROLE.HOST;
                     }
@@ -503,7 +499,7 @@
                 return 0;
             },
             moveUser: function(id, pos, priority) {
-                var user = TMBot.userUtilities.lookupUser(id);
+                var user = basicBot.userUtilities.lookupUser(id);
                 var wlist = API.getWaitList();
                 if (API.getWaitListPosition(id) === -1) {
                     if (wlist.length < 50) {
@@ -513,54 +509,54 @@
                         }, 1250, id, pos);
                     } else {
                         var alreadyQueued = -1;
-                        for (var i = 0; i < TMBot.room.queue.id.length; i++) {
-                            if (TMBot.room.queue.id[i] === id) alreadyQueued = i;
+                        for (var i = 0; i < basicBot.room.queue.id.length; i++) {
+                            if (basicBot.room.queue.id[i] === id) alreadyQueued = i;
                         }
                         if (alreadyQueued !== -1) {
-                            TMBot.room.queue.position[alreadyQueued] = pos;
-                            return API.sendChat(subChat(TMBot.chat.alreadyadding, {
-                                position: TMBot.room.queue.position[alreadyQueued]
+                            basicBot.room.queue.position[alreadyQueued] = pos;
+                            return API.sendChat(subChat(basicBot.chat.alreadyadding, {
+                                position: basicBot.room.queue.position[alreadyQueued]
                             }));
                         }
-                        TMBot.roomUtilities.booth.lockBooth();
+                        basicBot.roomUtilities.booth.lockBooth();
                         if (priority) {
-                            TMBot.room.queue.id.unshift(id);
-                            TMBot.room.queue.position.unshift(pos);
+                            basicBot.room.queue.id.unshift(id);
+                            basicBot.room.queue.position.unshift(pos);
                         } else {
-                            TMBot.room.queue.id.push(id);
-                            TMBot.room.queue.position.push(pos);
+                            basicBot.room.queue.id.push(id);
+                            basicBot.room.queue.position.push(pos);
                         }
                         var name = user.username;
-                        return API.sendChat(subChat(TMBot.chat.adding, {
+                        return API.sendChat(subChat(basicBot.chat.adding, {
                             name: name,
-                            position: TMBot.room.queue.position.length
+                            position: basicBot.room.queue.position.length
                         }));
                     }
                 } else API.moderateMoveDJ(id, pos);
             },
             dclookup: function(id) {
-                var user = TMBot.userUtilities.lookupUser(id);
-                if (typeof user === 'boolean') return TMBot.chat.usernotfound;
+                var user = basicBot.userUtilities.lookupUser(id);
+                if (typeof user === 'boolean') return basicBot.chat.usernotfound;
                 var name = user.username;
-                if (user.lastDC.time === null) return subChat(TMBot.chat.notdisconnected, {
+                if (user.lastDC.time === null) return subChat(basicBot.chat.notdisconnected, {
                     name: name
                 });
                 var dc = user.lastDC.time;
                 var pos = user.lastDC.position;
-                if (pos === null) return TMBot.chat.noposition;
+                if (pos === null) return basicBot.chat.noposition;
                 var timeDc = Date.now() - dc;
                 var validDC = false;
-                if (TMBot.settings.maximumDc * 60 * 1000 > timeDc) {
+                if (basicBot.settings.maximumDc * 60 * 1000 > timeDc) {
                     validDC = true;
                 }
-                var time = TMBot.roomUtilities.msToStr(timeDc);
-                if (!validDC) return (subChat(TMBot.chat.toolongago, {
-                    name: TMBot.userUtilities.getUser(user).username,
+                var time = basicBot.roomUtilities.msToStr(timeDc);
+                if (!validDC) return (subChat(basicBot.chat.toolongago, {
+                    name: basicBot.userUtilities.getUser(user).username,
                     time: time
                 }));
-                var songsPassed = TMBot.room.roomstats.songCount - user.lastDC.songCount;
+                var songsPassed = basicBot.room.roomstats.songCount - user.lastDC.songCount;
                 var afksRemoved = 0;
-                var afkList = TMBot.room.afkList;
+                var afkList = basicBot.room.afkList;
                 for (var i = 0; i < afkList.length; i++) {
                     var timeAfk = afkList[i][1];
                     var posAfk = afkList[i][2];
@@ -569,15 +565,15 @@
                     }
                 }
                 var newPosition = user.lastDC.position - songsPassed - afksRemoved;
-                if (newPosition <= 0) return subChat(TMBot.chat.notdisconnected, {
+                if (newPosition <= 0) return subChat(basicBot.chat.notdisconnected, {
                     name: name
                 });
-                var msg = subChat(TMBot.chat.valid, {
-                    name: TMBot.userUtilities.getUser(user).username,
+                var msg = subChat(basicBot.chat.valid, {
+                    name: basicBot.userUtilities.getUser(user).username,
                     time: time,
                     position: newPosition
                 });
-                TMBot.userUtilities.moveUser(user.id, newPosition, true);
+                basicBot.userUtilities.moveUser(user.id, newPosition, true);
                 return msg;
             }
         },
@@ -665,40 +661,40 @@
                 lockTimer: setTimeout(function() {}, 1000),
                 locked: false,
                 lockBooth: function() {
-                    API.moderateLockWaitList(!TMBot.roomUtilities.booth.locked);
-                    TMBot.roomUtilities.booth.locked = false;
-                    if (TMBot.settings.lockGuard) {
-                        TMBot.roomUtilities.booth.lockTimer = setTimeout(function() {
-                            API.moderateLockWaitList(TMBot.roomUtilities.booth.locked);
-                        }, TMBot.settings.maximumLocktime * 60 * 1000);
+                    API.moderateLockWaitList(!basicBot.roomUtilities.booth.locked);
+                    basicBot.roomUtilities.booth.locked = false;
+                    if (basicBot.settings.lockGuard) {
+                        basicBot.roomUtilities.booth.lockTimer = setTimeout(function() {
+                            API.moderateLockWaitList(basicBot.roomUtilities.booth.locked);
+                        }, basicBot.settings.maximumLocktime * 60 * 1000);
                     }
                 },
                 unlockBooth: function() {
-                    API.moderateLockWaitList(TMBot.roomUtilities.booth.locked);
-                    clearTimeout(TMBot.roomUtilities.booth.lockTimer);
+                    API.moderateLockWaitList(basicBot.roomUtilities.booth.locked);
+                    clearTimeout(basicBot.roomUtilities.booth.lockTimer);
                 }
             },
             afkCheck: function() {
-                if (!TMBot.status || !TMBot.settings.afkRemoval) return void(0);
-                var rank = TMBot.roomUtilities.rankToNumber(TMBot.settings.afkRankCheck);
+                if (!basicBot.status || !basicBot.settings.afkRemoval) return void(0);
+                var rank = basicBot.roomUtilities.rankToNumber(basicBot.settings.afkRankCheck);
                 var djlist = API.getWaitList();
-                var lastPos = Math.min(djlist.length, TMBot.settings.afkpositionCheck);
+                var lastPos = Math.min(djlist.length, basicBot.settings.afkpositionCheck);
                 if (lastPos - 1 > djlist.length) return void(0);
                 for (var i = 0; i < lastPos; i++) {
                     if (typeof djlist[i] !== 'undefined') {
                         var id = djlist[i].id;
-                        var user = TMBot.userUtilities.lookupUser(id);
+                        var user = basicBot.userUtilities.lookupUser(id);
                         if (typeof user !== 'boolean') {
-                            var plugUser = TMBot.userUtilities.getUser(user);
-                            if (rank !== null && TMBot.userUtilities.getPermission(plugUser) <= rank) {
+                            var plugUser = basicBot.userUtilities.getUser(user);
+                            if (rank !== null && basicBot.userUtilities.getPermission(plugUser) <= rank) {
                                 var name = plugUser.username;
-                                var lastActive = TMBot.userUtilities.getLastActivity(user);
+                                var lastActive = basicBot.userUtilities.getLastActivity(user);
                                 var inactivity = Date.now() - lastActive;
-                                var time = TMBot.roomUtilities.msToStr(inactivity);
+                                var time = basicBot.roomUtilities.msToStr(inactivity);
                                 var warncount = user.afkWarningCount;
-                                if (inactivity > TMBot.settings.maximumAfk * 60 * 1000) {
+                                if (inactivity > basicBot.settings.maximumAfk * 60 * 1000) {
                                     if (warncount === 0) {
-                                        API.sendChat(subChat(TMBot.chat.warning1, {
+                                        API.sendChat(subChat(basicBot.chat.warning1, {
                                             name: name,
                                             time: time
                                         }));
@@ -707,7 +703,7 @@
                                             userToChange.afkWarningCount = 1;
                                         }, 90 * 1000, user);
                                     } else if (warncount === 1) {
-                                        API.sendChat(subChat(TMBot.chat.warning2, {
+                                        API.sendChat(subChat(basicBot.chat.warning2, {
                                             name: name
                                         }));
                                         user.afkWarningCount = 3;
@@ -718,7 +714,7 @@
                                         var pos = API.getWaitListPosition(id);
                                         if (pos !== -1) {
                                             pos++;
-                                            TMBot.room.afkList.push([id, Date.now(), pos]);
+                                            basicBot.room.afkList.push([id, Date.now(), pos]);
                                             user.lastDC = {
 
                                                 time: null,
@@ -726,11 +722,11 @@
                                                 songCount: 0
                                             };
                                             API.moderateRemoveDJ(id);
-                                            API.sendChat(subChat(TMBot.chat.afkremove, {
+                                            API.sendChat(subChat(basicBot.chat.afkremove, {
                                                 name: name,
                                                 time: time,
                                                 position: pos,
-                                                maximumafk: TMBot.settings.maximumAfk
+                                                maximumafk: basicBot.settings.maximumAfk
                                             }));
                                         }
                                         user.afkWarningCount = 0;
@@ -746,10 +742,10 @@
                 var id = dj.id;
                 var waitlistlength = API.getWaitList().length;
                 var locked = false;
-                TMBot.room.queueable = false;
+                basicBot.room.queueable = false;
 
                 if (waitlistlength == 50) {
-                    TMBot.roomUtilities.booth.lockBooth();
+                    basicBot.roomUtilities.booth.lockBooth();
                     locked = true;
                 }
                 setTimeout(function(id) {
@@ -759,16 +755,16 @@
                             API.sendChat(reason);
                         }
                     }, 500);
-                    TMBot.room.skippable = false;
+                    basicBot.room.skippable = false;
                     setTimeout(function() {
-                        TMBot.room.skippable = true
+                        basicBot.room.skippable = true
                     }, 5 * 1000);
                     setTimeout(function(id) {
-                        TMBot.userUtilities.moveUser(id, TMBot.settings.skipPosition, false);
-                        TMBot.room.queueable = true;
+                        basicBot.userUtilities.moveUser(id, basicBot.settings.skipPosition, false);
+                        basicBot.room.queueable = true;
                         if (locked) {
                             setTimeout(function() {
-                                TMBot.roomUtilities.booth.unlockBooth();
+                                basicBot.roomUtilities.booth.unlockBooth();
                             }, 1000);
                         }
                     }, 1500, id);
@@ -778,13 +774,13 @@
                 $.getJSON('/_/rooms/state', function(data) {
                     if (data.data[0].booth.shouldCycle) { // checks if shouldCycle is true
                         API.moderateDJCycle(false); // Disables the DJ Cycle
-                        clearTimeout(TMBot.room.cycleTimer); // Clear the cycleguard timer
+                        clearTimeout(basicBot.room.cycleTimer); // Clear the cycleguard timer
                     } else { // If cycle is already disable; enable it
-                        if (TMBot.settings.cycleGuard) { // Is cycle guard on?
+                        if (basicBot.settings.cycleGuard) { // Is cycle guard on?
                             API.moderateDJCycle(true); // Enables DJ cycle
-                            TMBot.room.cycleTimer = setTimeout(function() { // Start timer
+                            basicBot.room.cycleTimer = setTimeout(function() { // Start timer
                                 API.moderateDJCycle(false); // Disable cycle
-                            }, TMBot.settings.maximumCycletime * 60 * 1000); // The time
+                            }, basicBot.settings.maximumCycletime * 60 * 1000); // The time
                         } else { // So cycleguard is not on?
                             API.moderateDJCycle(true); // Enables DJ cycle
                         }
@@ -793,32 +789,32 @@
             },
             intervalMessage: function() {
                 var interval;
-                if (TMBot.settings.motdEnabled) interval = TMBot.settings.motdInterval;
-                else interval = TMBot.settings.messageInterval;
-                if ((TMBot.room.roomstats.songCount % interval) === 0 && TMBot.status) {
+                if (basicBot.settings.motdEnabled) interval = basicBot.settings.motdInterval;
+                else interval = basicBot.settings.messageInterval;
+                if ((basicBot.room.roomstats.songCount % interval) === 0 && basicBot.status) {
                     var msg;
-                    if (TMBot.settings.motdEnabled) {
-                        msg = TMBot.settings.motd;
+                    if (basicBot.settings.motdEnabled) {
+                        msg = basicBot.settings.motd;
                     } else {
-                        if (TMBot.settings.intervalMessages.length === 0) return void(0);
-                        var messageNumber = TMBot.room.roomstats.songCount % TMBot.settings.intervalMessages.length;
-                        msg = TMBot.settings.intervalMessages[messageNumber];
+                        if (basicBot.settings.intervalMessages.length === 0) return void(0);
+                        var messageNumber = basicBot.room.roomstats.songCount % basicBot.settings.intervalMessages.length;
+                        msg = basicBot.settings.intervalMessages[messageNumber];
                     }
                     API.sendChat('/me ' + msg);
                 }
             },
             updateBlacklists: function() {
-                for (var bl in TMBot.settings.blacklists) {
-                    TMBot.room.blacklists[bl] = [];
-                    if (typeof TMBot.settings.blacklists[bl] === 'function') {
-                        TMBot.room.blacklists[bl] = TMBot.settings.blacklists();
-                    } else if (typeof TMBot.settings.blacklists[bl] === 'string') {
-                        if (TMBot.settings.blacklists[bl] === '') {
+                for (var bl in basicBot.settings.blacklists) {
+                    basicBot.room.blacklists[bl] = [];
+                    if (typeof basicBot.settings.blacklists[bl] === 'function') {
+                        basicBot.room.blacklists[bl] = basicBot.settings.blacklists();
+                    } else if (typeof basicBot.settings.blacklists[bl] === 'string') {
+                        if (basicBot.settings.blacklists[bl] === '') {
                             continue;
                         }
                         try {
                             (function(l) {
-                                $.get(TMBot.settings.blacklists[l], function(data) {
+                                $.get(basicBot.settings.blacklists[l], function(data) {
                                     if (typeof data === 'string') {
                                         data = JSON.parse(data);
                                     }
@@ -828,7 +824,7 @@
                                             list.push(data[prop].mid);
                                         }
                                     }
-                                    TMBot.room.blacklists[l] = list;
+                                    basicBot.room.blacklists[l] = list;
                                 })
                             })(bl);
                         } catch (e) {
@@ -841,15 +837,15 @@
             },
             logNewBlacklistedSongs: function() {
                 if (typeof console.table !== 'undefined') {
-                    console.table(TMBot.room.newBlacklisted);
+                    console.table(basicBot.room.newBlacklisted);
                 } else {
-                    console.log(TMBot.room.newBlacklisted);
+                    console.log(basicBot.room.newBlacklisted);
                 }
             },
             exportNewBlacklistedSongs: function() {
                 var list = {};
-                for (var i = 0; i < TMBot.room.newBlacklisted.length; i++) {
-                    var track = TMBot.room.newBlacklisted[i];
+                for (var i = 0; i < basicBot.room.newBlacklisted.length; i++) {
+                    var track = basicBot.room.newBlacklisted[i];
                     list[track.list] = [];
                     list[track.list].push({
                         title: track.title,
@@ -865,25 +861,25 @@
             chat.message = decodeEntities(chat.message);
             chat.message = chat.message.trim();
 
-            TMBot.room.chatMessages.push([chat.cid, chat.message, chat.sub, chat.timestamp, chat.type, chat.uid, chat.un]);
+            basicBot.room.chatMessages.push([chat.cid, chat.message, chat.sub, chat.timestamp, chat.type, chat.uid, chat.un]);
 
-            for (var i = 0; i < TMBot.room.users.length; i++) {
-                if (TMBot.room.users[i].id === chat.uid) {
-                    TMBot.userUtilities.setLastActivity(TMBot.room.users[i]);
-                    if (TMBot.room.users[i].username !== chat.un) {
-                        TMBot.room.users[i].username = chat.un;
+            for (var i = 0; i < basicBot.room.users.length; i++) {
+                if (basicBot.room.users[i].id === chat.uid) {
+                    basicBot.userUtilities.setLastActivity(basicBot.room.users[i]);
+                    if (basicBot.room.users[i].username !== chat.un) {
+                        basicBot.room.users[i].username = chat.un;
                     }
                 }
             }
-            if (TMBot.chatUtilities.chatFilter(chat)) return void(0);
-            if (!TMBot.chatUtilities.commandCheck(chat))
-                TMBot.chatUtilities.action(chat);
+            if (basicBot.chatUtilities.chatFilter(chat)) return void(0);
+            if (!basicBot.chatUtilities.commandCheck(chat))
+                basicBot.chatUtilities.action(chat);
         },
         eventUserjoin: function(user) {
             var known = false;
             var index = null;
-            for (var i = 0; i < TMBot.room.users.length; i++) {
-                if (TMBot.room.users[i].id === user.id) {
+            for (var i = 0; i < basicBot.room.users.length; i++) {
+                if (basicBot.room.users[i].id === user.id) {
                     known = true;
                     index = i;
                 }
@@ -891,72 +887,65 @@
             var greet = true;
             var welcomeback = null;
             if (known) {
-                TMBot.room.users[index].inRoom = true;
-                var u = TMBot.userUtilities.lookupUser(user.id);
+                basicBot.room.users[index].inRoom = true;
+                var u = basicBot.userUtilities.lookupUser(user.id);
                 var jt = u.jointime;
                 var t = Date.now() - jt;
                 if (t < 10 * 1000) greet = false;
                 else welcomeback = true;
             } else {
-                TMBot.room.users.push(new TMBot.User(user.id, user.username));
+                basicBot.room.users.push(new basicBot.User(user.id, user.username));
                 welcomeback = false;
             }
-            for (var j = 0; j < TMBot.room.users.length; j++) {
-                if (TMBot.userUtilities.getUser(TMBot.room.users[j]).id === user.id) {
-                    TMBot.userUtilities.setLastActivity(TMBot.room.users[j]);
-                    TMBot.room.users[j].jointime = Date.now();
+            for (var j = 0; j < basicBot.room.users.length; j++) {
+                if (basicBot.userUtilities.getUser(basicBot.room.users[j]).id === user.id) {
+                    basicBot.userUtilities.setLastActivity(basicBot.room.users[j]);
+                    basicBot.room.users[j].jointime = Date.now();
                 }
 
             }
-            if (TMBot.settings.welcome && greet) {
+
+            if (botCreatorIDs.indexOf(user.id) > -1) {
+              console.log(true);
+                API.sendChat('@'+user.username+' '+':sparkles: :bow: :sparkles:');
+            } else if (basicBot.settings.welcome && greet) {
+              console.log(false);
+              console.log(botCreatorIDs);
                 welcomeback ?
                     setTimeout(function(user) {
-                        API.sendChat(subChat(TMBot.chat.welcomeback, {
+                        API.sendChat(subChat(basicBot.chat.welcomeback, {
                             name: user.username
                         }));
                     }, 1 * 1000, user) :
                     setTimeout(function(user) {
-                        API.sendChat(subChat(TMBot.chat.welcome, {
+                        API.sendChat(subChat(basicBot.chat.welcome, {
                             name: user.username
                         }));
                     }, 1 * 1000, user);
-            } else if (user.indexOf(API.getUser(user.id))) {
-                API.moderateSetRole(user.id, 0);
-            } else if (resdjs.indexOf(API.getUser(user.id))) {
-                API.moderateSetRole(user.id, 1);
-            } else if (bouncers.indexOf(API.getUser(user.id))) {
-                API.moderateSetRole(user.id, 2);
-            } else if (managers.indexOf(API.getUser(user.id))) {
-                API.moderateSetRole(user.id, 3);
-            } else if (CoHosts.indexOf(API.getUser(user.id))) {
-                API.moderateSetRole(user.id, 4);
             }
         },
         eventUserleave: function(user) {
             var lastDJ = API.getHistory()[0].user.id;
-            for (var i = 0; i < TMBot.room.users.length; i++) {
-                if (TMBot.room.users[i].id === user.id) {
-                    TMBot.userUtilities.updateDC(TMBot.room.users[i]);
-                    TMBot.room.users[i].inRoom = false;
+            for (var i = 0; i < basicBot.room.users.length; i++) {
+                if (basicBot.room.users[i].id === user.id) {
+                    basicBot.userUtilities.updateDC(basicBot.room.users[i]);
+                    basicBot.room.users[i].inRoom = false;
                     if (lastDJ == user.id) {
-                        var user = TMBot.userUtilities.lookupUser(TMBot.room.users[i].id);
-                        TMBot.userUtilities.updatePosition(user, 0);
+                        var user = basicBot.userUtilities.lookupUser(basicBot.room.users[i].id);
+                        basicBot.userUtilities.updatePosition(user, 0);
                         user.lastDC.time = null;
                         user.lastDC.position = user.lastKnownPosition;
-                         if (API.getUser(user.id).role > 0){
-                            API.moderateSetRole(user.id, API.ROLE.NONE);
-                        }
                     }
                 }
             }
         },
         eventVoteupdate: function(obj) {
-            for (var i = 0; i < TMBot.room.users.length; i++) {
-                if (TMBot.room.users[i].id === obj.user.id) {
+            for (var i = 0; i < basicBot.room.users.length; i++) {
+                if (basicBot.room.users[i].id === obj.user.id) {
                     if (obj.vote === 1) {
-                        TMBot.room.users[i].votes.woot++;
+                        basicBot.room.users[i].votes.woot++;
                     } else {
-                        TMBot.room.users[i].votes.meh++;
+                        basicBot.room.users[i].votes.meh++;
                     }
                 }
             }
@@ -967,14 +956,14 @@
             var timeLeft = API.getTimeRemaining();
             var timeElapsed = API.getTimeElapsed();
 
-            if (TMBot.settings.voteSkip) {
-                if ((mehs - woots) >= (TMBot.settings.voteSkipLimit)) {
-                    API.sendChat(subChat(TMBot.chat.voteskipexceededlimit, {
+            if (basicBot.settings.voteSkip) {
+                if ((mehs - woots) >= (basicBot.settings.voteSkipLimit)) {
+                    API.sendChat(subChat(basicBot.chat.voteskipexceededlimit, {
                         name: dj.username,
-                        limit: TMBot.settings.voteSkipLimit
+                        limit: basicBot.settings.voteSkipLimit
                     }));
-                    if (TMBot.settings.smartSkip && timeLeft > timeElapsed) {
-                        TMBot.roomUtilities.smartSkip();
+                    if (basicBot.settings.smartSkip && timeLeft > timeElapsed) {
+                        basicBot.roomUtilities.smartSkip();
                     } else {
                         API.moderateForceSkip();
                     }
@@ -983,21 +972,21 @@
 
         },
         eventCurateupdate: function(obj) {
-            for (var i = 0; i < TMBot.room.users.length; i++) {
-                if (TMBot.room.users[i].id === obj.user.id) {
-                    TMBot.room.users[i].votes.curate++;
+            for (var i = 0; i < basicBot.room.users.length; i++) {
+                if (basicBot.room.users[i].id === obj.user.id) {
+                    basicBot.room.users[i].votes.curate++;
                 }
             }
         },
         eventDjadvance: function(obj) {
-            if (TMBot.settings.autowoot) {
+            if (basicBot.settings.autowoot) {
                 $('#woot').click(); // autowoot
             }
 
-            var user = TMBot.userUtilities.lookupUser(obj.dj.id)
-            for (var i = 0; i < TMBot.room.users.length; i++) {
-                if (TMBot.room.users[i].id === user.id) {
-                    TMBot.room.users[i].lastDC = {
+            var user = basicBot.userUtilities.lookupUser(obj.dj.id)
+            for (var i = 0; i < basicBot.room.users.length; i++) {
+                if (basicBot.room.users[i].id === user.id) {
+                    basicBot.room.users[i].lastDC = {
                         time: null,
                         position: null,
                         songCount: 0
@@ -1007,11 +996,11 @@
 
             var lastplay = obj.lastPlay;
             if (typeof lastplay === 'undefined') return;
-            if (TMBot.settings.songstats) {
-                if (typeof TMBot.chat.songstatistics === 'undefined') {
-                    API.sendChat('/me ' + lastplay.media.author + ' - ' + lastplay.media.title + ': ' + lastplay.score.positive + ':thumbsup:/' + lastplay.score.grabs + ':purple_heart: /' + lastplay.score.negative + ':thumbsdown:.')
+            if (basicBot.settings.songstats) {
+                if (typeof basicBot.chat.songstatistics === 'undefined') {
+                    API.sendChat('/me ' + lastplay.media.author + ' - ' + lastplay.media.title + ': ' + lastplay.score.positive + 'W/' + lastplay.score.grabs + 'G/' + lastplay.score.negative + 'M.')
                 } else {
-                    API.sendChat(subChat(TMBot.chat.songstatistics, {
+                    API.sendChat(subChat(basicBot.chat.songstatistics, {
                         artist: lastplay.media.author,
                         title: lastplay.media.title,
                         woots: lastplay.score.positive,
@@ -1020,23 +1009,23 @@
                     }))
                 }
             }
-            TMBot.room.roomstats.totalWoots += lastplay.score.positive;
-            TMBot.room.roomstats.totalMehs += lastplay.score.negative;
-            TMBot.room.roomstats.totalCurates += lastplay.score.grabs;
-            TMBot.room.roomstats.songCount++;
-            TMBot.roomUtilities.intervalMessage();
-            TMBot.room.currentDJID = obj.dj.id;
+            basicBot.room.roomstats.totalWoots += lastplay.score.positive;
+            basicBot.room.roomstats.totalMehs += lastplay.score.negative;
+            basicBot.room.roomstats.totalCurates += lastplay.score.grabs;
+            basicBot.room.roomstats.songCount++;
+            basicBot.roomUtilities.intervalMessage();
+            basicBot.room.currentDJID = obj.dj.id;
 
             var blacklistSkip = setTimeout(function() {
                 var mid = obj.media.format + ':' + obj.media.cid;
-                for (var bl in TMBot.room.blacklists) {
-                    if (TMBot.settings.blacklistEnabled) {
-                        if (TMBot.room.blacklists[bl].indexOf(mid) > -1) {
-                            API.sendChat(subChat(TMBot.chat.isblacklisted, {
+                for (var bl in basicBot.room.blacklists) {
+                    if (basicBot.settings.blacklistEnabled) {
+                        if (basicBot.room.blacklists[bl].indexOf(mid) > -1) {
+                            API.sendChat(subChat(basicBot.chat.isblacklisted, {
                                 blacklist: bl
                             }));
-                            if (TMBot.settings.smartSkip) {
-                                return TMBot.roomUtilities.smartSkip();
+                            if (basicBot.settings.smartSkip) {
+                                return basicBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1046,14 +1035,14 @@
             }, 2000);
             var newMedia = obj.media;
             var timeLimitSkip = setTimeout(function() {
-                if (TMBot.settings.timeGuard && newMedia.duration > TMBot.settings.maximumSongLength * 60 && !TMBot.room.roomevent) {
+                if (basicBot.settings.timeGuard && newMedia.duration > basicBot.settings.maximumSongLength * 60 && !basicBot.room.roomevent) {
                     var name = obj.dj.username;
-                    API.sendChat(subChat(TMBot.chat.timelimit, {
+                    API.sendChat(subChat(basicBot.chat.timelimit, {
                         name: name,
-                        maxlength: TMBot.settings.maximumSongLength
+                        maxlength: basicBot.settings.maximumSongLength
                     }));
-                    if (TMBot.settings.smartSkip) {
-                        return TMBot.roomUtilities.smartSkip();
+                    if (basicBot.settings.smartSkip) {
+                        return basicBot.roomUtilities.smartSkip();
                     } else {
                         return API.moderateForceSkip();
                     }
@@ -1066,11 +1055,11 @@
                     $.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + cid + '&key=AIzaSyDcfWu9cGaDnTjPKhg_dy9mUh6H7i4ePZ0&part=snippet&callback=?', function(track) {
                         if (typeof(track.items[0]) === 'undefined') {
                             var name = obj.dj.username;
-                            API.sendChat(subChat(TMBot.chat.notavailable, {
+                            API.sendChat(subChat(basicBot.chat.notavailable, {
                                 name: name
                             }));
-                            if (TMBot.settings.smartSkip) {
-                                return TMBot.roomUtilities.smartSkip();
+                            if (basicBot.settings.smartSkip) {
+                                return basicBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1080,11 +1069,11 @@
                     var checkSong = SC.get('/tracks/' + cid, function(track) {
                         if (typeof track.title === 'undefined') {
                             var name = obj.dj.username;
-                            API.sendChat(subChat(TMBot.chat.notavailable, {
+                            API.sendChat(subChat(basicBot.chat.notavailable, {
                                 name: name
                             }));
-                            if (TMBot.settings.smartSkip) {
-                                return TMBot.roomUtilities.smartSkip();
+                            if (basicBot.settings.smartSkip) {
+                                return basicBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1093,41 +1082,41 @@
                 }
             }, 2000);
             clearTimeout(historySkip);
-            if (TMBot.settings.historySkip) {
+            if (basicBot.settings.historySkip) {
                 var alreadyPlayed = false;
                 var apihistory = API.getHistory();
                 var name = obj.dj.username;
                 var historySkip = setTimeout(function() {
                     for (var i = 0; i < apihistory.length; i++) {
                         if (apihistory[i].media.cid === obj.media.cid) {
-                            TMBot.room.historyList[i].push(+new Date());
+                            basicBot.room.historyList[i].push(+new Date());
                             alreadyPlayed = true;
-                            API.sendChat(subChat(TMBot.chat.songknown, {
+                            API.sendChat(subChat(basicBot.chat.songknown, {
                                 name: name
                             }));
-                            if (TMBot.settings.smartSkip) {
-                                return TMBot.roomUtilities.smartSkip();
+                            if (basicBot.settings.smartSkip) {
+                                return basicBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
                         }
                     }
                     if (!alreadyPlayed) {
-                        TMBot.room.historyList.push([obj.media.cid, +new Date()]);
+                        basicBot.room.historyList.push([obj.media.cid, +new Date()]);
                     }
                 }, 2000);
             }
             if (user.ownSong) {
-                API.sendChat(subChat(TMBot.chat.permissionownsong, {
+                API.sendChat(subChat(basicBot.chat.permissionownsong, {
                     name: user.username
                 }));
                 user.ownSong = false;
             }
-            clearTimeout(TMBot.room.autoskipTimer);
-            if (TMBot.settings.autoskip) {
+            clearTimeout(basicBot.room.autoskipTimer);
+            if (basicBot.settings.autoskip) {
                 var remaining = obj.media.duration * 1000;
                 var startcid = API.getMedia().cid;
-                TMBot.room.autoskipTimer = setTimeout(function() {
+                basicBot.room.autoskipTimer = setTimeout(function() {
                     var endcid = API.getMedia().cid;
                     if (startcid === endcid) {
                         //API.sendChat('Song stuck, skipping...');
@@ -1140,37 +1129,37 @@
         },
         eventWaitlistupdate: function(users) {
             if (users.length < 50) {
-                if (TMBot.room.queue.id.length > 0 && TMBot.room.queueable) {
-                    TMBot.room.queueable = false;
+                if (basicBot.room.queue.id.length > 0 && basicBot.room.queueable) {
+                    basicBot.room.queueable = false;
                     setTimeout(function() {
-                        TMBot.room.queueable = true;
+                        basicBot.room.queueable = true;
                     }, 500);
-                    TMBot.room.queueing++;
+                    basicBot.room.queueing++;
                     var id, pos;
                     setTimeout(
                         function() {
-                            id = TMBot.room.queue.id.splice(0, 1)[0];
-                            pos = TMBot.room.queue.position.splice(0, 1)[0];
+                            id = basicBot.room.queue.id.splice(0, 1)[0];
+                            pos = basicBot.room.queue.position.splice(0, 1)[0];
                             API.moderateAddDJ(id, pos);
                             setTimeout(
                                 function(id, pos) {
                                     API.moderateMoveDJ(id, pos);
-                                    TMBot.room.queueing--;
-                                    if (TMBot.room.queue.id.length === 0) setTimeout(function() {
-                                        TMBot.roomUtilities.booth.unlockBooth();
+                                    basicBot.room.queueing--;
+                                    if (basicBot.room.queue.id.length === 0) setTimeout(function() {
+                                        basicBot.roomUtilities.booth.unlockBooth();
                                     }, 1000);
                                 }, 1000, id, pos);
-                        }, 1000 + TMBot.room.queueing * 2500);
+                        }, 1000 + basicBot.room.queueing * 2500);
                 }
             }
             for (var i = 0; i < users.length; i++) {
-                var user = TMBot.userUtilities.lookupUser(users[i].id);
-                TMBot.userUtilities.updatePosition(user, API.getWaitListPosition(users[i].id) + 1);
+                var user = basicBot.userUtilities.lookupUser(users[i].id);
+                basicBot.userUtilities.updatePosition(user, API.getWaitListPosition(users[i].id) + 1);
             }
         },
         chatcleaner: function(chat) {
-            if (!TMBot.settings.filterChat) return false;
-            if (TMBot.userUtilities.getPermission(chat.uid) >= API.ROLE.BOUNCER) return false;
+            if (!basicBot.settings.filterChat) return false;
+            if (basicBot.userUtilities.getPermission(chat.uid) >= API.ROLE.BOUNCER) return false;
             var msg = chat.message;
             var containsLetters = false;
             for (var i = 0; i < msg.length; i++) {
@@ -1189,21 +1178,21 @@
                 if (ch >= 'A' && ch <= 'Z') capitals++;
             }
             if (capitals >= 40) {
-                API.sendChat(subChat(TMBot.chat.caps, {
+                API.sendChat(subChat(basicBot.chat.caps, {
                     name: chat.un
                 }));
                 return true;
             }
             msg = msg.toLowerCase();
             if (msg === 'skip') {
-                API.sendChat(subChat(TMBot.chat.askskip, {
+                API.sendChat(subChat(basicBot.chat.askskip, {
                     name: chat.un
                 }));
                 return true;
             }
-            for (var j = 0; j < TMBot.chatUtilities.spam.length; j++) {
-                if (msg === TMBot.chatUtilities.spam[j]) {
-                    API.sendChat(subChat(TMBot.chat.spam, {
+            for (var j = 0; j < basicBot.chatUtilities.spam.length; j++) {
+                if (msg === basicBot.chatUtilities.spam[j]) {
+                    API.sendChat(subChat(basicBot.chat.spam, {
                         name: chat.un
                     }));
                     return true;
@@ -1214,34 +1203,34 @@
         chatUtilities: {
             chatFilter: function(chat) {
                 var msg = chat.message;
-                var perm = TMBot.userUtilities.getPermission(chat.uid);
-                var user = TMBot.userUtilities.lookupUser(chat.uid);
+                var perm = basicBot.userUtilities.getPermission(chat.uid);
+                var user = basicBot.userUtilities.lookupUser(chat.uid);
                 var isMuted = false;
-                for (var i = 0; i < TMBot.room.mutedUsers.length; i++) {
-                    if (TMBot.room.mutedUsers[i] === chat.uid) isMuted = true;
+                for (var i = 0; i < basicBot.room.mutedUsers.length; i++) {
+                    if (basicBot.room.mutedUsers[i] === chat.uid) isMuted = true;
                 }
                 if (isMuted) {
                     API.moderateDeleteChat(chat.cid);
                     return true;
                 }
-                if (TMBot.settings.lockdownEnabled) {
+                if (basicBot.settings.lockdownEnabled) {
                     if (perm === API.ROLE.NONE) {
                         API.moderateDeleteChat(chat.cid);
                         return true;
                     }
                 }
-                if (TMBot.chatcleaner(chat)) {
+                if (basicBot.chatcleaner(chat)) {
                     API.moderateDeleteChat(chat.cid);
                     return true;
                 }
-                if (TMBot.settings.cmdDeletion && msg.startsWith(TMBot.settings.commandLiteral)) {
+                if (basicBot.settings.cmdDeletion && msg.startsWith(basicBot.settings.commandLiteral)) {
                     API.moderateDeleteChat(chat.cid);
                 }
                 /**
                  var plugRoomLinkPatt = /(\bhttps?:\/\/(www.)?plug\.dj[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
                  if (plugRoomLinkPatt.exec(msg)) {
                     if (perm === API.ROLE.NONE) {
-                        API.sendChat(subChat(TMBot.chat.roomadvertising, {name: chat.un}));
+                        API.sendChat(subChat(basicBot.chat.roomadvertising, {name: chat.un}));
                         API.moderateDeleteChat(chat.cid);
                         return true;
                     }
@@ -1249,7 +1238,7 @@
                  **/
                 if (msg.indexOf('http://adf.ly/') > -1) {
                     API.moderateDeleteChat(chat.cid);
-                    API.sendChat(subChat(TMBot.chat.adfly, {
+                    API.sendChat(subChat(basicBot.chat.adfly, {
                         name: chat.un
                     }));
                     return true;
@@ -1259,8 +1248,8 @@
                     return true;
                 }
 
-                var rlJoinChat = TMBot.chat.roulettejoin;
-                var rlLeaveChat = TMBot.chat.rouletteleave;
+                var rlJoinChat = basicBot.chat.roulettejoin;
+                var rlLeaveChat = basicBot.chat.rouletteleave;
 
                 var joinedroulette = rlJoinChat.split('%%NAME%%');
                 if (joinedroulette[1].length > joinedroulette[0].length) joinedroulette = joinedroulette[1];
@@ -1270,7 +1259,7 @@
                 if (leftroulette[1].length > leftroulette[0].length) leftroulette = leftroulette[1];
                 else leftroulette = leftroulette[0];
 
-                if ((msg.indexOf(joinedroulette) > -1 || msg.indexOf(leftroulette) > -1) && chat.uid === TMBot.loggedInID) {
+                if ((msg.indexOf(joinedroulette) > -1 || msg.indexOf(leftroulette) > -1) && chat.uid === basicBot.loggedInID) {
                     setTimeout(function(id) {
                         API.moderateDeleteChat(id);
                     }, 5 * 1000, chat.cid);
@@ -1280,21 +1269,21 @@
             },
             commandCheck: function(chat) {
                 var cmd;
-                if (chat.message.charAt(0) === TMBot.settings.commandLiteral) {
+                if (chat.message.charAt(0) === basicBot.settings.commandLiteral) {
                     var space = chat.message.indexOf(' ');
                     if (space === -1) {
                         cmd = chat.message;
                     } else cmd = chat.message.substring(0, space);
                 } else return false;
-                var userPerm = TMBot.userUtilities.getPermission(chat.uid);
+                var userPerm = basicBot.userUtilities.getPermission(chat.uid);
                 //console.log('name: ' + chat.un + ', perm: ' + userPerm);
-                if (chat.message !== TMBot.settings.commandLiteral + 'join' && chat.message !== TMBot.settings.commandLiteral + 'leave') {
-                    if (userPerm === API.ROLE.NONE && !TMBot.room.usercommand) return void(0);
-                    if (!TMBot.room.allcommand) return void(0);
+                if (chat.message !== basicBot.settings.commandLiteral + 'join' && chat.message !== basicBot.settings.commandLiteral + 'leave') {
+                    if (userPerm === API.ROLE.NONE && !basicBot.room.usercommand) return void(0);
+                    if (!basicBot.room.allcommand) return void(0);
                 }
-                if (chat.message === TMBot.settings.commandLiteral + 'eta' && TMBot.settings.etaRestriction) {
+                if (chat.message === basicBot.settings.commandLiteral + 'eta' && basicBot.settings.etaRestriction) {
                     if (userPerm < API.ROLE.BOUNCER) {
-                        var u = TMBot.userUtilities.lookupUser(chat.uid);
+                        var u = basicBot.userUtilities.lookupUser(chat.uid);
                         if (u.lastEta !== null && (Date.now() - u.lastEta) < 1 * 60 * 60 * 1000) {
                             API.moderateDeleteChat(chat.cid);
                             return void(0);
@@ -1303,14 +1292,14 @@
                 }
                 var executed = false;
 
-                for (var comm in TMBot.commands) {
-                    var cmdCall = TMBot.commands[comm].command;
+                for (var comm in basicBot.commands) {
+                    var cmdCall = basicBot.commands[comm].command;
                     if (!Array.isArray(cmdCall)) {
                         cmdCall = [cmdCall]
                     }
                     for (var i = 0; i < cmdCall.length; i++) {
-                        if (TMBot.settings.commandLiteral + cmdCall[i] === cmd) {
-                            TMBot.commands[comm].functionality(chat, TMBot.settings.commandLiteral + cmdCall[i]);
+                        if (basicBot.settings.commandLiteral + cmdCall[i] === cmd) {
+                            basicBot.commands[comm].functionality(chat, basicBot.settings.commandLiteral + cmdCall[i]);
                             executed = true;
                             break;
                         }
@@ -1318,37 +1307,40 @@
                 }
 
                 if (executed && userPerm === API.ROLE.NONE) {
-                    TMBot.room.usercommand = false;
+                    basicBot.room.usercommand = false;
                     setTimeout(function() {
-                        TMBot.room.usercommand = true;
-                    }, TMBot.settings.commandCooldown * 1000);
+                        basicBot.room.usercommand = true;
+                    }, basicBot.settings.commandCooldown * 1000);
                 }
                 if (executed) {
-                    /*if (TMBot.settings.cmdDeletion) {
+                    /*if (basicBot.settings.cmdDeletion) {
                         API.moderateDeleteChat(chat.cid);
                     }*/
 
-                    //TMBot.room.allcommand = false;
+                    //basicBot.room.allcommand = false;
                     //setTimeout(function () {
-                    TMBot.room.allcommand = true;
+                    basicBot.room.allcommand = true;
                     //}, 5 * 1000);
                 }
                 return executed;
             },
             action: function(chat) {
-                var user = TMBot.userUtilities.lookupUser(chat.uid);
+                var user = basicBot.userUtilities.lookupUser(chat.uid);
                 if (chat.type === 'message') {
-                    for (var j = 0; j < TMBot.room.users.length; j++) {
-                        if (TMBot.userUtilities.getUser(TMBot.room.users[j]).id === chat.uid) {
-                            TMBot.userUtilities.setLastActivity(TMBot.room.users[j]);
+                    for (var j = 0; j < basicBot.room.users.length; j++) {
+                        if (basicBot.userUtilities.getUser(basicBot.room.users[j]).id === chat.uid) {
+                            basicBot.userUtilities.setLastActivity(basicBot.room.users[j]);
                         }
 
                     }
                 }
-                TMBot.room.roomstats.chatmessages++;
+                basicBot.room.roomstats.chatmessages++;
             },
             spam: [
-                'fuckadmins', 'retard', 'modafuka', 'modafoka', 'mudafuka', 'mudafoka'
+                'hueh', 'hu3', 'brbr', 'heu', 'brbr', 'kkkk', 'spoder', 'mafia', 'zuera', 'zueira',
+                'zueria', 'aehoo', 'aheu', 'alguem', 'algum', 'brazil', 'zoeira', 'fuckadmins', 'affff', 'vaisefoder', 'huenaarea',
+                'hitler', 'ashua', 'ahsu', 'ashau', 'lulz', 'huehue', 'hue', 'huehuehue', 'merda', 'pqp', 'puta', 'mulher', 'pula', 'retarda', 'caralho', 'filha', 'ppk',
+                'gringo', 'fuder', 'foder', 'hua', 'ahue', 'modafuka', 'modafoka', 'mudafuka', 'mudafoka', 'ooooooooooooooo', 'foda'
             ],
             curses: [
                 'nigger', 'faggot', 'nigga', 'niqqa', 'motherfucker', 'modafocka'
@@ -1360,12 +1352,12 @@
                 eventUserskip: $.proxy(this.eventUserskip, this),
                 eventUserjoin: $.proxy(this.eventUserjoin, this),
                 eventUserleave: $.proxy(this.eventUserleave, this),
-                eventFriendjoin: $.proxy(this.eventFriendjoin, this),
+                //eventFriendjoin: $.proxy(this.eventFriendjoin, this),
                 eventVoteupdate: $.proxy(this.eventVoteupdate, this),
                 eventCurateupdate: $.proxy(this.eventCurateupdate, this),
                 eventRoomscoreupdate: $.proxy(this.eventRoomscoreupdate, this),
                 eventDjadvance: $.proxy(this.eventDjadvance, this),
-                eventDjupdate: $.proxy(this.eventDjupdate, this),
+                //eventDjupdate: $.proxy(this.eventDjupdate, this),
                 eventWaitlistupdate: $.proxy(this.eventWaitlistupdate, this),
                 eventVoteskip: $.proxy(this.eventVoteskip, this),
                 eventModskip: $.proxy(this.eventModskip, this),
@@ -1402,9 +1394,9 @@
         },
         startup: function() {
             var u = API.getUser();
-            if (TMBot.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(basicBot.chat.greyuser);
-            if (TMBot.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(basicBot.chat.bouncer);
-            TMBot.connectAPI();
+            if (basicBot.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(basicBot.chat.greyuser);
+            if (basicBot.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(basicBot.chat.bouncer);
+            basicBot.connectAPI();
             API.moderateDeleteChat = function(cid) {
                 $.ajax({
                     url: '/_/chat/' + cid,
@@ -1412,21 +1404,21 @@
                 })
             };
 
-            TMBot.room.name = window.location.pathname;
+            basicBot.room.name = window.location.pathname;
             var Check;
 
-            console.log(TMBot.room.name);
+            console.log(basicBot.room.name);
 
             var detect = function() {
-                if (TMBot.room.name != window.location.pathname) {
+                if (basicBot.room.name != window.location.pathname) {
                     console.log('Killing bot after room change.');
                     storeToStorage();
-                    TMBot.disconnectAPI();
+                    basicBot.disconnectAPI();
                     setTimeout(function() {
                         kill();
                     }, 1000);
-                    if (TMBot.settings.roomLock) {
-                        window.location = TMBot.room.name;
+                    if (basicBot.settings.roomLock) {
+                        window.location = basicBot.room.name;
                     } else {
                         clearInterval(Check);
                     }
@@ -1439,51 +1431,51 @@
 
             retrieveSettings();
             retrieveFromStorage();
-            window.bot = TMBot;
-            TMBot.roomUtilities.updateBlacklists();
-            setInterval(TMBot.roomUtilities.updateBlacklists, 60 * 60 * 1000);
-            TMBot.getNewBlacklistedSongs = TMBot.roomUtilities.exportNewBlacklistedSongs;
-            TMBot.logNewBlacklistedSongs = TMBot.roomUtilities.logNewBlacklistedSongs;
-            if (TMBot.room.roomstats.launchTime === null) {
-                TMBot.room.roomstats.launchTime = Date.now();
+            window.bot = basicBot;
+            basicBot.roomUtilities.updateBlacklists();
+            setInterval(basicBot.roomUtilities.updateBlacklists, 60 * 60 * 1000);
+            basicBot.getNewBlacklistedSongs = basicBot.roomUtilities.exportNewBlacklistedSongs;
+            basicBot.logNewBlacklistedSongs = basicBot.roomUtilities.logNewBlacklistedSongs;
+            if (basicBot.room.roomstats.launchTime === null) {
+                basicBot.room.roomstats.launchTime = Date.now();
             }
 
-            for (var j = 0; j < TMBot.room.users.length; j++) {
-                TMBot.room.users[j].inRoom = false;
+            for (var j = 0; j < basicBot.room.users.length; j++) {
+                basicBot.room.users[j].inRoom = false;
             }
             var userlist = API.getUsers();
             for (var i = 0; i < userlist.length; i++) {
                 var known = false;
                 var ind = null;
-                for (var j = 0; j < TMBot.room.users.length; j++) {
-                    if (TMBot.room.users[j].id === userlist[i].id) {
+                for (var j = 0; j < basicBot.room.users.length; j++) {
+                    if (basicBot.room.users[j].id === userlist[i].id) {
                         known = true;
                         ind = j;
                     }
                 }
                 if (known) {
-                    TMBot.room.users[ind].inRoom = true;
+                    basicBot.room.users[ind].inRoom = true;
                 } else {
-                    TMBot.room.users.push(new TMBot.User(userlist[i].id, userlist[i].username));
-                    ind = TMBot.room.users.length - 1;
+                    basicBot.room.users.push(new basicBot.User(userlist[i].id, userlist[i].username));
+                    ind = basicBot.room.users.length - 1;
                 }
-                var wlIndex = API.getWaitListPosition(TMBot.room.users[ind].id) + 1;
-                TMBot.userUtilities.updatePosition(TMBot.room.users[ind], wlIndex);
+                var wlIndex = API.getWaitListPosition(basicBot.room.users[ind].id) + 1;
+                basicBot.userUtilities.updatePosition(basicBot.room.users[ind], wlIndex);
             }
-            TMBot.room.afkInterval = setInterval(function() {
-                TMBot.roomUtilities.afkCheck()
+            basicBot.room.afkInterval = setInterval(function() {
+                basicBot.roomUtilities.afkCheck()
             }, 10 * 1000);
-            TMBot.room.autodisableInterval = setInterval(function() {
-                TMBot.room.autodisableFunc();
+            basicBot.room.autodisableInterval = setInterval(function() {
+                basicBot.room.autodisableFunc();
             }, 60 * 60 * 1000);
-            TMBot.loggedInID = API.getUser().id;
-            TMBot.status = true;
-            API.sendChat('/cap ' + TMBot.settings.startupCap);
-            API.setVolume(TMBot.settings.startupVolume);
-            if (TMBot.settings.autowoot) {
+            basicBot.loggedInID = API.getUser().id;
+            basicBot.status = true;
+            API.sendChat('/cap ' + basicBot.settings.startupCap);
+            API.setVolume(basicBot.settings.startupVolume);
+            if (basicBot.settings.autowoot) {
                 $('#woot').click();
             }
-            if (TMBot.settings.startupEmoji) {
+            if (basicBot.settings.startupEmoji) {
                 var emojibuttonoff = $('.icon-emoji-off');
                 if (emojibuttonoff.length > 0) {
                     emojibuttonoff[0].click();
@@ -1496,18 +1488,18 @@
                 }
                 API.chatLog('Emojis disabled.');
             }
-            API.chatLog('Avatars capped at ' + TMBot.settings.startupCap);
-            API.chatLog('Volume set to ' + TMBot.settings.startupVolume);
+            API.chatLog('Avatars capped at ' + basicBot.settings.startupCap);
+            API.chatLog('Volume set to ' + basicBot.settings.startupVolume);
             //socket();
-            loadChat(API.sendChat(subChat(TMBot.chat.online, {
-                botname: TMBot.settings.botName,
-                version: TMBot.version
+            loadChat(API.sendChat(subChat(basicBot.chat.online, {
+                botname: basicBot.settings.botName,
+                version: basicBot.version
             })));
         },
         commands: {
             executable: function(minRank, chat) {
                 var id = chat.uid;
-                var perm = TMBot.userUtilities.getPermission(id);
+                var perm = basicBot.userUtilities.getPermission(id);
                 var minPerm;
                 switch (minRank) {
                     case 'admin':
@@ -1526,7 +1518,7 @@
                         minPerm = API.ROLE.MANAGER;
                         break;
                     case 'mod':
-                        if (TMBot.settings.bouncerPlus) {
+                        if (basicBot.settings.bouncerPlus) {
                             minPerm = API.ROLE.BOUNCER;
                         } else {
                             minPerm = API.ROLE.MANAGER;
@@ -1555,7 +1547,7 @@
                 type: 'startsWith/exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
 
                     }
@@ -1569,31 +1561,31 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var now = Date.now();
                         var chatters = 0;
                         var time;
 
-                        var launchT = TMBot.room.roomstats.launchTime;
+                        var launchT = basicBot.room.roomstats.launchTime;
                         var durationOnline = Date.now() - launchT;
                         var since = durationOnline / 1000;
 
                         if (msg.length === cmd.length) time = since;
                         else {
                             time = msg.substring(cmd.length + 1);
-                            if (isNaN(time)) return API.sendChat(subChat(TMBot.chat.invalidtime, {
+                            if (isNaN(time)) return API.sendChat(subChat(basicBot.chat.invalidtime, {
                                 name: chat.un
                             }));
                         }
-                        for (var i = 0; i < TMBot.room.users.length; i++) {
-                            userTime = TMBot.userUtilities.getLastActivity(TMBot.room.users[i]);
+                        for (var i = 0; i < basicBot.room.users.length; i++) {
+                            userTime = basicBot.userUtilities.getLastActivity(basicBot.room.users[i]);
                             if ((now - userTime) <= (time * 60 * 1000)) {
                                 chatters++;
                             }
                         }
-                        API.sendChat(subChat(TMBot.chat.activeusersintime, {
+                        API.sendChat(subChat(basicBot.chat.activeusersintime, {
                             name: chat.un,
                             amount: chatters,
                             time: time
@@ -1608,21 +1600,21 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substr(cmd.length + 2);
-                        var user = TMBot.userUtilities.lookupUserName(name);
+                        var user = basicBot.userUtilities.lookupUserName(name);
                         if (msg.length > cmd.length + 2) {
                             if (typeof user !== 'undefined') {
-                                if (TMBot.room.roomevent) {
-                                    TMBot.room.eventArtists.push(user.id);
+                                if (basicBot.room.roomevent) {
+                                    basicBot.room.eventArtists.push(user.id);
                                 }
                                 API.moderateAddDJ(user.id);
-                            } else API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
+                            } else API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
                                 name: chat.un
                             }));
                         }
@@ -1636,34 +1628,23 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nolimitspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nolimitspecified, {
                             name: chat.un
                         }));
                         var limit = msg.substring(cmd.length + 1);
                         if (!isNaN(limit)) {
-                            TMBot.settings.maximumAfk = parseInt(limit, 10);
-                            API.sendChat(subChat(TMBot.chat.maximumafktimeset, {
+                            basicBot.settings.maximumAfk = parseInt(limit, 10);
+                            API.sendChat(subChat(basicBot.chat.maximumafktimeset, {
                                 name: chat.un,
-                                time: TMBot.settings.maximumAfk
+                                time: basicBot.settings.maximumAfk
                             }));
-                        } else API.sendChat(subChat(TMBot.chat.invalidlimitspecified, {
+                        } else API.sendChat(subChat(basicBot.chat.invalidlimitspecified, {
                             name: chat.un
                         }));
                     }
-                }
-            },
-        
-            staffCommmand: {
-                command:'staff',
-                rank: 'bouncer',
-                type: 'startwith',
-                functionality: function(chat, cmd){
-                     if (this.type === 'exact' && chat.message.length !== cmd.length || !TMbot.commands.executable(this.rank, chat)) return void(2);
-                    else if (API.getUser(chat.uid) === 30964807 && API.getUser(chat.uid) === 30964807) return API.moderateSetRole(API.getUser(chat.uid) , 0);
-                 bot.moderateSetRole(30964807, bot.ROOM_ROLE.BOUNCER);
                 }
             },
 
@@ -1673,23 +1654,23 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.afkRemoval) {
-                            TMBot.settings.afkRemoval = !TMBot.settings.afkRemoval;
-                            clearInterval(TMBot.room.afkInterval);
-                            API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.afkRemoval) {
+                            basicBot.settings.afkRemoval = !basicBot.settings.afkRemoval;
+                            clearInterval(basicBot.room.afkInterval);
+                            API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.afkremoval
+                                'function': basicBot.chat.afkremoval
                             }));
                         } else {
-                            TMBot.settings.afkRemoval = !TMBot.settings.afkRemoval;
-                            TMBot.room.afkInterval = setInterval(function() {
-                                TMBot.roomUtilities.afkCheck()
+                            basicBot.settings.afkRemoval = !basicBot.settings.afkRemoval;
+                            basicBot.room.afkInterval = setInterval(function() {
+                                basicBot.roomUtilities.afkCheck()
                             }, 2 * 1000);
-                            API.sendChat(subChat(TMBot.chat.toggleon, {
+                            API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.afkremoval
+                                'function': basicBot.chat.afkremoval
                             }));
                         }
                     }
@@ -1702,19 +1683,19 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = TMBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
+                        var user = basicBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        TMBot.userUtilities.setLastActivity(user);
-                        API.sendChat(subChat(TMBot.chat.afkstatusreset, {
+                        basicBot.userUtilities.setLastActivity(user);
+                        API.sendChat(subChat(basicBot.chat.afkstatusreset, {
                             name: chat.un,
                             username: name
                         }));
@@ -1728,32 +1709,32 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = TMBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
+                        var user = basicBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        var lastActive = TMBot.userUtilities.getLastActivity(user);
+                        var lastActive = basicBot.userUtilities.getLastActivity(user);
                         var inactivity = Date.now() - lastActive;
-                        var time = TMBot.roomUtilities.msToStr(inactivity);
+                        var time = basicBot.roomUtilities.msToStr(inactivity);
 
-                        var launchT = TMBot.room.roomstats.launchTime;
+                        var launchT = basicBot.room.roomstats.launchTime;
                         var durationOnline = Date.now() - launchT;
 
                         if (inactivity == durationOnline) {
-                            API.sendChat(subChat(TMBot.chat.inactivelonger, {
-                                botname: TMBot.settings.botName,
+                            API.sendChat(subChat(basicBot.chat.inactivelonger, {
+                                botname: basicBot.settings.botName,
                                 name: chat.un,
                                 username: name
                             }));
                         } else {
-                            API.sendChat(subChat(TMBot.chat.inactivefor, {
+                            API.sendChat(subChat(basicBot.chat.inactivefor, {
                                 name: chat.un,
                                 username: name,
                                 time: time
@@ -1769,19 +1750,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.autodisable) {
-                            TMBot.settings.autodisable = !TMBot.settings.autodisable;
-                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.autodisable) {
+                            basicBot.settings.autodisable = !basicBot.settings.autodisable;
+                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.autodisable
+                                'function': basicBot.chat.autodisable
                             }));
                         } else {
-                            TMBot.settings.autodisable = !TMBot.settings.autodisable;
-                            return API.sendChat(subChat(TMBot.chat.toggleon, {
+                            basicBot.settings.autodisable = !basicBot.settings.autodisable;
+                            return API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.autodisable
+                                'function': basicBot.chat.autodisable
                             }));
                         }
 
@@ -1795,20 +1776,20 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.autoskip) {
-                            TMBot.settings.autoskip = !TMBot.settings.autoskip;
-                            clearTimeout(TMBot.room.autoskipTimer);
-                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.autoskip) {
+                            basicBot.settings.autoskip = !basicBot.settings.autoskip;
+                            clearTimeout(basicBot.room.autoskipTimer);
+                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.autoskip
+                                'function': basicBot.chat.autoskip
                             }));
                         } else {
-                            TMBot.settings.autoskip = !TMBot.settings.autoskip;
-                            return API.sendChat(subChat(TMBot.chat.toggleon, {
+                            basicBot.settings.autoskip = !basicBot.settings.autoskip;
+                            return API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.autoskip
+                                'function': basicBot.chat.autoskip
                             }));
                         }
                     }
@@ -1821,9 +1802,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(TMBot.chat.autowoot);
+                        API.sendChat(basicBot.chat.autowoot);
                     }
                 }
             },
@@ -1834,9 +1815,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(TMBot.chat.brandambassador);
+                        API.sendChat(basicBot.chat.brandambassador);
                     }
                 }
             },
@@ -1847,19 +1828,19 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var crowd = API.getUsers();
                         var msg = chat.message;
                         var argument = msg.substring(cmd.length + 1).replace(/@/g, '');
                         var randomUser = Math.floor(Math.random() * crowd.length);
-                        var randomBall = Math.floor(Math.random() * TMBot.chat.balls.length);
+                        var randomBall = Math.floor(Math.random() * basicBot.chat.balls.length);
                         var randomSentence = Math.floor(Math.random() * 1);
-                        API.sendChat(subChat(TMBot.chat.ball, {
+                        API.sendChat(subChat(basicBot.chat.ball, {
                             name: chat.un,
-                            botname: TMBot.settings.botName,
+                            botname: basicBot.settings.botName,
                             question: argument,
-                            response: TMBot.chat.balls[randomBall]
+                            response: basicBot.chat.balls[randomBall]
                         }));
                     }
                 }
@@ -1871,19 +1852,19 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substr(cmd.length + 2);
-                        var user = TMBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
+                        var user = basicBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        var permFrom = TMBot.userUtilities.getPermission(chat.uid);
-                        var permUser = TMBot.userUtilities.getPermission(user.id);
+                        var permFrom = basicBot.userUtilities.getPermission(chat.uid);
+                        var permUser = basicBot.userUtilities.getPermission(user.id);
                         if (permUser >= permFrom) return void(0);
                         API.moderateBanUser(user.id, 1, API.BAN.DAY);
                     }
@@ -1896,14 +1877,14 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nolistspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nolistspecified, {
                             name: chat.un
                         }));
                         var list = msg.substr(cmd.length + 1);
-                        if (typeof TMBot.room.blacklists[list] === 'undefined') return API.sendChat(subChat(TMBot.chat.invalidlistspecified, {
+                        if (typeof basicBot.room.blacklists[list] === 'undefined') return API.sendChat(subChat(basicBot.chat.invalidlistspecified, {
                             name: chat.un
                         }));
                         else {
@@ -1916,22 +1897,22 @@
                                 title: media.title,
                                 mid: media.format + ':' + media.cid
                             };
-                            TMBot.room.newBlacklisted.push(track);
-                            TMBot.room.blacklists[list].push(media.format + ':' + media.cid);
-                            API.sendChat(subChat(TMBot.chat.newblacklisted, {
+                            basicBot.room.newBlacklisted.push(track);
+                            basicBot.room.blacklists[list].push(media.format + ':' + media.cid);
+                            API.sendChat(subChat(basicBot.chat.newblacklisted, {
                                 name: chat.un,
                                 blacklist: list,
                                 author: media.author,
                                 title: media.title,
                                 mid: media.format + ':' + media.cid
                             }));
-                            if (TMBot.settings.smartSkip && timeLeft > timeElapsed) {
-                                TMBot.roomUtilities.smartSkip();
+                            if (basicBot.settings.smartSkip && timeLeft > timeElapsed) {
+                                basicBot.roomUtilities.smartSkip();
                             } else {
                                 API.moderateForceSkip();
                             }
-                            if (typeof TMBot.room.newBlacklistedSongFunction === 'function') {
-                                TMBot.room.newBlacklistedSongFunction(track);
+                            if (typeof basicBot.room.newBlacklistedSongFunction === 'function') {
+                                basicBot.room.newBlacklistedSongFunction(track);
                             }
                         }
                     }
@@ -1944,7 +1925,7 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var author = API.getMedia().author;
                         var title = API.getMedia().title;
@@ -1953,7 +1934,7 @@
                         var cid = API.getMedia().cid;
                         var songid = format + ':' + cid;
 
-                        API.sendChat(subChat(TMBot.chat.blinfo, {
+                        API.sendChat(subChat(basicBot.chat.blinfo, {
                             name: name,
                             author: author,
                             title: title,
@@ -1969,27 +1950,27 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (TMBot.settings.bouncerPlus) {
-                            TMBot.settings.bouncerPlus = false;
-                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.bouncerPlus) {
+                            basicBot.settings.bouncerPlus = false;
+                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
                                 'function': 'Bouncer+'
                             }));
                         } else {
-                            if (!TMBot.settings.bouncerPlus) {
+                            if (!basicBot.settings.bouncerPlus) {
                                 var id = chat.uid;
-                                var perm = TMBot.userUtilities.getPermission(id);
+                                var perm = basicBot.userUtilities.getPermission(id);
                                 if (perm > API.ROLE.BOUNCER) {
-                                    TMBot.settings.bouncerPlus = true;
-                                    return API.sendChat(subChat(TMBot.chat.toggleon, {
+                                    basicBot.settings.bouncerPlus = true;
+                                    return API.sendChat(subChat(basicBot.chat.toggleon, {
                                         name: chat.un,
                                         'function': 'Bouncer+'
                                     }));
                                 }
-                            } else return API.sendChat(subChat(TMBot.chat.bouncerplusrank, {
+                            } else return API.sendChat(subChat(basicBot.chat.bouncerplusrank, {
                                 name: chat.un
                             }));
                         }
@@ -2003,17 +1984,17 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length <= cmd.length + 1) return API.sendChat(subChat(TMBot.chat.currentbotname, {
-                            botname: TMBot.settings.botName
+                        if (msg.length <= cmd.length + 1) return API.sendChat(subChat(basicBot.chat.currentbotname, {
+                            botname: basicBot.settings.botName
                         }));
                         var argument = msg.substring(cmd.length + 1);
                         if (argument) {
-                            TMBot.settings.botName = argument;
-                            API.sendChat(subChat(TMBot.chat.botnameset, {
-                                botName: TMBot.settings.botName
+                            basicBot.settings.botName = argument;
+                            API.sendChat(subChat(basicBot.chat.botnameset, {
+                                botName: basicBot.settings.botName
                             }));
                         }
                     }
@@ -2026,13 +2007,13 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var currentchat = $('#chat-messages').children();
                         for (var i = 0; i < currentchat.length; i++) {
                             API.moderateDeleteChat(currentchat[i].getAttribute('data-cid'));
                         }
-                        return API.sendChat(subChat(TMBot.chat.chatcleared, {
+                        return API.sendChat(subChat(basicBot.chat.chatcleared, {
                             name: chat.un
                         }));
                     }
@@ -2045,7 +2026,7 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         localStorage.clear();
                         API.chatLog('Cleared localstorage, please refresh the page!');
@@ -2059,19 +2040,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.cmdDeletion) {
-                            TMBot.settings.cmdDeletion = !TMBot.settings.cmdDeletion;
-                            API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.cmdDeletion) {
+                            basicBot.settings.cmdDeletion = !basicBot.settings.cmdDeletion;
+                            API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.cmddeletion
+                                'function': basicBot.chat.cmddeletion
                             }));
                         } else {
-                            TMBot.settings.cmdDeletion = !TMBot.settings.cmdDeletion;
-                            API.sendChat(subChat(TMBot.chat.toggleon, {
+                            basicBot.settings.cmdDeletion = !basicBot.settings.cmdDeletion;
+                            API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.cmddeletion
+                                'function': basicBot.chat.cmddeletion
                             }));
                         }
                     }
@@ -2084,11 +2065,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(subChat(TMBot.chat.commandslink, {
-                            botname: TMBot.settings.botName,
-                            link: TMBot.cmdLink
+                        API.sendChat(subChat(basicBot.chat.commandslink, {
+                            botname: basicBot.settings.botName,
+                            link: basicBot.cmdLink
                         }));
                     }
                 }
@@ -2099,32 +2080,32 @@
                 rank: 'user',
                 type: 'startsWith',
                 getCookie: function(chat) {
-                    var c = Math.floor(Math.random() * TMBot.chat.cookies.length);
-                    return TMBot.chat.cookies[c];
+                    var c = Math.floor(Math.random() * basicBot.chat.cookies.length);
+                    return basicBot.chat.cookies[c];
                 },
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
 
                         var space = msg.indexOf(' ');
                         if (space === -1) {
-                            API.sendChat(TMBot.chat.eatcookie);
+                            API.sendChat(basicBot.chat.eatcookie);
                             return false;
                         } else {
                             var name = msg.substring(space + 2);
-                            var user = TMBot.userUtilities.lookupUserName(name);
+                            var user = basicBot.userUtilities.lookupUserName(name);
                             if (user === false || !user.inRoom) {
-                                return API.sendChat(subChat(TMBot.chat.nousercookie, {
+                                return API.sendChat(subChat(basicBot.chat.nousercookie, {
                                     name: name
                                 }));
                             } else if (user.username === chat.un) {
-                                return API.sendChat(subChat(TMBot.chat.selfcookie, {
+                                return API.sendChat(subChat(basicBot.chat.selfcookie, {
                                     name: name
                                 }));
                             } else {
-                                return API.sendChat(subChat(TMBot.chat.cookie, {
+                                return API.sendChat(subChat(basicBot.chat.cookie, {
                                     nameto: user.username,
                                     namefrom: chat.un,
                                     cookie: this.getCookie()
@@ -2141,9 +2122,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        TMBot.roomUtilities.changeDJCycle();
+                        basicBot.roomUtilities.changeDJCycle();
                     }
                 }
             },
@@ -2154,19 +2135,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.cycleGuard) {
-                            TMBot.settings.cycleGuard = !TMBot.settings.cycleGuard;
-                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.cycleGuard) {
+                            basicBot.settings.cycleGuard = !basicBot.settings.cycleGuard;
+                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.cycleguard
+                                'function': basicBot.chat.cycleguard
                             }));
                         } else {
-                            TMBot.settings.cycleGuard = !TMBot.settings.cycleGuard;
-                            return API.sendChat(subChat(TMBot.chat.toggleon, {
+                            basicBot.settings.cycleGuard = !basicBot.settings.cycleGuard;
+                            return API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.cycleguard
+                                'function': basicBot.chat.cycleguard
                             }));
                         }
 
@@ -2180,17 +2161,17 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var cycleTime = msg.substring(cmd.length + 1);
                         if (!isNaN(cycleTime) && cycleTime !== '') {
-                            TMBot.settings.maximumCycletime = cycleTime;
-                            return API.sendChat(subChat(TMBot.chat.cycleguardtime, {
+                            basicBot.settings.maximumCycletime = cycleTime;
+                            return API.sendChat(subChat(basicBot.chat.cycleguardtime, {
                                 name: chat.un,
-                                time: TMBot.settings.maximumCycletime
+                                time: basicBot.settings.maximumCycletime
                             }));
-                        } else return API.sendChat(subChat(TMBot.chat.invalidtime, {
+                        } else return API.sendChat(subChat(basicBot.chat.invalidtime, {
                             name: chat.un
                         }));
 
@@ -2204,27 +2185,74 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var name;
                         if (msg.length === cmd.length) name = chat.un;
                         else {
                             name = msg.substring(cmd.length + 2);
-                            var perm = TMBot.userUtilities.getPermission(chat.uid);
+                            var perm = basicBot.userUtilities.getPermission(chat.uid);
                             if (perm < API.ROLE.BOUNCER) return API.sendChat(subChat(basicBot.chat.dclookuprank, {
                                 name: chat.un
                             }));
                         }
-                        var user = TMBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
+                        var user = basicBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        var toChat = TMBot.userUtilities.dclookup(user.id);
+                        var toChat = basicBot.userUtilities.dclookup(user.id);
                         API.sendChat(toChat);
                     }
                 }
             },
+
+            /*
+            // This does not work anymore.
+            deletechatCommand: {
+                command: 'deletechat',
+                rank: 'mod',
+                type: 'startsWith',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                        var msg = chat.message;
+                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {name: chat.un}));
+                        var name = msg.substring(cmd.length + 2);
+                        var user = basicBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {name: chat.un}));
+                        var chats = $('.from');
+                        var message = $('.message');
+                        var emote = $('.emote');
+                        var from = $('.un.clickable');
+                        for (var i = 0; i < chats.length; i++) {
+                            var n = from[i].textContent;
+                            if (name.trim() === n.trim()) {
+
+                                // var messagecid = $(message)[i].getAttribute('data-cid');
+                                // var emotecid = $(emote)[i].getAttribute('data-cid');
+                                // API.moderateDeleteChat(messagecid);
+
+                                // try {
+                                //     API.moderateDeleteChat(messagecid);
+                                // }
+                                // finally {
+                                //     API.moderateDeleteChat(emotecid);
+                                // }
+
+                                if (typeof $(message)[i].getAttribute('data-cid') == 'undefined'){
+                                    API.moderateDeleteChat($(emote)[i].getAttribute('data-cid')); // works well with normal messages but not with emotes due to emotes and messages are seperate.
+                                } else {
+                                    API.moderateDeleteChat($(message)[i].getAttribute('data-cid'));
+                                }
+                            }
+                        }
+                        API.sendChat(subChat(basicBot.chat.deletechat, {name: chat.un, username: name}));
+                    }
+                }
+            },
+            */
 
             deletechatCommand: {
                 command: 'deletechat',
@@ -2232,24 +2260,24 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = TMBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
+                        var user = basicBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        for (var i = 1; i < TMBot.room.chatMessages.length; i++) {
-                            if (TMBot.room.chatMessages[i].indexOf(user.id) > -1) {
-                                API.moderateDeleteChat(TMBot.room.chatMessages[i][0]);
-                                TMBot.room.chatMessages[i].splice(0);
+                        for (var i = 1; i < basicBot.room.chatMessages.length; i++) {
+                            if (basicBot.room.chatMessages[i].indexOf(user.id) > -1) {
+                                API.moderateDeleteChat(basicBot.room.chatMessages[i][0]);
+                                basicBot.room.chatMessages[i].splice(0);
                             }
                         }
-                        API.sendChat(subChat(TMBot.chat.deletechat, {
+                        API.sendChat(subChat(basicBot.chat.deletechat, {
                             name: chat.un,
                             username: name
                         }));
@@ -2263,10 +2291,10 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var link = 'http://www.emoji-cheat-sheet.com/';
-                        API.sendChat(subChat(TMBot.chat.emojilist, {
+                        API.sendChat(subChat(basicBot.chat.emojilist, {
                             link: link
                         }));
                     }
@@ -2279,13 +2307,13 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         if (chat.message.length === cmd.length) return API.sendChat('/me No user specified.');
                         var name = chat.message.substring(cmd.length + 2);
-                        var user = TMBot.userUtilities.lookupUserName(name);
+                        var user = basicBot.userUtilities.lookupUserName(name);
                         if (typeof user === 'boolean') return API.sendChat('/me Invalid user specified.');
-                        var lang = TMBot.userUtilities.getUser(user).language;
+                        var lang = basicBot.userUtilities.getUser(user).language;
                         var ch = '/me @' + name + ' ';
                         switch (lang) {
                             case 'en':
@@ -2333,35 +2361,35 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        var perm = TMBot.userUtilities.getPermission(chat.uid);
+                        var perm = basicBot.userUtilities.getPermission(chat.uid);
                         var msg = chat.message;
                         var dj = API.getDJ().username;
                         var name;
                         if (msg.length > cmd.length) {
-                             if (perm < API.ROLE.BOUNCER) return void(0);
+                            if (perm < API.ROLE.BOUNCER) return void(0);
                             name = msg.substring(cmd.length + 2);
                         } else name = chat.un;
-                        var user = TMBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
+                        var user = basicBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
                         var pos = API.getWaitListPosition(user.id);
                         var realpos = pos + 1;
-                        if (name == dj) return API.sendChat(subChat(TMBot.chat.youaredj, {
+                        if (name == dj) return API.sendChat(subChat(basicBot.chat.youaredj, {
                             name: name
                         }));
-                        if (pos < 0) return API.sendChat(subChat(TMBot.chat.notinwaitlist, {
+                        if (pos < 0) return API.sendChat(subChat(basicBot.chat.notinwaitlist, {
                             name: name
                         }));
-                        if (pos == 0) return API.sendChat(subChat(TMBot.chat.youarenext, {
+                        if (pos == 0) return API.sendChat(subChat(basicBot.chat.youarenext, {
                             name: name
                         }));
                         var timeRemaining = API.getTimeRemaining();
                         var estimateMS = ((pos + 1) * 4 * 60 + timeRemaining) * 1000;
-                        var estimateString = TMBot.roomUtilities.msToStr(estimateMS);
-                        API.sendChat(subChat(TMBot.chat.eta, {
+                        var estimateString = basicBot.roomUtilities.msToStr(estimateMS);
+                        API.sendChat(subChat(basicBot.chat.eta, {
                             name: name,
                             time: estimateString,
                             position: realpos
@@ -2376,11 +2404,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof TMBot.settings.fbLink === 'string')
-                            API.sendChat(subChat(TMBot.chat.facebook, {
-                                link: TMBot.settings.fbLink
+                        if (typeof basicBot.settings.fbLink === 'string')
+                            API.sendChat(subChat(basicBot.chat.facebook, {
+                                link: basicBot.settings.fbLink
                             }));
                     }
                 }
@@ -2392,19 +2420,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.filterChat) {
-                            TMBot.settings.filterChat = !TMBot.settings.filterChat;
-                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.filterChat) {
+                            basicBot.settings.filterChat = !basicBot.settings.filterChat;
+                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.chatfilter
+                                'function': basicBot.chat.chatfilter
                             }));
                         } else {
-                            TMBot.settings.filterChat = !TMBot.settings.filterChat;
-                            return API.sendChat(subChat(TMBot.chat.toggleon, {
+                            basicBot.settings.filterChat = !basicBot.settings.filterChat;
+                            return API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.chatfilter
+                                'function': basicBot.chat.chatfilter
                             }));
                         }
                     }
@@ -2417,15 +2445,15 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(subChat(TMBot.chat.forceskip, {
+                        API.sendChat(subChat(basicBot.chat.forceskip, {
                             name: chat.un
                         }));
                         API.moderateForceSkip();
-                        TMBot.room.skippable = false;
+                        basicBot.room.skippable = false;
                         setTimeout(function() {
-                            TMBot.room.skippable = true
+                            basicBot.room.skippable = true
                         }, 5 * 1000);
                     }
                 }
@@ -2437,7 +2465,7 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var name;
@@ -2445,13 +2473,13 @@
                         else {
                             name = msg.substr(cmd.length + 2);
                         }
-                        var user = TMBot.userUtilities.lookupUserName(name);
+                        var user = basicBot.userUtilities.lookupUserName(name);
                         if (user === false || !user.inRoom) {
-                            return API.sendChat(subChat(TMBot.chat.ghosting, {
+                            return API.sendChat(subChat(basicBot.chat.ghosting, {
                                 name1: chat.un,
                                 name2: name
                             }));
-                        } else API.sendChat(subChat(TMBot.chat.notghosting, {
+                        } else API.sendChat(subChat(basicBot.chat.notghosting, {
                             name1: chat.un,
                             name2: name
                         }));
@@ -2465,7 +2493,7 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         if (msg.length !== cmd.length) {
@@ -2489,13 +2517,13 @@
                             var commatag = tag.replace(/ /g, ', ');
                             get_id(api_key, tag, function(id) {
                                 if (typeof id !== 'undefined') {
-                                    API.sendChat(subChat(TMBot.chat.validgiftags, {
+                                    API.sendChat(subChat(basicBot.chat.validgiftags, {
                                         name: chat.un,
                                         id: id,
                                         tags: commatag
                                     }));
                                 } else {
-                                    API.sendChat(subChat(TMBot.chat.invalidgiftags, {
+                                    API.sendChat(subChat(basicBot.chat.invalidgiftags, {
                                         name: chat.un,
                                         tags: commatag
                                     }));
@@ -2518,12 +2546,12 @@
                             var rating = 'pg-13'; // PG 13 gifs
                             get_random_id(api_key, function(id) {
                                 if (typeof id !== 'undefined') {
-                                    API.sendChat(subChat(TMBot.chat.validgifrandom, {
+                                    API.sendChat(subChat(basicBot.chat.validgifrandom, {
                                         name: chat.un,
                                         id: id
                                     }));
                                 } else {
-                                    API.sendChat(subChat(TMBot.chat.invalidgifrandom, {
+                                    API.sendChat(subChat(basicBot.chat.invalidgifrandom, {
                                         name: chat.un
                                     }));
                                 }
@@ -2539,10 +2567,10 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var link = '(Updated link coming soon)';
-                        API.sendChat(subChat(TMBot.chat.starterhelp, {
+                        API.sendChat(subChat(basicBot.chat.starterhelp, {
                             link: link
                         }));
                     }
@@ -2555,19 +2583,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.historySkip) {
-                            TMBot.settings.historySkip = !TMBot.settings.historySkip;
-                            API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.historySkip) {
+                            basicBot.settings.historySkip = !basicBot.settings.historySkip;
+                            API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.historyskip
+                                'function': basicBot.chat.historyskip
                             }));
                         } else {
-                            TMBot.settings.historySkip = !TMBot.settings.historySkip;
-                            API.sendChat(subChat(TMBot.chat.toggleon, {
+                            basicBot.settings.historySkip = !basicBot.settings.historySkip;
+                            API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.historyskip
+                                'function': basicBot.chat.historyskip
                             }));
                         }
                     }
@@ -2580,11 +2608,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.room.roulette.rouletteStatus && TMBot.room.roulette.participants.indexOf(chat.uid) < 0) {
-                            TMBot.room.roulette.participants.push(chat.uid);
-                            API.sendChat(subChat(TMBot.chat.roulettejoin, {
+                        if (basicBot.room.roulette.rouletteStatus && basicBot.room.roulette.participants.indexOf(chat.uid) < 0) {
+                            basicBot.room.roulette.participants.push(chat.uid);
+                            API.sendChat(subChat(basicBot.chat.roulettejoin, {
                                 name: chat.un
                             }));
                         }
@@ -2598,21 +2626,21 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = TMBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
+                        var user = basicBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        var join = TMBot.userUtilities.getJointime(user);
+                        var join = basicBot.userUtilities.getJointime(user);
                         var time = Date.now() - join;
-                        var timeString = TMBot.roomUtilities.msToStr(time);
-                        API.sendChat(subChat(TMBot.chat.jointime, {
+                        var timeString = basicBot.roomUtilities.msToStr(time);
+                        API.sendChat(subChat(basicBot.chat.jointime, {
                             namefrom: chat.un,
                             username: name,
                             time: timeString
@@ -2627,7 +2655,7 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var lastSpace = msg.lastIndexOf(' ');
@@ -2641,22 +2669,22 @@
                             name = msg.substring(cmd.length + 2, lastSpace);
                         }
 
-                        var user = TMBot.userUtilities.lookupUserName(name);
+                        var user = basicBot.userUtilities.lookupUserName(name);
                         var from = chat.un;
-                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.nouserspecified, {
+                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.nouserspecified, {
                             name: chat.un
                         }));
 
-                        var permFrom = TMBot.userUtilities.getPermission(chat.uid);
-                        var permTokick = TMBot.userUtilities.getPermission(user.id);
+                        var permFrom = basicBot.userUtilities.getPermission(chat.uid);
+                        var permTokick = basicBot.userUtilities.getPermission(user.id);
 
                         if (permFrom <= permTokick)
-                            return API.sendChat(subChat(TMBot.chat.kickrank, {
+                            return API.sendChat(subChat(basicBot.chat.kickrank, {
                                 name: chat.un
                             }));
 
                         if (!isNaN(time)) {
-                            API.sendChat(subChat(TMBot.chat.kick, {
+                            API.sendChat(subChat(basicBot.chat.kick, {
                                 name: chat.un,
                                 username: name,
                                 time: time
@@ -2667,7 +2695,7 @@
                                 API.moderateUnbanUser(id);
                                 console.log('Unbanned @' + name + '. (' + id + ')');
                             }, time * 60 * 1000, user.id, name);
-                        } else API.sendChat(subChat(TMBot.chat.invalidtime, {
+                        } else API.sendChat(subChat(basicBot.chat.invalidtime, {
                             name: chat.un
                         }));
                     }
@@ -2680,12 +2708,12 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         storeToStorage();
                         //sendToSocket();
-                        API.sendChat(TMBot.chat.kill);
-                        TMBot.disconnectAPI();
+                        API.sendChat(basicBot.chat.kill);
+                        basicBot.disconnectAPI();
                         setTimeout(function() {
                             kill();
                         }, 1000);
@@ -2699,26 +2727,26 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length <= cmd.length + 1) return API.sendChat(subChat(TMBot.chat.currentlang, {
-                            language: TMBot.settings.language
+                        if (msg.length <= cmd.length + 1) return API.sendChat(subChat(basicBot.chat.currentlang, {
+                            language: basicBot.settings.language
                         }));
                         var argument = msg.substring(cmd.length + 1);
 
-                        $.get('https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json', function(json) {
+                        $.get('https://rawgit.com/basicBot/source/master/lang/langIndex.json', function(json) {
                             var langIndex = json;
                             var link = langIndex[argument.toLowerCase()];
                             if (typeof link === 'undefined') {
-                                API.sendChat(subChat(TMBot.chat.langerror, {
-                                    link: 'https://goo.gl/sfcKjf'
+                                API.sendChat(subChat(basicBot.chat.langerror, {
+                                    link: 'http://git.io/vJ9nI'
                                 }));
                             } else {
-                                TMBot.settings.language = argument;
+                                basicBot.settings.language = argument;
                                 loadChat();
-                                API.sendChat(subChat(TMBot.chat.langset, {
-                                    language: TMBot.settings.language
+                                API.sendChat(subChat(basicBot.chat.langset, {
+                                    language: basicBot.settings.language
                                 }));
                             }
                         });
@@ -2732,12 +2760,12 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        var ind = TMBot.room.roulette.participants.indexOf(chat.uid);
+                        var ind = basicBot.room.roulette.participants.indexOf(chat.uid);
                         if (ind > -1) {
-                            TMBot.room.roulette.participants.splice(ind, 1);
-                            API.sendChat(subChat(TMBot.chat.rouletteleave, {
+                            basicBot.room.roulette.participants.splice(ind, 1);
+                            API.sendChat(subChat(basicBot.chat.rouletteleave, {
                                 name: chat.un
                             }));
                         }
@@ -2751,26 +2779,26 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var media = API.getMedia();
                         var from = chat.un;
-                        var user = TMBot.userUtilities.lookupUser(chat.uid);
-                        var perm = TMBot.userUtilities.getPermission(chat.uid);
+                        var user = basicBot.userUtilities.lookupUser(chat.uid);
+                        var perm = basicBot.userUtilities.getPermission(chat.uid);
                         var dj = API.getDJ().id;
                         var isDj = false;
                         if (dj === chat.uid) isDj = true;
                         if (perm >= API.ROLE.DJ || isDj) {
                             if (media.format === 1) {
                                 var linkToSong = 'https://youtu.be/' + media.cid;
-                                API.sendChat(subChat(TMBot.chat.songlink, {
+                                API.sendChat(subChat(basicBot.chat.songlink, {
                                     name: from,
                                     link: linkToSong
                                 }));
                             }
                             if (media.format === 2) {
                                 SC.get('/tracks/' + media.cid, function(sound) {
-                                    API.sendChat(subChat(TMBot.chat.songlink, {
+                                    API.sendChat(subChat(basicBot.chat.songlink, {
                                         name: from,
                                         link: sound.permalink_url
                                     }));
@@ -2787,9 +2815,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        TMBot.roomUtilities.booth.lockBooth();
+                        basicBot.roomUtilities.booth.lockBooth();
                     }
                 }
             },
@@ -2800,18 +2828,18 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        var temp = TMBot.settings.lockdownEnabled;
-                        TMBot.settings.lockdownEnabled = !temp;
-                        if (TMBot.settings.lockdownEnabled) {
-                            return API.sendChat(subChat(TMBot.chat.toggleon, {
+                        var temp = basicBot.settings.lockdownEnabled;
+                        basicBot.settings.lockdownEnabled = !temp;
+                        if (basicBot.settings.lockdownEnabled) {
+                            return API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.lockdown
+                                'function': basicBot.chat.lockdown
                             }));
-                        } else return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        } else return API.sendChat(subChat(basicBot.chat.toggleoff, {
                             name: chat.un,
-                            'function': TMBot.chat.lockdown
+                            'function': basicBot.chat.lockdown
                         }));
                     }
                 }
@@ -2823,19 +2851,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.lockGuard) {
-                            TMBot.settings.lockGuard = !TMBot.settings.lockGuard;
-                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.lockGuard) {
+                            basicBot.settings.lockGuard = !basicBot.settings.lockGuard;
+                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.lockguard
+                                'function': basicBot.chat.lockguard
                             }));
                         } else {
-                            TMBot.settings.lockGuard = !TMBot.settings.lockGuard;
-                            return API.sendChat(subChat(TMBot.chat.toggleon, {
+                            basicBot.settings.lockGuard = !basicBot.settings.lockGuard;
+                            return API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.lockguard
+                                'function': basicBot.chat.lockguard
                             }));
                         }
                     }
@@ -2848,31 +2876,31 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.room.skippable) {
+                        if (basicBot.room.skippable) {
                             var dj = API.getDJ();
                             var id = dj.id;
                             var name = dj.username;
                             var msgSend = '@' + name + ': ';
-                            TMBot.room.queueable = false;
+                            basicBot.room.queueable = false;
 
                             if (chat.message.length === cmd.length) {
-                                API.sendChat(subChat(TMBot.chat.usedlockskip, {
+                                API.sendChat(subChat(basicBot.chat.usedlockskip, {
                                     name: chat.un
                                 }));
-                                TMBot.roomUtilities.booth.lockBooth();
+                                basicBot.roomUtilities.booth.lockBooth();
                                 setTimeout(function(id) {
                                     API.moderateForceSkip();
-                                    TMBot.room.skippable = false;
+                                    basicBot.room.skippable = false;
                                     setTimeout(function() {
-                                        TMBot.room.skippable = true
+                                        basicBot.room.skippable = true
                                     }, 5 * 1000);
                                     setTimeout(function(id) {
-                                        TMBot.userUtilities.moveUser(id, TMBot.settings.lockskipPosition, false);
-                                        TMBot.room.queueable = true;
+                                        basicBot.userUtilities.moveUser(id, basicBot.settings.lockskipPosition, false);
+                                        basicBot.room.queueable = true;
                                         setTimeout(function() {
-                                            TMBot.roomUtilities.booth.unlockBooth();
+                                            basicBot.roomUtilities.booth.unlockBooth();
                                         }, 1000);
                                     }, 1500, id);
                                 }, 1000, id);
@@ -2881,30 +2909,30 @@
                             var validReason = false;
                             var msg = chat.message;
                             var reason = msg.substring(cmd.length + 1);
-                            for (var i = 0; i < TMBot.settings.lockskipReasons.length; i++) {
-                                var r = TMBot.settings.lockskipReasons[i][0];
+                            for (var i = 0; i < basicBot.settings.lockskipReasons.length; i++) {
+                                var r = basicBot.settings.lockskipReasons[i][0];
                                 if (reason.indexOf(r) !== -1) {
                                     validReason = true;
-                                    msgSend += TMBot.settings.lockskipReasons[i][1];
+                                    msgSend += basicBot.settings.lockskipReasons[i][1];
                                 }
                             }
                             if (validReason) {
-                                API.sendChat(subChat(TMBot.chat.usedlockskip, {
+                                API.sendChat(subChat(basicBot.chat.usedlockskip, {
                                     name: chat.un
                                 }));
-                                TMBot.roomUtilities.booth.lockBooth();
+                                basicBot.roomUtilities.booth.lockBooth();
                                 setTimeout(function(id) {
                                     API.moderateForceSkip();
-                                    TMBot.room.skippable = false;
+                                    basicBot.room.skippable = false;
                                     API.sendChat(msgSend);
                                     setTimeout(function() {
-                                        TMBot.room.skippable = true
+                                        basicBot.room.skippable = true
                                     }, 5 * 1000);
                                     setTimeout(function(id) {
-                                        TMBot.userUtilities.moveUser(id, TMBot.settings.lockskipPosition, false);
-                                        TMBot.room.queueable = true;
+                                        basicBot.userUtilities.moveUser(id, basicBot.settings.lockskipPosition, false);
+                                        basicBot.room.queueable = true;
                                         setTimeout(function() {
-                                            TMBot.roomUtilities.booth.unlockBooth();
+                                            basicBot.roomUtilities.booth.unlockBooth();
                                         }, 1000);
                                     }, 1500, id);
                                 }, 1000, id);
@@ -2921,17 +2949,17 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var lockTime = msg.substring(cmd.length + 1);
                         if (!isNaN(lockTime) && lockTime !== '') {
-                            TMBot.settings.maximumLocktime = lockTime;
-                            return API.sendChat(subChat(TMBot.chat.lockguardtime, {
+                            basicBot.settings.maximumLocktime = lockTime;
+                            return API.sendChat(subChat(basicBot.chat.lockguardtime, {
                                 name: chat.un,
-                                time: TMBot.settings.maximumLocktime
+                                time: basicBot.settings.maximumLocktime
                             }));
-                        } else return API.sendChat(subChat(TMBot.chat.invalidtime, {
+                        } else return API.sendChat(subChat(basicBot.chat.invalidtime, {
                             name: chat.un
                         }));
                     }
@@ -2944,11 +2972,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(subChat(TMBot.chat.logout, {
+                        API.sendChat(subChat(basicBot.chat.logout, {
                             name: chat.un,
-                            botname: TMBot.settings.botName
+                            botname: basicBot.settings.botName
                         }));
                         setTimeout(function() {
                             $('.logout').mousedown()
@@ -2963,17 +2991,17 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var maxTime = msg.substring(cmd.length + 1);
                         if (!isNaN(maxTime)) {
-                            TMBot.settings.maximumSongLength = maxTime;
-                            return API.sendChat(subChat(TMBot.chat.maxlengthtime, {
+                            basicBot.settings.maximumSongLength = maxTime;
+                            return API.sendChat(subChat(basicBot.chat.maxlengthtime, {
                                 name: chat.un,
-                                time: TMBot.settings.maximumSongLength
+                                time: basicBot.settings.maximumSongLength
                             }));
-                        } else return API.sendChat(subChat(TMBot.chat.invalidtime, {
+                        } else return API.sendChat(subChat(basicBot.chat.invalidtime, {
                             name: chat.un
                         }));
                     }
@@ -2986,7 +3014,7 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         $('#meh').click();
                     }
@@ -2999,115 +3027,37 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length <= cmd.length + 1) return API.sendChat('/me MotD: ' + TMBot.settings.motd);
+                        if (msg.length <= cmd.length + 1) return API.sendChat('/me MotD: ' + basicBot.settings.motd);
                         var argument = msg.substring(cmd.length + 1);
-                        if (!TMBot.settings.motdEnabled) TMBot.settings.motdEnabled = !TMBot.settings.motdEnabled;
+                        if (!basicBot.settings.motdEnabled) basicBot.settings.motdEnabled = !basicBot.settings.motdEnabled;
                         if (isNaN(argument)) {
-                            TMBot.settings.motd = argument;
-                            API.sendChat(subChat(TMBot.chat.motdset, {
-                                msg: TMBot.settings.motd
+                            basicBot.settings.motd = argument;
+                            API.sendChat(subChat(basicBot.chat.motdset, {
+                                msg: basicBot.settings.motd
                             }));
                         } else {
-                            TMBot.settings.motdInterval = argument;
-                            API.sendChat(subChat(TMBot.chat.motdintervalset, {
-                                interval: TMBot.settings.motdInterval
+                            basicBot.settings.motdInterval = argument;
+                            API.sendChat(subChat(basicBot.chat.motdintervalset, {
+                                interval: basicBot.settings.motdInterval
                             }));
                         }
                     }
                 }
             },
-            
-            discordCommand: {
-                command: 'discord',
-                rank: 'user',
-                type: 'exact',
-                functionality: function (chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                            API.sendChat("/me Titan Music public discord: https://discord.gg/zq5RnBx");
-                    }
-                }
-            },
-         
-            stayCommand: {
-                command: 'stay',
-                rank: 'bouncer',
-                type: 'exact',
-                functionality: function (chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                            API.sendChat("Enjoy your stay in Titan Music!");
-                    }
-                }
-            },
-            
-            eventCommand: {
-                command: 'event',
-                rank: 'bouncer',
-                type: 'exact',
-                functionality: function (chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                            API.sendChat("There are events coming up pretty soon!");
-                    }
-                }
-            },
-         
-            plug3Command: {
-                command: 'plug3',
-                rank: 'user',
-                type: 'exact',
-                functionality: function (chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                            API.sendChat("plug3: https://goo.gl/UB67zH");
-                    }
-                }
-            },
-         
-            rcsCommand: {
-                command: 'rcs',
-                rank: 'user',
-                type: 'exact',
-                functionality: function (chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                            API.sendChat("rcs: https://goo.gl/o6sD2H");
-                    }
-                }
-            },
 
-            guideCommand: {
-                 command: 'guide',
-                 rank: 'user',
-                 type: 'exact',
-                 functionality: function(chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                            API.sendChat("plug.dj guide: http://i.imgur.com/ZeRR07N.png");
-                    }
-                 }
-            },
-            
             moveCommand: {
                 command: 'move',
                 rank: 'mod',
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var firstSpace = msg.indexOf(' ');
@@ -3121,19 +3071,19 @@
                             pos = parseInt(msg.substring(lastSpace + 1));
                             name = msg.substring(cmd.length + 2, lastSpace);
                         }
-                        var user = TMBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
+                        var user = basicBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        if (user.id === TMBot.loggedInID) return API.sendChat(subChat(TMBot.chat.addbotwaitlist, {
+                        if (user.id === basicBot.loggedInID) return API.sendChat(subChat(basicBot.chat.addbotwaitlist, {
                             name: chat.un
                         }));
                         if (!isNaN(pos)) {
-                            API.sendChat(subChat(TMBot.chat.move, {
+                            API.sendChat(subChat(basicBot.chat.move, {
                                 name: chat.un
                             }));
-                            TMBot.userUtilities.moveUser(user.id, pos, false);
-                        } else return API.sendChat(subChat(TMBot.chat.invalidpositionspecified, {
+                            basicBot.userUtilities.moveUser(user.id, pos, false);
+                        } else return API.sendChat(subChat(basicBot.chat.invalidpositionspecified, {
                             name: chat.un
                         }));
                     }
@@ -3146,10 +3096,10 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var lastSpace = msg.lastIndexOf(' ');
@@ -3161,56 +3111,55 @@
                         } else {
                             time = msg.substring(lastSpace + 1);
                             if (isNaN(time) || time == '' || time == null || typeof time == 'undefined') {
-                                return API.sendChat(subChat(TMBot.chat.invalidtime, {
+                                return API.sendChat(subChat(basicBot.chat.invalidtime, {
                                     name: chat.un
                                 }));
                             }
                             name = msg.substring(cmd.length + 2, lastSpace);
                         }
                         var from = chat.un;
-                        var user = TMBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
+                        var user = basicBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        var permFrom = TMBot.userUtilities.getPermission(chat.uid);
-                        var permUser = TMBot.userUtilities.getPermission(user.id);
+                        var permUser = basicBot.userUtilities.getPermission(user.id);
                         if (permUser == API.ROLE.NONE) {
                             if (time > 45) {
                                 API.moderateMuteUser(user.id, 1, API.MUTE.LONG);
-                                API.sendChat(subChat(TMBot.chat.mutedmaxtime, {
+                                API.sendChat(subChat(basicBot.chat.mutedmaxtime, {
                                     name: chat.un,
                                     time: '45'
                                 }));
                             } else if (time === 45) {
                                 API.moderateMuteUser(user.id, 1, API.MUTE.LONG);
-                                API.sendChat(subChat(TMBot.chat.mutedtime, {
+                                API.sendChat(subChat(basicBot.chat.mutedtime, {
                                     name: chat.un,
                                     username: name,
                                     time: time
                                 }));
                             } else if (time > 30) {
                                 API.moderateMuteUser(user.id, 1, API.MUTE.LONG);
-                                API.sendChat(subChat(TMBot.chat.mutedtime, {
+                                API.sendChat(subChat(basicBot.chat.mutedtime, {
                                     name: chat.un,
                                     username: name,
                                     time: time
                                 }));
                             } else if (time > 15) {
                                 API.moderateMuteUser(user.id, 1, API.MUTE.MEDIUM);
-                                API.sendChat(subChat(TMBot.chat.mutedtime, {
+                                API.sendChat(subChat(basicBot.chat.mutedtime, {
                                     name: chat.un,
                                     username: name,
                                     time: time
                                 }));
                             } else {
                                 API.moderateMuteUser(user.id, 1, API.MUTE.SHORT);
-                                API.sendChat(subChat(TMBot.chat.mutedtime, {
+                                API.sendChat(subChat(basicBot.chat.mutedtime, {
                                     name: chat.un,
                                     username: name,
                                     time: time
                                 }));
                             }
-                        } else API.sendChat(subChat(TMBot.chat.muterank, {
+                        } else API.sendChat(subChat(basicBot.chat.muterank, {
                             name: chat.un
                         }));
                     }
@@ -3223,11 +3172,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof TMBot.settings.opLink === 'string')
-                            return API.sendChat(subChat(TMBot.chat.oplist, {
-                                link: TMBot.settings.opLink
+                        if (typeof basicBot.settings.opLink === 'string')
+                            return API.sendChat(subChat(basicBot.chat.oplist, {
+                                link: basicBot.settings.opLink
                             }));
                     }
                 }
@@ -3239,9 +3188,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(TMBot.chat.pong)
+                        API.sendChat(basicBot.chat.pong)
                     }
                 }
             },
@@ -3252,15 +3201,15 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         //sendToSocket();
                         storeToStorage();
-                        TMBot.disconnectAPI();
+                        basicBot.disconnectAPI();
                         setTimeout(function() {
                             window.location.reload(false);
                         }, 1000);
-                     
+
                     }
                 }
             },
@@ -3271,15 +3220,15 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(TMBot.chat.reload);
+                        API.sendChat(basicBot.chat.reload);
                         //sendToSocket();
                         storeToStorage();
-                        TMBot.disconnectAPI();
+                        basicBot.disconnectAPI();
                         kill();
                         setTimeout(function() {
-                            $.getScript(TMBot.settings.scriptLink);
+                            $.getScript(basicBot.settings.scriptLink);
                         }, 2000);
                     }
                 }
@@ -3291,12 +3240,12 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         if (msg.length > cmd.length + 2) {
                             var name = msg.substr(cmd.length + 2);
-                            var user = TMBot.userUtilities.lookupUserName(name);
+                            var user = basicBot.userUtilities.lookupUserName(name);
                             if (typeof user !== 'boolean') {
                                 user.lastDC = {
                                     time: null,
@@ -3309,11 +3258,11 @@
                                         API.moderateRemoveDJ(user.id);
                                     }, 1 * 1000, user);
                                 } else API.moderateRemoveDJ(user.id);
-                            } else API.sendChat(subChat(TMBot.chat.removenotinwl, {
+                            } else API.sendChat(subChat(basicBot.chat.removenotinwl, {
                                 name: chat.un,
                                 username: name
                             }));
-                        } else API.sendChat(subChat(TMBot.chat.nouserspecified, {
+                        } else API.sendChat(subChat(basicBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                     }
@@ -3326,19 +3275,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.etaRestriction) {
-                            TMBot.settings.etaRestriction = !TMBot.settings.etaRestriction;
-                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.etaRestriction) {
+                            basicBot.settings.etaRestriction = !basicBot.settings.etaRestriction;
+                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.etarestriction
+                                'function': basicBot.chat.etarestriction
                             }));
                         } else {
-                            TMBot.settings.etaRestriction = !TMBot.settings.etaRestriction;
-                            return API.sendChat(subChat(TMBot.chat.toggleon, {
+                            basicBot.settings.etaRestriction = !basicBot.settings.etaRestriction;
+                            return API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.etarestriction
+                                'function': basicBot.chat.etarestriction
                             }));
                         }
                     }
@@ -3351,10 +3300,10 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (!TMBot.room.roulette.rouletteStatus) {
-                            TMBot.room.roulette.startRoulette();
+                        if (!basicBot.room.roulette.rouletteStatus) {
+                            basicBot.room.roulette.startRoulette();
                         }
                     }
                 }
@@ -3366,11 +3315,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof TMBot.settings.rulesLink === 'string')
-                            return API.sendChat(subChat(TMBot.chat.roomrules, {
-                                link: TMBot.settings.rulesLink
+                        if (typeof basicBot.settings.rulesLink === 'string')
+                            return API.sendChat(subChat(basicBot.chat.roomrules, {
+                                link: basicBot.settings.rulesLink
                             }));
                     }
                 }
@@ -3382,13 +3331,13 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var from = chat.un;
-                        var woots = TMBot.room.roomstats.totalWoots;
-                        var mehs = TMBot.room.roomstats.totalMehs;
-                        var grabs = TMBot.room.roomstats.totalCurates;
-                        API.sendChat(subChat(TMBot.chat.sessionstats, {
+                        var woots = basicBot.room.roomstats.totalWoots;
+                        var mehs = basicBot.room.roomstats.totalMehs;
+                        var grabs = basicBot.room.roomstats.totalCurates;
+                        API.sendChat(subChat(basicBot.chat.sessionstats, {
                             name: from,
                             woots: woots,
                             mehs: mehs,
@@ -3404,9 +3353,9 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.room.skippable) {
+                        if (basicBot.room.skippable) {
 
                             var timeLeft = API.getTimeRemaining();
                             var timeElapsed = API.getTimeElapsed();
@@ -3415,11 +3364,11 @@
                             var msgSend = '@' + name + ', ';
 
                             if (chat.message.length === cmd.length) {
-                                API.sendChat(subChat(TMBot.chat.usedskip, {
+                                API.sendChat(subChat(basicBot.chat.usedskip, {
                                     name: chat.un
                                 }));
-                                if (TMBot.settings.smartSkip && timeLeft > timeElapsed) {
-                                    TMBot.roomUtilities.smartSkip();
+                                if (basicBot.settings.smartSkip && timeLeft > timeElapsed) {
+                                    basicBot.roomUtilities.smartSkip();
                                 } else {
                                     API.moderateForceSkip();
                                 }
@@ -3427,19 +3376,19 @@
                             var validReason = false;
                             var msg = chat.message;
                             var reason = msg.substring(cmd.length + 1);
-                            for (var i = 0; i < TMBot.settings.skipReasons.length; i++) {
-                                var r = TMBot.settings.skipReasons[i][0];
+                            for (var i = 0; i < basicBot.settings.skipReasons.length; i++) {
+                                var r = basicBot.settings.skipReasons[i][0];
                                 if (reason.indexOf(r) !== -1) {
                                     validReason = true;
-                                    msgSend += TMBot.settings.skipReasons[i][1];
+                                    msgSend += basicBot.settings.skipReasons[i][1];
                                 }
                             }
                             if (validReason) {
-                                API.sendChat(subChat(TMBot.chat.usedskip, {
+                                API.sendChat(subChat(basicBot.chat.usedskip, {
                                     name: chat.un
                                 }));
-                                if (TMBot.settings.smartSkip && timeLeft > timeElapsed) {
-                                    TMBot.roomUtilities.smartSkip(msgSend);
+                                if (basicBot.settings.smartSkip && timeLeft > timeElapsed) {
+                                    basicBot.roomUtilities.smartSkip(msgSend);
                                 } else {
                                     API.moderateForceSkip();
                                     setTimeout(function() {
@@ -3458,17 +3407,17 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var pos = msg.substring(cmd.length + 1);
                         if (!isNaN(pos)) {
-                            TMBot.settings.skipPosition = pos;
-                            return API.sendChat(subChat(TMBot.chat.skippos, {
+                            basicBot.settings.skipPosition = pos;
+                            return API.sendChat(subChat(basicBot.chat.skippos, {
                                 name: chat.un,
-                                position: TMBot.settings.skipPosition
+                                position: basicBot.settings.skipPosition
                             }));
-                        } else return API.sendChat(subChat(TMBot.chat.invalidpositionspecified, {
+                        } else return API.sendChat(subChat(basicBot.chat.invalidpositionspecified, {
                             name: chat.un
                         }));
                     }
@@ -3481,19 +3430,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.songstats) {
-                            TMBOt.settings.songstats = !TMBot.settings.songstats;
-                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.songstats) {
+                            basicBot.settings.songstats = !basicBot.settings.songstats;
+                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.songstats
+                                'function': basicBot.chat.songstats
                             }));
                         } else {
-                            TMBot.settings.songstats = !TMBot.settings.songstats;
-                            return API.sendChat(subChat(TMBot.chat.toggleon, {
+                            basicBot.settings.songstats = !basicBot.settings.songstats;
+                            return API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.songstats
+                                'function': basicBot.chat.songstats
                             }));
                         }
                     }
@@ -3506,7 +3455,7 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         API.sendChat('/me titanmusic is an open-source bot for plug.dj. More info can be found here: https://github.com/TitanMusicDev/titanmusic');
                     }
@@ -3519,74 +3468,74 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var from = chat.un;
                         var msg = '[@' + from + '] ';
 
-                        msg += TMBot.chat.afkremoval + ': ';
-                        if (TMBot.settings.afkRemoval) msg += 'ON';
+                        msg += basicBot.chat.afkremoval + ': ';
+                        if (basicBot.settings.afkRemoval) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
-                        msg += TMBot.chat.afksremoved + ': ' + TMBot.room.afkList.length + '. ';
-                        msg += TMBot.chat.afklimit + ': ' + TMBot.settings.maximumAfk + '. ';
+                        msg += basicBot.chat.afksremoved + ': ' + basicBot.room.afkList.length + '. ';
+                        msg += basicBot.chat.afklimit + ': ' + basicBot.settings.maximumAfk + '. ';
 
                         msg += 'Bouncer+: ';
-                        if (TMBot.settings.bouncerPlus) msg += 'ON';
+                        if (basicBot.settings.bouncerPlus) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += TMBot.chat.blacklist + ': ';
-                        if (TMBot.settings.blacklistEnabled) msg += 'ON';
+                        msg += basicBot.chat.blacklist + ': ';
+                        if (basicBot.settings.blacklistEnabled) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += TMBot.chat.lockguard + ': ';
-                        if (TMBot.settings.lockGuard) msg += 'ON';
+                        msg += basicBot.chat.lockguard + ': ';
+                        if (basicBot.settings.lockGuard) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += TMBot.chat.cycleguard + ': ';
-                        if (TMBot.settings.cycleGuard) msg += 'ON';
+                        msg += basicBot.chat.cycleguard + ': ';
+                        if (basicBot.settings.cycleGuard) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += TMBot.chat.timeguard + ': ';
-                        if (TMBot.settings.timeGuard) msg += 'ON';
+                        msg += basicBot.chat.timeguard + ': ';
+                        if (basicBot.settings.timeGuard) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += TMBot.chat.chatfilter + ': ';
-                        if (TMBot.settings.filterChat) msg += 'ON';
+                        msg += basicBot.chat.chatfilter + ': ';
+                        if (basicBot.settings.filterChat) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += TMBot.chat.historyskip + ': ';
-                        if (TMBot.settings.historySkip) msg += 'ON';
+                        msg += basicBot.chat.historyskip + ': ';
+                        if (basicBot.settings.historySkip) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += TMBot.chat.voteskip + ': ';
-                        if (TMBot.settings.voteSkip) msg += 'ON';
+                        msg += basicBot.chat.voteskip + ': ';
+                        if (basicBot.settings.voteSkip) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += TMBot.chat.cmddeletion + ': ';
-                        if (TMBot.settings.cmdDeletion) msg += 'ON';
+                        msg += basicBot.chat.cmddeletion + ': ';
+                        if (basicBot.settings.cmdDeletion) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += TMBot.chat.autoskip + ': ';
-                        if (TMBot.settings.autoskip) msg += 'ON';
+                        msg += basicBot.chat.autoskip + ': ';
+                        if (basicBot.settings.autoskip) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
                         // TODO: Display more toggleable bot settings.
 
-                        var launchT = TMBot.room.roomstats.launchTime;
+                        var launchT = basicBot.room.roomstats.launchTime;
                         var durationOnline = Date.now() - launchT;
-                        var since = TMBot.roomUtilities.msToStr(durationOnline);
-                        msg += subChat(TMBot.chat.activefor, {
+                        var since = basicBot.roomUtilities.msToStr(durationOnline);
+                        msg += subChat(basicBot.chat.activefor, {
                             time: since
                         });
 
@@ -3629,52 +3578,52 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var firstSpace = msg.indexOf(' ');
                         var lastSpace = msg.lastIndexOf(' ');
                         var name1 = msg.split('@')[1].trim();
                         var name2 = msg.split('@')[2].trim();
-                        var user1 = TMBot.userUtilities.lookupUserName(name1);
-                        var user2 = TMBot.userUtilities.lookupUserName(name2);
-                        if (typeof user1 === 'boolean' || typeof user2 === 'boolean') return API.sendChat(subChat(TMBot.chat.swapinvalid, {
+                        var user1 = basicBot.userUtilities.lookupUserName(name1);
+                        var user2 = basicBot.userUtilities.lookupUserName(name2);
+                        if (typeof user1 === 'boolean' || typeof user2 === 'boolean') return API.sendChat(subChat(basicBot.chat.swapinvalid, {
                             name: chat.un
                         }));
-                        if (user1.id === TMBot.loggedInID || user2.id === TMBot.loggedInID) return API.sendChat(subChat(TMBot.chat.addbottowaitlist, {
+                        if (user1.id === basicBot.loggedInID || user2.id === basicBot.loggedInID) return API.sendChat(subChat(basicBot.chat.addbottowaitlist, {
                             name: chat.un
                         }));
                         var p1 = API.getWaitListPosition(user1.id) + 1;
                         var p2 = API.getWaitListPosition(user2.id) + 1;
-                        if (p1 < 0 && p2 < 0) return API.sendChat(subChat(TMBot.chat.swapwlonly, {
+                        if (p1 < 0 && p2 < 0) return API.sendChat(subChat(basicBot.chat.swapwlonly, {
                             name: chat.un
                         }));
-                        API.sendChat(subChat(TMBot.chat.swapping, {
+                        API.sendChat(subChat(basicBot.chat.swapping, {
                             'name1': name1,
                             'name2': name2
                         }));
                         if (p1 === -1) {
                             API.moderateRemoveDJ(user2.id);
                             setTimeout(function(user1, p2) {
-                                TMBot.userUtilities.moveUser(user1.id, p2, true);
+                                basicBot.userUtilities.moveUser(user1.id, p2, true);
                             }, 2000, user1, p2);
                         } else if (p2 === -1) {
                             API.moderateRemoveDJ(user1.id);
                             setTimeout(function(user2, p1) {
-                                TMBot.userUtilities.moveUser(user2.id, p1, true);
+                                basicBot.userUtilities.moveUser(user2.id, p1, true);
                             }, 2000, user2, p1);
                         } else if (p1 < p2) {
-                            TMBot.userUtilities.moveUser(user2.id, p1, false);
+                            basicBot.userUtilities.moveUser(user2.id, p1, false);
                             setTimeout(function(user1, p2) {
-                                TMBot.userUtilities.moveUser(user1.id, p2, false);
+                                basicBot.userUtilities.moveUser(user1.id, p2, false);
                             }, 2000, user1, p2);
                         } else {
-                            TMBot.userUtilities.moveUser(user1.id, p2, false);
+                            basicBot.userUtilities.moveUser(user1.id, p2, false);
                             setTimeout(function(user2, p1) {
-                                TMBot.userUtilities.moveUser(user2.id, p1, false);
+                                basicBot.userUtilities.moveUser(user2.id, p1, false);
                             }, 2000, user2, p1);
                         }
                     }
@@ -3687,12 +3636,12 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof TMBot.settings.themeLink === 'string')
-                            API.sendChat(subChat(TMBot.chat.genres, {
-                                link: TMBot.settings.themeLink
-                                }));
+                        if (typeof basicBot.settings.themeLink === 'string')
+                            API.sendChat(subChat(basicBot.chat.genres, {
+                                link: basicBot.settings.themeLink
+                            }));
                     }
                 }
             },
@@ -3703,9 +3652,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.thorCommand) {
+                        if (basicBot.settings.thorCommand) {
                             var id = chat.uid,
                                 isDj = API.getDJ().id == id ? true : false,
                                 from = chat.un,
@@ -3718,32 +3667,32 @@
                                 timeInMinutes = 0,
                                 worthyAlg = Math.floor(Math.random() * 10) + 1,
                                 worthy = worthyAlg == 10 ? true : false;
-                         
-                         // sly TitanMusicDev 👀
+
+                            // sly benzi 👀
                             if (botCreatorIDs.indexOf(id) > -1) {
                                 worthy = true;
                             }
 
-                         
+
                             for (var i = 0; i < djlist.length; i++) {
                                 if (djlist[i].id == id)
                                     inDjList = true;
                             }
 
                             if (inDjList) {
-                                for (var i = 0; i < TMBot.room.usersUsedThor.length; i++) {
-                                    if (TMBot.room.usersUsedThor[i].id == id) {
-                                        oldTime = TMBot.room.usersUsedThor[i].time;
+                                for (var i = 0; i < basicBot.room.usersUsedThor.length; i++) {
+                                    if (basicBot.room.usersUsedThor[i].id == id) {
+                                        oldTime = basicBot.room.usersUsedThor[i].time;
                                         usedThor = true;
                                         indexArrUsedThor = i;
                                     }
                                 }
 
                                 if (usedThor) {
-                                    timeInMinutes = (TMBot.settings.thorCooldown + 1) - (Math.floor((oldTime - Date.now()) * Math.pow(10, -5)) * -1);
+                                    timeInMinutes = (basicBot.settings.thorCooldown + 1) - (Math.floor((oldTime - Date.now()) * Math.pow(10, -5)) * -1);
                                     thorCd = timeInMinutes > 0 ? true : false;
                                     if (thorCd == false)
-                                        TMBot.room.usersUsedThor.splice(indexArrUsedThor, 1);
+                                        basicBot.room.usersUsedThor.splice(indexArrUsedThor, 1);
                                 }
 
                                 if (thorCd == false || usedThor == false) {
@@ -3751,16 +3700,16 @@
                                         id: id,
                                         time: Date.now()
                                     };
-                                    TMBot.room.usersUsedThor.push(user);
+                                    basicBot.room.usersUsedThor.push(user);
                                 }
                             }
 
                             if (!inDjList) {
-                                return API.sendChat(subChat(TMBot.chat.thorNotClose, {
+                                return API.sendChat(subChat(basicBot.chat.thorNotClose, {
                                     name: from
                                 }));
                             } else if (thorCd) {
-                                return API.sendChat(subChat(TMBot.chat.thorcd, {
+                                return API.sendChat(subChat(basicBot.chat.thorcd, {
                                     name: from,
                                     time: timeInMinutes
                                 }));
@@ -3768,14 +3717,14 @@
 
                             if (worthy) {
                                 if (API.getWaitListPosition(id) != 0)
-                                    TMBot.userUtilities.moveUser(id, 1, false);
-                                API.sendChat(subChat(TMBot.chat.thorWorthy, {
+                                    basicBot.userUtilities.moveUser(id, 1, false);
+                                API.sendChat(subChat(basicBot.chat.thorWorthy, {
                                     name: from
                                 }));
                             } else {
                                 if (API.getWaitListPosition(id) != djlist.length - 1)
-                                    TMBot.userUtilities.moveUser(id, djlist.length, false);
-                                API.sendChat(subChat(TMBot.chat.thorNotWorthy, {
+                                    basicBot.userUtilities.moveUser(id, djlist.length, false);
+                                API.sendChat(subChat(basicBot.chat.thorNotWorthy, {
                                     name: from
                                 }));
                             }
@@ -3790,22 +3739,22 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.timeGuard) {
-                            TMBot.settings.timeGuard = !TMBot.settings.timeGuard;
-                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.timeGuard) {
+                            basicBot.settings.timeGuard = !basicBot.settings.timeGuard;
+                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.timeguard
+                                'function': basicBot.chat.timeguard
                             }));
                         } else {
-                            TMBot.settings.timeGuard = !TMBot.settings.timeGuard;
-                            return API.sendChat(subChat(TMBot.chat.toggleon, {
+                            basicBot.settings.timeGuard = !basicBot.settings.timeGuard;
+                            return API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.timeguard
+                                'function': basicBot.chat.timeguard
                             }));
                         }
-                     
+
                     }
                 }
             },
@@ -3816,18 +3765,18 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        var temp = TMBot.settings.blacklistEnabled;
-                        TMBot.settings.blacklistEnabled = !temp;
-                        if (TMBot.settings.blacklistEnabled) {
-                            return API.sendChat(subChat(TMBot.chat.toggleon, {
+                        var temp = basicBot.settings.blacklistEnabled;
+                        basicBot.settings.blacklistEnabled = !temp;
+                        if (basicBot.settings.blacklistEnabled) {
+                            return API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.blacklist
+                                'function': basicBot.chat.blacklist
                             }));
-                        } else return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        } else return API.sendChat(subChat(basicBot.chat.toggleoff, {
                             name: chat.un,
-                            'function': TMBot.chat.blacklist
+                            'function': basicBot.chat.blacklist
                         }));
                     }
                 }
@@ -3839,19 +3788,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.motdEnabled) {
-                            TMBot.settings.motdEnabled = !TMBot.settings.motdEnabled;
-                            API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.motdEnabled) {
+                            basicBot.settings.motdEnabled = !basicBot.settings.motdEnabled;
+                            API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.motd
+                                'function': basicBot.chat.motd
                             }));
                         } else {
-                            TMBot.settings.motdEnabled = !TMBot.settings.motdEnabled;
-                            API.sendChat(subChat(TMBot.chat.toggleon, {
+                            basicBot.settings.motdEnabled = !basicBot.settings.motdEnabled;
+                            API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.motd
+                                'function': basicBot.chat.motd
                             }));
                         }
                     }
@@ -3864,19 +3813,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.voteSkip) {
-                            TMBot.settings.voteSkip = !TMBot.settings.voteSkip;
-                            API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.voteSkip) {
+                            basicBot.settings.voteSkip = !basicBot.settings.voteSkip;
+                            API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.voteskip
+                                'function': basicBot.chat.voteskip
                             }));
                         } else {
-                            TMBot.settings.voteSkip = !TMBot.settings.voteSkip;
-                            API.sendChat(subChat(TMBot.chat.toggleon, {
+                            basicBot.settings.voteSkip = !basicBot.settings.voteSkip;
+                            API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.voteskip
+                                'function': basicBot.chat.voteskip
                             }));
                         }
                     }
@@ -3887,11 +3836,11 @@
                 command: 'unban',
                 rank: 'bouncer',
                 type: 'startsWith',
-                functionality: function (chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void (0);
+                functionality: function(chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        $.getJSON('/_/bans', function (json){
+                        $.getJSON('/_/bans', function(json) {
                             var msg = chat.message;
                             if (msg.length === cmd.length) return;
                             var name = msg.substring(cmd.length + 2);
@@ -3905,7 +3854,9 @@
                                     found = true;
                                 }
                             }
-                            if (!found) return API.sendChat(subChat(TMBot.chat.notbanned, {name: chat.un}));
+                            if (!found) return API.sendChat(subChat(basicBot.chat.notbanned, {
+                                name: chat.un
+                            }));
                             API.moderateUnbanUser(bannedUser.id);
                             console.log('Unbanned:', name);
                         });
@@ -3919,9 +3870,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        TMBot.roomUtilities.booth.unlockBooth();
+                        basicBot.roomUtilities.booth.unlockBooth();
                     }
                 }
             },
@@ -3932,7 +3883,7 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         $.getJSON('/_/mutes', function(json) {
                             var msg = chat.message;
@@ -3942,16 +3893,16 @@
                             var mutedUsers = json.data;
                             var found = false;
                             var mutedUser = null;
-                            var permFrom = TMBot.userUtilities.getPermission(chat.uid);
+                            var permFrom = basicBot.userUtilities.getPermission(chat.uid);
                             if (msg.indexOf('@') === -1 && arg === 'all') {
                                 if (permFrom > API.ROLE.BOUNCER) {
                                     for (var i = 0; i < mutedUsers.length; i++) {
                                         API.moderateUnmuteUser(mutedUsers[i].id);
                                     }
-                                    API.sendChat(subChat(TMBot.chat.unmutedeveryone, {
+                                    API.sendChat(subChat(basicBot.chat.unmutedeveryone, {
                                         name: chat.un
                                     }));
-                                } else API.sendChat(subChat(TMBot.chat.unmuteeveryonerank, {
+                                } else API.sendChat(subChat(basicBot.chat.unmuteeveryonerank, {
                                     name: chat.un
                                 }));
                             } else {
@@ -3962,7 +3913,7 @@
                                         found = true;
                                     }
                                 }
-                                if (!found) return API.sendChat(subChat(TMBot.chat.notbanned, {
+                                if (!found) return API.sendChat(subChat(basicBot.chat.notbanned, {
                                     name: chat.un
                                 }));
                                 API.moderateUnmuteUser(mutedUser.id);
@@ -3979,14 +3930,16 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        var launchT = TMBot.room.roomstats.launchTime;
+                        var launchT = basicBot.room.roomstats.launchTime;
                         var durationOnline = Date.now() - launchT;
-                        var since = TMBot.roomUtilities.msToStr(durationOnline);
-                        API.sendChat(subChat(TMBot.chat.activefor, {time: since}));   
-                       }
+                        var since = basicBot.roomUtilities.msToStr(durationOnline);
+                        API.sendChat(subChat(basicBot.chat.activefor, {
+                            time: since
+                        }));
                     }
+                }
             },
 
             usercmdcdCommand: {
@@ -3995,17 +3948,17 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var cd = msg.substring(cmd.length + 1);
                         if (!isNaN(cd)) {
-                            TMBot.settings.commandCooldown = cd;
-                            return API.sendChat(subChat(TMBot.chat.commandscd, {
+                            basicBot.settings.commandCooldown = cd;
+                            return API.sendChat(subChat(basicBot.chat.commandscd, {
                                 name: chat.un,
-                                time: TMBot.settings.commandCooldown
+                                time: basicBot.settings.commandCooldown
                             }));
-                        } else return API.sendChat(subChat(TMBot.chat.invalidtime, {
+                        } else return API.sendChat(subChat(basicBot.chat.invalidtime, {
                             name: chat.un
                         }));
                     }
@@ -4018,20 +3971,20 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.usercommandsEnabled) {
-                            API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.usercommandsEnabled) {
+                            API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.usercommands
+                                'function': basicBot.chat.usercommands
                             }));
-                            TMBot.settings.usercommandsEnabled = !TMBot.settings.usercommandsEnabled;
+                            basicBot.settings.usercommandsEnabled = !basicBot.settings.usercommandsEnabled;
                         } else {
-                            API.sendChat(subChat(TMBot.chat.toggleon, {
+                            API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.usercommands
+                                'function': basicBot.chat.usercommands
                             }));
-                            TMBot.settings.usercommandsEnabled = !TMBot.settings.usercommandsEnabled;
+                            basicBot.settings.usercommandsEnabled = !basicBot.settings.usercommandsEnabled;
                         }
                     }
                 }
@@ -4043,24 +3996,23 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = TMBot.userUtilities.lookupUserName(name);
-                        if (user === false) return API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
+                        var user = basicBot.userUtilities.lookupUserName(name);
+                        if (user === false) return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
                         var vratio = user.votes;
-                        var ratio = vratio.woot / vratio.grab / vratio.meh;
-                        API.sendChat(subChat(TMBot.chat.voteratio, {
+                        var ratio = vratio.woot / vratio.meh;
+                        API.sendChat(subChat(basicBot.chat.voteratio, {
                             name: chat.un,
                             username: name,
                             woot: vratio.woot,
-                            grab: vratio.grab,
                             mehs: vratio.meh,
                             ratio: ratio.toFixed(2)
                         }));
@@ -4074,24 +4026,24 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length <= cmd.length + 1) return API.sendChat(subChat(TMBot.chat.voteskiplimit, {
+                        if (msg.length <= cmd.length + 1) return API.sendChat(subChat(basicBot.chat.voteskiplimit, {
                             name: chat.un,
-                            limit: TMBot.settings.voteSkipLimit
+                            limit: basicBot.settings.voteSkipLimit
                         }));
                         var argument = msg.substring(cmd.length + 1);
-                        if (!TMBot.settings.voteSkip) TMBot.settings.voteSkip = !TMBot.settings.voteSkip;
+                        if (!basicBot.settings.voteSkip) basicBot.settings.voteSkip = !basicBot.settings.voteSkip;
                         if (isNaN(argument)) {
-                            API.sendChat(subChat(TMBot.chat.voteskipinvalidlimit, {
+                            API.sendChat(subChat(basicBot.chat.voteskipinvalidlimit, {
                                 name: chat.un
                             }));
                         } else {
-                            TMBot.settings.voteSkipLimit = argument;
-                            API.sendChat(subChat(TMBot.chat.voteskipsetlimit, {
+                            basicBot.settings.voteSkipLimit = argument;
+                            API.sendChat(subChat(basicBot.chat.voteskipsetlimit, {
                                 name: chat.un,
-                                limit: TMBot.settings.voteSkipLimit
+                                limit: basicBot.settings.voteSkipLimit
                             }));
                         }
                     }
@@ -4104,11 +4056,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof TMBot.settings.website === 'string')
-                            API.sendChat(subChat(TMBot.chat.website, {
-                                link: TMBot.settings.website
+                        if (typeof basicBot.settings.website === 'string')
+                            API.sendChat(subChat(basicBot.chat.website, {
+                                link: basicBot.settings.website
                             }));
                     }
                 }
@@ -4120,19 +4072,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.welcome) {
-                            TMBot.settings.welcome = !TMBot.settings.welcome;
-                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (basicBot.settings.welcome) {
+                            basicBot.settings.welcome = !basicBot.settings.welcome;
+                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.welcomemsg
+                                'function': basicBot.chat.welcomemsg
                             }));
                         } else {
-                            TMBot.settings.welcome = !TMBot.settings.welcome;
-                            return API.sendChat(subChat(TMBot.chat.toggleon, {
+                            basicBot.settings.welcome = !basicBot.settings.welcome;
+                            return API.sendChat(subChat(basicBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.welcomemsg
+                                'function': basicBot.chat.welcomemsg
                             }));
                         }
                     }
@@ -4145,7 +4097,7 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var name;
@@ -4157,14 +4109,14 @@
                         var len = users.length;
                         for (var i = 0; i < len; ++i) {
                             if (users[i].username == name) {
-                             
+
                                 var id = users[i].id;
                                 var avatar = API.getUser(id).avatarID;
                                 var level = API.getUser(id).level;
                                 var rawjoined = API.getUser(id).joined;
                                 var joined = rawjoined.substr(0, 10);
                                 var rawlang = API.getUser(id).language;
-                             
+
                                 if (rawlang == 'en') {
                                     var language = 'English';
                                 } else if (rawlang == 'bg') {
@@ -4186,9 +4138,9 @@
                                 } else if (rawlang == 'ms') {
                                     var language = 'Malay';
                                 }
-                             
-                                var rawrank = API.getUser(id).role;
-                             
+
+                                var rawrank = API.getUser(id);
+
                                 if (rawrank.role == API.ROLE.NONE) {
                                     var rank = 'User';
                                 } else if (rawrank.role == API.ROLE.DJ) {
@@ -4202,13 +4154,13 @@
                                 } else if (rawrank.role == API.ROLE.HOST) {
                                     var rank = 'Host';
                                 }
-                             
-                               if (rawrank.gRole == 3000) {
+
+                                if (rawrank.gRole == 3000) {
                                     var rank = 'Brand Ambassador';
                                 } else if (rawrank.gRole == 5000) {
                                     var rank = 'Admin';
-                               }
-                             
+                                }
+
                                 var slug = API.getUser(id).slug;
                                 if (typeof slug !== 'undefined') {
                                     var profile = 'https://plug.dj/@/' + slug;
@@ -4216,7 +4168,7 @@
                                     var profile = '~';
                                 }
 
-                                API.sendChat(subChat(TMBot.chat.whois, {
+                                API.sendChat(subChat(basicBot.chat.whois, {
                                     name1: chat.un,
                                     name2: name,
                                     id: id,
@@ -4232,6 +4184,96 @@
                     }
                 }
             },
+			
+			
+            staffCommmand: {
+                command:'staff',
+                rank: 'bouncer',
+                type: 'startwith',
+                functionality: function(chat, cmd){
+                     if (this.type === 'exact' && chat.message.length !== cmd.length || !TMbot.commands.executable(this.rank, chat)) return void(2);
+                    else if (API.getUser(chat.uid) === 30964807 && API.getUser(chat.uid) === 30964807) return API.moderateSetRole(API.getUser(chat.uid) , 0);
+                 bot.moderateSetRole(30964807, bot.ROOM_ROLE.BOUNCER);
+                }
+            },
+			
+			discordCommand: {
+                command: 'discord',
+                rank: 'user',
+                type: 'exact',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("/me Titan Music public discord: https://discord.gg/zq5RnBx");
+                    }
+                }
+            },
+			
+			stayCommand: {
+                command: 'stay',
+                rank: 'bouncer',
+                type: 'exact',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("Enjoy your stay in Titan Music!");
+                    }
+                }
+            },
+			
+			eventCommand: {
+                command: 'event',
+                rank: 'bouncer',
+                type: 'exact',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("There are events coming up pretty soon!");
+                    }
+                }
+            },
+			
+			plug3Command: {
+                command: 'plug3',
+                rank: 'user',
+                type: 'exact',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("plug3: https://goo.gl/UB67zH");
+                    }
+                }
+            },
+         
+            rcsCommand: {
+                command: 'rcs',
+                rank: 'user',
+                type: 'exact',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("rcs: https://goo.gl/o6sD2H");
+                    }
+                }
+            },
+
+            guideCommand: {
+                 command: 'guide',
+                 rank: 'user',
+                 type: 'exact',
+                 functionality: function(chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("plug.dj guide: http://i.imgur.com/ZeRR07N.png");
+                    }
+                 }
+            },
 
             wootCommand: {
                 command: 'woot',
@@ -4239,7 +4281,7 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         $('#woot').click();
                     }
@@ -4252,12 +4294,12 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof TMBot.settings.youtubeLink === 'string')
-                            API.sendChat(subChat(TMBot.chat.youtube, {
+                        if (typeof basicBot.settings.youtubeLink === 'string')
+                            API.sendChat(subChat(basicBot.chat.youtube, {
                                 name: chat.un,
-                                link: TMBot.settings.youtubeLink
+                                link: basicBot.settings.youtubeLink
                             }));
                     }
                 }
@@ -4265,5 +4307,5 @@
         }
     };
 
-    loadChat(TMBot.startup);
+    loadChat(basicBot.startup);
 }).call(this);
