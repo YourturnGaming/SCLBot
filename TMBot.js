@@ -3461,6 +3461,84 @@
                     }
                 }
             },
+		
+	    discordCommand: {
+                command: 'discord',
+                rank: 'user',
+                type: 'exact',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("/me Titan Music public discord: https://discord.gg/zq5RnBx");
+                    }
+                }
+            },
+			
+	    stayCommand: {
+                command: 'stay',
+                rank: 'bouncer',
+                type: 'exact',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("Enjoy your stay in Titan Music!");
+                    }
+                }
+            },
+			
+	    eventCommand: {
+                command: 'event',
+                rank: 'bouncer',
+                type: 'exact',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("There are events coming up pretty soon!");
+                    }
+                }
+            },
+			
+            plug3Command: {
+                command: 'plug3',
+                rank: 'user',
+                type: 'exact',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("plug3: https://goo.gl/UB67zH");
+                    }
+                }
+            },
+         
+            rcsCommand: {
+                command: 'rcs',
+                rank: 'user',
+                type: 'exact',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("rcs: https://goo.gl/o6sD2H");
+                    }
+                }
+            },
+
+            guideCommand: {
+                 command: 'guide',
+                 rank: 'user',
+                 type: 'exact',
+                 functionality: function(chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("plug.dj guide: http://i.imgur.com/ZeRR07N.png");
+                    }
+                 }
+            },	
 
             statusCommand: {
                 command: 'status',
@@ -4183,84 +4261,6 @@
                         }
                     }
                 }
-            },
-			
-	    discordCommand: {
-                command: 'discord',
-                rank: 'user',
-                type: 'exact',
-                functionality: function (chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                            API.sendChat("/me Titan Music public discord: https://discord.gg/zq5RnBx");
-                    }
-                }
-            },
-			
-	    stayCommand: {
-                command: 'stay',
-                rank: 'bouncer',
-                type: 'exact',
-                functionality: function (chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                            API.sendChat("Enjoy your stay in Titan Music!");
-                    }
-                }
-            },
-			
-	    eventCommand: {
-                command: 'event',
-                rank: 'bouncer',
-                type: 'exact',
-                functionality: function (chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                            API.sendChat("There are events coming up pretty soon!");
-                    }
-                }
-            },
-			
-            plug3Command: {
-                command: 'plug3',
-                rank: 'user',
-                type: 'exact',
-                functionality: function (chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                            API.sendChat("plug3: https://goo.gl/UB67zH");
-                    }
-                }
-            },
-         
-            rcsCommand: {
-                command: 'rcs',
-                rank: 'user',
-                type: 'exact',
-                functionality: function (chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                            API.sendChat("rcs: https://goo.gl/o6sD2H");
-                    }
-                }
-            },
-
-            guideCommand: {
-                 command: 'guide',
-                 rank: 'user',
-                 type: 'exact',
-                 functionality: function(chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                            API.sendChat("plug.dj guide: http://i.imgur.com/ZeRR07N.png");
-                    }
-                 }
             },
 
             wootCommand: {
