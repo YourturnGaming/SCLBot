@@ -112,7 +112,7 @@
 
     var loadChat = function(cb) {
         if (!cb) cb = function() {};
-        $.get('https://rawgit.com/TitanMusicDev/titanmusic/master/lang', function(json) {
+        $.get('https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json', function(json) {
             var link = TMBot.chatLink;
             if (json !== null && typeof json !== 'undefined') {
                 langIndex = json;
@@ -249,13 +249,13 @@
     var managers = ['',''];
     var CoHosts = ['',''];
     var TMBot = {
-        version: '2.14.4.0',
+        version: '2.14.4.1',
         status: false,
         name: 'TMBot',
         loggedInID: null,
         scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
-        cmdLink: 'https://github.com/TitanMusicDev/titanmusic/blob/master/commands.md',
-        chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/lang',
+        cmdLink: 'https://goo.gl/4BQP8Y',
+        chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json',
         chat: null,
         loadChat: loadChat,
         retrieveSettings: retrieveSettings,
@@ -263,7 +263,7 @@
         settings: {
             botName: 'TMBot',
             language: 'english',
-            chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/lang',
+            chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json',
             scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
             roomLock: false, // Requires an extension to re-load the script
             startupCap: 10, // 1-200
