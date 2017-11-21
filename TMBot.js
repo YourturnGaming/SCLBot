@@ -10,7 +10,7 @@
 (function() {
 
     /*window.onerror = function() {
-        var room = JSON.parse(localStorage.getItem('basicBotRoom'));
+        var room = JSON.parse(localStorage.getItem('TMBotRoom'));
         window.location = 'https://plug.dj' + room.name;
     };*/
 
@@ -28,9 +28,9 @@
     };
 
     var kill = function() {
-        clearInterval(basicBot.room.autodisableInterval);
-        clearInterval(basicBot.room.afkInterval);
-        basicBot.status = false;
+        clearInterval(TMBot.room.autodisableInterval);
+        clearInterval(TMBot.room.afkInterval);
+        TMBot.status = false;
     };
 
     // This socket server is used solely for statistical and troubleshooting purposes.
@@ -66,33 +66,33 @@
     }
 
     var sendToSocket = function() {
-        var basicBotSettings = basicBot.settings;
-        var basicBotRoom = basicBot.room;
-        var basicBotInfo = {
+        var TMBotSettings = TMBot.settings;
+        var TMBotRoom = TMBot.room;
+        var TMBotInfo = {
             time: Date.now(),
-            version: basicBot.version
+            version: TMBot.version
         };
         var data = {
             users: API.getUsers(),
             userinfo: API.getUser(),
             room: location.pathname,
-            basicBotSettings: basicBotSettings,
-            basicBotRoom: basicBotRoom,
-            basicBotInfo: basicBotInfo
+            TMBotSettings: TMBotSettings,
+            TMBotRoom: TMBotRoom,
+            TMBotInfo: TMBotInfo
         };
         return sock.msg(data);
     };
     */
 
     var storeToStorage = function() {
-        localStorage.setItem('basicBotsettings', JSON.stringify(basicBot.settings));
-        localStorage.setItem('basicBotRoom', JSON.stringify(basicBot.room));
-        var basicBotStorageInfo = {
+        localStorage.setItem('TMBotsettings', JSON.stringify(TMBot.settings));
+        localStorage.setItem('TMBotRoom', JSON.stringify(TMBot.room));
+        var TMBotStorageInfo = {
             time: Date.now(),
             stored: true,
-            version: basicBot.version
+            version: TMBot.version
         };
-        localStorage.setItem('basicBotStorageInfo', JSON.stringify(basicBotStorageInfo));
+        localStorage.setItem('TMBotStorageInfo', JSON.stringify(TMBotStorageInfo));
     };
 
     var subChat = function(chat, obj) {
@@ -144,25 +144,25 @@
     };
 
     var retrieveSettings = function() {
-        var settings = JSON.parse(localStorage.getItem('basicBotsettings'));
+        var settings = JSON.parse(localStorage.getItem('TMBotsettings'));
         if (settings !== null) {
             for (var prop in settings) {
-                basicBot.settings[prop] = settings[prop];
+                TMBot.settings[prop] = settings[prop];
             }
         }
     };
 
     var retrieveFromStorage = function() {
-        var info = localStorage.getItem('basicBotStorageInfo');
-        if (info === null) API.chatLog(basicBot.chat.nodatafound);
+        var info = localStorage.getItem('TMBotStorageInfo');
+        if (info === null) API.chatLog(TMBot.chat.nodatafound);
         else {
-            var settings = JSON.parse(localStorage.getItem('basicBotsettings'));
-            var room = JSON.parse(localStorage.getItem('basicBotRoom'));
+            var settings = JSON.parse(localStorage.getItem('TMBotsettings'));
+            var room = JSON.parse(localStorage.getItem('TMBotRoom'));
             var elapsed = Date.now() - JSON.parse(info).time;
             if ((elapsed < 1 * 60 * 60 * 1000)) {
-                API.chatLog(basicBot.chat.retrievingdata);
+                API.chatLog(TMBot.chat.retrievingdata);
                 for (var prop in settings) {
-                    basicBot.settings[prop] = settings[prop];
+                    TMBot.settings[prop] = settings[prop];
                 }
                 basicBot.room.users = room.users;
                 basicBot.room.afkList = room.afkList;
