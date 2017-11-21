@@ -121,21 +121,21 @@
                     link = TMBot.settings.chatLink;
                 } else {
                     if (typeof link === 'undefined') {
-                        link = basicBot.chatLink;
+                        link = TMBot.chatLink;
                     }
                 }
                 $.get(link, function(json) {
                     if (json !== null && typeof json !== 'undefined') {
                         if (typeof json === 'string') json = JSON.parse(json);
-                        basicBot.chat = json;
+                        TMBot.chat = json;
                         cb();
                     }
                 });
             } else {
-                $.get(basicBot.chatLink, function(json) {
+                $.get(TMBot.chatLink, function(json) {
                     if (json !== null && typeof json !== 'undefined') {
                         if (typeof json === 'string') json = JSON.parse(json);
-                        basicBot.chat = json;
+                        TMBot.chat = json;
                         cb();
                     }
                 });
