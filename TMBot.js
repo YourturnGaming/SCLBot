@@ -1431,51 +1431,51 @@
 
             retrieveSettings();
             retrieveFromStorage();
-            window.bot = basicBot;
-            basicBot.roomUtilities.updateBlacklists();
-            setInterval(basicBot.roomUtilities.updateBlacklists, 60 * 60 * 1000);
-            basicBot.getNewBlacklistedSongs = basicBot.roomUtilities.exportNewBlacklistedSongs;
-            basicBot.logNewBlacklistedSongs = basicBot.roomUtilities.logNewBlacklistedSongs;
-            if (basicBot.room.roomstats.launchTime === null) {
-                basicBot.room.roomstats.launchTime = Date.now();
+            window.bot = TMBot;
+            TMBot.roomUtilities.updateBlacklists();
+            setInterval(TMBot.roomUtilities.updateBlacklists, 60 * 60 * 1000);
+            TMBot.getNewBlacklistedSongs = TMBot.roomUtilities.exportNewBlacklistedSongs;
+            TMBot.logNewBlacklistedSongs = TMBot.roomUtilities.logNewBlacklistedSongs;
+            if (TMBot.room.roomstats.launchTime === null) {
+                TMBot.room.roomstats.launchTime = Date.now();
             }
 
-            for (var j = 0; j < basicBot.room.users.length; j++) {
-                basicBot.room.users[j].inRoom = false;
+            for (var j = 0; j < TMBot.room.users.length; j++) {
+                TMBot.room.users[j].inRoom = false;
             }
             var userlist = API.getUsers();
             for (var i = 0; i < userlist.length; i++) {
                 var known = false;
                 var ind = null;
-                for (var j = 0; j < basicBot.room.users.length; j++) {
-                    if (basicBot.room.users[j].id === userlist[i].id) {
+                for (var j = 0; j < TMBot.room.users.length; j++) {
+                    if (TMBot.room.users[j].id === userlist[i].id) {
                         known = true;
                         ind = j;
                     }
                 }
                 if (known) {
-                    basicBot.room.users[ind].inRoom = true;
+                    TMBot.room.users[ind].inRoom = true;
                 } else {
-                    basicBot.room.users.push(new basicBot.User(userlist[i].id, userlist[i].username));
-                    ind = basicBot.room.users.length - 1;
+                    TMBot.room.users.push(new TMBot.User(userlist[i].id, userlist[i].username));
+                    ind = TMBot.room.users.length - 1;
                 }
-                var wlIndex = API.getWaitListPosition(basicBot.room.users[ind].id) + 1;
-                basicBot.userUtilities.updatePosition(basicBot.room.users[ind], wlIndex);
+                var wlIndex = API.getWaitListPosition(TMBot.room.users[ind].id) + 1;
+                TMBot.userUtilities.updatePosition(TMBot.room.users[ind], wlIndex);
             }
-            basicBot.room.afkInterval = setInterval(function() {
-                basicBot.roomUtilities.afkCheck()
+            TMBot.room.afkInterval = setInterval(function() {
+                TMBot.roomUtilities.afkCheck()
             }, 10 * 1000);
-            basicBot.room.autodisableInterval = setInterval(function() {
-                basicBot.room.autodisableFunc();
+            TMBot.room.autodisableInterval = setInterval(function() {
+                TMBot.room.autodisableFunc();
             }, 60 * 60 * 1000);
-            basicBot.loggedInID = API.getUser().id;
-            basicBot.status = true;
-            API.sendChat('/cap ' + basicBot.settings.startupCap);
-            API.setVolume(basicBot.settings.startupVolume);
-            if (basicBot.settings.autowoot) {
+            TMBot.loggedInID = API.getUser().id;
+            TMBot.status = true;
+            API.sendChat('/cap ' + TMBot.settings.startupCap);
+            API.setVolume(TMBot.settings.startupVolume);
+            if (TMBot.settings.autowoot) {
                 $('#woot').click();
             }
-            if (basicBot.settings.startupEmoji) {
+            if (TMBot.settings.startupEmoji) {
                 var emojibuttonoff = $('.icon-emoji-off');
                 if (emojibuttonoff.length > 0) {
                     emojibuttonoff[0].click();
@@ -1488,12 +1488,12 @@
                 }
                 API.chatLog('Emojis disabled.');
             }
-            API.chatLog('Avatars capped at ' + basicBot.settings.startupCap);
-            API.chatLog('Volume set to ' + basicBot.settings.startupVolume);
+            API.chatLog('Avatars capped at ' + TMBot.settings.startupCap);
+            API.chatLog('Volume set to ' + TMBot.settings.startupVolume);
             //socket();
-            loadChat(API.sendChat(subChat(basicBot.chat.online, {
-                botname: basicBot.settings.botName,
-                version: basicBot.version
+            loadChat(API.sendChat(subChat(TMBot.chat.online, {
+                botname: TMBot.settings.botName,
+                version: TMBot.version
             })));
         },
         commands: {
