@@ -774,13 +774,13 @@
                 $.getJSON('/_/rooms/state', function(data) {
                     if (data.data[0].booth.shouldCycle) { // checks if shouldCycle is true
                         API.moderateDJCycle(false); // Disables the DJ Cycle
-                        clearTimeout(basicBot.room.cycleTimer); // Clear the cycleguard timer
+                        clearTimeout(TMBot.room.cycleTimer); // Clear the cycleguard timer
                     } else { // If cycle is already disable; enable it
-                        if (basicBot.settings.cycleGuard) { // Is cycle guard on?
+                        if (TMBot.settings.cycleGuard) { // Is cycle guard on?
                             API.moderateDJCycle(true); // Enables DJ cycle
-                            basicBot.room.cycleTimer = setTimeout(function() { // Start timer
+                            TMBot.room.cycleTimer = setTimeout(function() { // Start timer
                                 API.moderateDJCycle(false); // Disable cycle
-                            }, basicBot.settings.maximumCycletime * 60 * 1000); // The time
+                            }, TMBot.settings.maximumCycletime * 60 * 1000); // The time
                         } else { // So cycleguard is not on?
                             API.moderateDJCycle(true); // Enables DJ cycle
                         }
@@ -789,32 +789,32 @@
             },
             intervalMessage: function() {
                 var interval;
-                if (basicBot.settings.motdEnabled) interval = basicBot.settings.motdInterval;
-                else interval = basicBot.settings.messageInterval;
-                if ((basicBot.room.roomstats.songCount % interval) === 0 && basicBot.status) {
+                if (TMBot.settings.motdEnabled) interval = TMBot.settings.motdInterval;
+                else interval = TMBot.settings.messageInterval;
+                if ((TMBot.room.roomstats.songCount % interval) === 0 && TMBot.status) {
                     var msg;
-                    if (basicBot.settings.motdEnabled) {
-                        msg = basicBot.settings.motd;
+                    if (TMBot.settings.motdEnabled) {
+                        msg = TMBot.settings.motd;
                     } else {
-                        if (basicBot.settings.intervalMessages.length === 0) return void(0);
-                        var messageNumber = basicBot.room.roomstats.songCount % basicBot.settings.intervalMessages.length;
-                        msg = basicBot.settings.intervalMessages[messageNumber];
+                        if (TMBot.settings.intervalMessages.length === 0) return void(0);
+                        var messageNumber = TMBot.room.roomstats.songCount % TMBot.settings.intervalMessages.length;
+                        msg = TMBot.settings.intervalMessages[messageNumber];
                     }
                     API.sendChat('/me ' + msg);
                 }
             },
             updateBlacklists: function() {
-                for (var bl in basicBot.settings.blacklists) {
-                    basicBot.room.blacklists[bl] = [];
-                    if (typeof basicBot.settings.blacklists[bl] === 'function') {
-                        basicBot.room.blacklists[bl] = basicBot.settings.blacklists();
-                    } else if (typeof basicBot.settings.blacklists[bl] === 'string') {
-                        if (basicBot.settings.blacklists[bl] === '') {
+                for (var bl in TMBot.settings.blacklists) {
+                    TMBot.room.blacklists[bl] = [];
+                    if (typeof TMBot.settings.blacklists[bl] === 'function') {
+                        TMBot.room.blacklists[bl] = TMBot.settings.blacklists();
+                    } else if (typeof TMBot.settings.blacklists[bl] === 'string') {
+                        if (TMBot.settings.blacklists[bl] === '') {
                             continue;
                         }
                         try {
                             (function(l) {
-                                $.get(basicBot.settings.blacklists[l], function(data) {
+                                $.get(TMBot.settings.blacklists[l], function(data) {
                                     if (typeof data === 'string') {
                                         data = JSON.parse(data);
                                     }
@@ -824,7 +824,7 @@
                                             list.push(data[prop].mid);
                                         }
                                     }
-                                    basicBot.room.blacklists[l] = list;
+                                    TMBot.room.blacklists[l] = list;
                                 })
                             })(bl);
                         } catch (e) {
@@ -837,7 +837,7 @@
             },
             logNewBlacklistedSongs: function() {
                 if (typeof console.table !== 'undefined') {
-                    console.table(basicBot.room.newBlacklisted);
+                    console.table(TMBot.room.newBlacklisted);
                 } else {
                     console.log(TMBot.room.newBlacklisted);
                 }
