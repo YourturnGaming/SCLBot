@@ -839,13 +839,13 @@
                 if (typeof console.table !== 'undefined') {
                     console.table(basicBot.room.newBlacklisted);
                 } else {
-                    console.log(basicBot.room.newBlacklisted);
+                    console.log(TMBot.room.newBlacklisted);
                 }
             },
             exportNewBlacklistedSongs: function() {
                 var list = {};
-                for (var i = 0; i < basicBot.room.newBlacklisted.length; i++) {
-                    var track = basicBot.room.newBlacklisted[i];
+                for (var i = 0; i < TMBot.room.newBlacklisted.length; i++) {
+                    var track = TMBot.room.newBlacklisted[i];
                     list[track.list] = [];
                     list[track.list].push({
                         title: track.title,
@@ -861,25 +861,25 @@
             chat.message = decodeEntities(chat.message);
             chat.message = chat.message.trim();
 
-            basicBot.room.chatMessages.push([chat.cid, chat.message, chat.sub, chat.timestamp, chat.type, chat.uid, chat.un]);
+            TMBot.room.chatMessages.push([chat.cid, chat.message, chat.sub, chat.timestamp, chat.type, chat.uid, chat.un]);
 
-            for (var i = 0; i < basicBot.room.users.length; i++) {
-                if (basicBot.room.users[i].id === chat.uid) {
-                    basicBot.userUtilities.setLastActivity(basicBot.room.users[i]);
-                    if (basicBot.room.users[i].username !== chat.un) {
-                        basicBot.room.users[i].username = chat.un;
+            for (var i = 0; i < TMBot.room.users.length; i++) {
+                if (TMBot.room.users[i].id === chat.uid) {
+                    TMBot.userUtilities.setLastActivity(TMBot.room.users[i]);
+                    if (TMBot.room.users[i].username !== chat.un) {
+                        TMBot.room.users[i].username = chat.un;
                     }
                 }
             }
-            if (basicBot.chatUtilities.chatFilter(chat)) return void(0);
-            if (!basicBot.chatUtilities.commandCheck(chat))
-                basicBot.chatUtilities.action(chat);
+            if (TMBot.chatUtilities.chatFilter(chat)) return void(0);
+            if (!TMBot.chatUtilities.commandCheck(chat))
+                TMBot.chatUtilities.action(chat);
         },
         eventUserjoin: function(user) {
             var known = false;
             var index = null;
-            for (var i = 0; i < basicBot.room.users.length; i++) {
-                if (basicBot.room.users[i].id === user.id) {
+            for (var i = 0; i < TMBot.room.users.length; i++) {
+                if (TMBot.room.users[i].id === user.id) {
                     known = true;
                     index = i;
                 }
@@ -887,20 +887,20 @@
             var greet = true;
             var welcomeback = null;
             if (known) {
-                basicBot.room.users[index].inRoom = true;
-                var u = basicBot.userUtilities.lookupUser(user.id);
+                TMBot.room.users[index].inRoom = true;
+                var u = TMBot.userUtilities.lookupUser(user.id);
                 var jt = u.jointime;
                 var t = Date.now() - jt;
                 if (t < 10 * 1000) greet = false;
                 else welcomeback = true;
             } else {
-                basicBot.room.users.push(new basicBot.User(user.id, user.username));
+                TMBot.room.users.push(new TMBot.User(user.id, user.username));
                 welcomeback = false;
             }
-            for (var j = 0; j < basicBot.room.users.length; j++) {
-                if (basicBot.userUtilities.getUser(basicBot.room.users[j]).id === user.id) {
-                    basicBot.userUtilities.setLastActivity(basicBot.room.users[j]);
-                    basicBot.room.users[j].jointime = Date.now();
+            for (var j = 0; j < TMBot.room.users.length; j++) {
+                if (TMBot.userUtilities.getUser(TMBot.room.users[j]).id === user.id) {
+                    TMBot.userUtilities.setLastActivity(TMBot.room.users[j]);
+                    TMBot.room.users[j].jointime = Date.now();
                 }
 
             }
