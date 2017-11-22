@@ -1600,21 +1600,21 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substr(cmd.length + 2);
-                        var user = basicBot.userUtilities.lookupUserName(name);
+                        var user = TMBot.userUtilities.lookupUserName(name);
                         if (msg.length > cmd.length + 2) {
                             if (typeof user !== 'undefined') {
-                                if (basicBot.room.roomevent) {
-                                    basicBot.room.eventArtists.push(user.id);
+                                if (TMBot.room.roomevent) {
+                                    TMBot.room.eventArtists.push(user.id);
                                 }
                                 API.moderateAddDJ(user.id);
-                            } else API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
+                            } else API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
                                 name: chat.un
                             }));
                         }
@@ -1628,20 +1628,20 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nolimitspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nolimitspecified, {
                             name: chat.un
                         }));
                         var limit = msg.substring(cmd.length + 1);
                         if (!isNaN(limit)) {
-                            basicBot.settings.maximumAfk = parseInt(limit, 10);
-                            API.sendChat(subChat(basicBot.chat.maximumafktimeset, {
+                            TMBot.settings.maximumAfk = parseInt(limit, 10);
+                            API.sendChat(subChat(TMBot.chat.maximumafktimeset, {
                                 name: chat.un,
-                                time: basicBot.settings.maximumAfk
+                                time: TMBot.settings.maximumAfk
                             }));
-                        } else API.sendChat(subChat(basicBot.chat.invalidlimitspecified, {
+                        } else API.sendChat(subChat(TMBot.chat.invalidlimitspecified, {
                             name: chat.un
                         }));
                     }
