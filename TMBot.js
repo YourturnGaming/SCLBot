@@ -164,22 +164,22 @@
                 for (var prop in settings) {
                     TMBot.settings[prop] = settings[prop];
                 }
-                basicBot.room.users = room.users;
-                basicBot.room.afkList = room.afkList;
-                basicBot.room.historyList = room.historyList;
-                basicBot.room.mutedUsers = room.mutedUsers;
-                //basicBot.room.autoskip = room.autoskip;
-                basicBot.room.roomstats = room.roomstats;
-                basicBot.room.messages = room.messages;
-                basicBot.room.queue = room.queue;
-                basicBot.room.newBlacklisted = room.newBlacklisted;
-                API.chatLog(basicBot.chat.datarestored);
+                TMBot.room.users = room.users;
+                TMBot.room.afkList = room.afkList;
+                TMBot.room.historyList = room.historyList;
+                TMBot.room.mutedUsers = room.mutedUsers;
+                //TMBot.room.autoskip = room.autoskip;
+                TMBot.room.roomstats = room.roomstats;
+                TMBot.room.messages = room.messages;
+                TMBot.room.queue = room.queue;
+                TMBot.room.newBlacklisted = room.newBlacklisted;
+                API.chatLog(TMBot.chat.datarestored);
             }
         }
         var json_sett = null;
         var roominfo = document.getElementById('room-settings');
         info = roominfo.textContent;
-        var ref_bot = '@basicBot=';
+        var ref_bot = '@TMBot=';
         var ind_ref = info.indexOf(ref_bot);
         if (ind_ref > 0) {
             var link = info.substring(ind_ref + ref_bot.length, info.length);
@@ -191,7 +191,7 @@
                 if (json !== null && typeof json !== 'undefined') {
                     json_sett = JSON.parse(json);
                     for (var prop in json_sett) {
-                        basicBot.settings[prop] = json_sett[prop];
+                        TMBot.settings[prop] = json_sett[prop];
                     }
                 }
             });
@@ -342,7 +342,7 @@
             autoskipTimer: null,
             autodisableInterval: null,
             autodisableFunc: function() {
-                if (basicBot.status && basicBot.settings.autodisable) {
+                if (TMBot.status && TMBot.settings.autodisable) {
                     API.sendChat('!afkdisable');
                     API.sendChat('!joindisable');
                 }
@@ -380,26 +380,26 @@
                 participants: [],
                 countdown: null,
                 startRoulette: function() {
-                    basicBot.room.roulette.rouletteStatus = true;
-                    basicBot.room.roulette.countdown = setTimeout(function() {
-                        basicBot.room.roulette.endRoulette();
+                    TMBot.room.roulette.rouletteStatus = true;
+                    TMBot.room.roulette.countdown = setTimeout(function() {
+                        TMBot.room.roulette.endRoulette();
                     }, 60 * 1000);
-                    API.sendChat(basicBot.chat.isopen);
+                    API.sendChat(TMBot.chat.isopen);
                 },
                 endRoulette: function() {
-                    basicBot.room.roulette.rouletteStatus = false;
-                    var ind = Math.floor(Math.random() * basicBot.room.roulette.participants.length);
-                    var winner = basicBot.room.roulette.participants[ind];
-                    basicBot.room.roulette.participants = [];
+                    TMBot.room.roulette.rouletteStatus = false;
+                    var ind = Math.floor(Math.random() * TMBot.room.roulette.participants.length);
+                    var winner = TMBot.room.roulette.participants[ind];
+                    TMBot.room.roulette.participants = [];
                     var pos = Math.floor((Math.random() * API.getWaitList().length) + 1);
-                    var user = basicBot.userUtilities.lookupUser(winner);
+                    var user = TMBot.userUtilities.lookupUser(winner);
                     var name = user.username;
-                    API.sendChat(subChat(basicBot.chat.winnerpicked, {
+                    API.sendChat(subChat(TMBot.chat.winnerpicked, {
                         name: name,
                         position: pos
                     }));
                     setTimeout(function(winner, pos) {
-                        basicBot.userUtilities.moveUser(winner, pos, false);
+                        TMBot.userUtilities.moveUser(winner, pos, false);
                     }, 1 * 1000, winner, pos);
                 }
             },
@@ -440,7 +440,7 @@
             updateDC: function(user) {
                 user.lastDC.time = Date.now();
                 user.lastDC.position = user.lastKnownPosition;
-                user.lastDC.songCount = basicBot.room.roomstats.songCount;
+                user.lastDC.songCount = TMBot.room.roomstats.songCount;
             },
             setLastActivity: function(user) {
                 user.lastActivity = Date.now();
@@ -457,24 +457,24 @@
                 user.afkWarningCount = value;
             },
             lookupUser: function(id) {
-                for (var i = 0; i < basicBot.room.users.length; i++) {
-                    if (basicBot.room.users[i].id === id) {
-                        return basicBot.room.users[i];
+                for (var i = 0; i < TMBot.room.users.length; i++) {
+                    if (TMBot.room.users[i].id === id) {
+                        return TMBot.room.users[i];
                     }
                 }
                 return false;
             },
             lookupUserName: function(name) {
-                for (var i = 0; i < basicBot.room.users.length; i++) {
-                    var match = basicBot.room.users[i].username.trim() == name.trim();
+                for (var i = 0; i < TMBot.room.users.length; i++) {
+                    var match = TMBot.room.users[i].username.trim() == name.trim();
                     if (match) {
-                        return basicBot.room.users[i];
+                        return TMBot.room.users[i];
                     }
                 }
                 return false;
             },
             voteRatio: function(id) {
-                var user = basicBot.userUtilities.lookupUser(id);
+                var user = TMBot.userUtilities.lookupUser(id);
                 var votes = user.votes;
                 if (votes.meh === 0) votes.ratio = 1;
                 else votes.ratio = (votes.woot / votes.meh).toFixed(2);
