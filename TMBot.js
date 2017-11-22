@@ -1158,8 +1158,8 @@
             }
         },
         chatcleaner: function(chat) {
-            if (!basicBot.settings.filterChat) return false;
-            if (basicBot.userUtilities.getPermission(chat.uid) >= API.ROLE.BOUNCER) return false;
+            if (!TMBot.settings.filterChat) return false;
+            if (TMBot.userUtilities.getPermission(chat.uid) >= API.ROLE.BOUNCER) return false;
             var msg = chat.message;
             var containsLetters = false;
             for (var i = 0; i < msg.length; i++) {
@@ -1178,21 +1178,21 @@
                 if (ch >= 'A' && ch <= 'Z') capitals++;
             }
             if (capitals >= 40) {
-                API.sendChat(subChat(basicBot.chat.caps, {
+                API.sendChat(subChat(TMBot.chat.caps, {
                     name: chat.un
                 }));
                 return true;
             }
             msg = msg.toLowerCase();
             if (msg === 'skip') {
-                API.sendChat(subChat(basicBot.chat.askskip, {
+                API.sendChat(subChat(TMBot.chat.askskip, {
                     name: chat.un
                 }));
                 return true;
             }
-            for (var j = 0; j < basicBot.chatUtilities.spam.length; j++) {
-                if (msg === basicBot.chatUtilities.spam[j]) {
-                    API.sendChat(subChat(basicBot.chat.spam, {
+            for (var j = 0; j < TMBot.chatUtilities.spam.length; j++) {
+                if (msg === TMBot.chatUtilities.spam[j]) {
+                    API.sendChat(subChat(TMBot.chat.spam, {
                         name: chat.un
                     }));
                     return true;
@@ -1203,34 +1203,34 @@
         chatUtilities: {
             chatFilter: function(chat) {
                 var msg = chat.message;
-                var perm = basicBot.userUtilities.getPermission(chat.uid);
-                var user = basicBot.userUtilities.lookupUser(chat.uid);
+                var perm = TMBot.userUtilities.getPermission(chat.uid);
+                var user = TMBot.userUtilities.lookupUser(chat.uid);
                 var isMuted = false;
-                for (var i = 0; i < basicBot.room.mutedUsers.length; i++) {
-                    if (basicBot.room.mutedUsers[i] === chat.uid) isMuted = true;
+                for (var i = 0; i < TMBot.room.mutedUsers.length; i++) {
+                    if (TMBot.room.mutedUsers[i] === chat.uid) isMuted = true;
                 }
                 if (isMuted) {
                     API.moderateDeleteChat(chat.cid);
                     return true;
                 }
-                if (basicBot.settings.lockdownEnabled) {
+                if (TMBot.settings.lockdownEnabled) {
                     if (perm === API.ROLE.NONE) {
                         API.moderateDeleteChat(chat.cid);
                         return true;
                     }
                 }
-                if (basicBot.chatcleaner(chat)) {
+                if (TMBot.chatcleaner(chat)) {
                     API.moderateDeleteChat(chat.cid);
                     return true;
                 }
-                if (basicBot.settings.cmdDeletion && msg.startsWith(basicBot.settings.commandLiteral)) {
+                if (TMBot.settings.cmdDeletion && msg.startsWith(TMBot.settings.commandLiteral)) {
                     API.moderateDeleteChat(chat.cid);
                 }
                 /**
                  var plugRoomLinkPatt = /(\bhttps?:\/\/(www.)?plug\.dj[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
                  if (plugRoomLinkPatt.exec(msg)) {
                     if (perm === API.ROLE.NONE) {
-                        API.sendChat(subChat(basicBot.chat.roomadvertising, {name: chat.un}));
+                        API.sendChat(subChat(TMBot.chat.roomadvertising, {name: chat.un}));
                         API.moderateDeleteChat(chat.cid);
                         return true;
                     }
@@ -1238,7 +1238,7 @@
                  **/
                 if (msg.indexOf('http://adf.ly/') > -1) {
                     API.moderateDeleteChat(chat.cid);
-                    API.sendChat(subChat(basicBot.chat.adfly, {
+                    API.sendChat(subChat(TMBot.chat.adfly, {
                         name: chat.un
                     }));
                     return true;
@@ -1248,8 +1248,8 @@
                     return true;
                 }
 
-                var rlJoinChat = basicBot.chat.roulettejoin;
-                var rlLeaveChat = basicBot.chat.rouletteleave;
+                var rlJoinChat = TMBot.chat.roulettejoin;
+                var rlLeaveChat = TMBot.chat.rouletteleave;
 
                 var joinedroulette = rlJoinChat.split('%%NAME%%');
                 if (joinedroulette[1].length > joinedroulette[0].length) joinedroulette = joinedroulette[1];
