@@ -661,40 +661,40 @@
                 lockTimer: setTimeout(function() {}, 1000),
                 locked: false,
                 lockBooth: function() {
-                    API.moderateLockWaitList(!basicBot.roomUtilities.booth.locked);
-                    basicBot.roomUtilities.booth.locked = false;
-                    if (basicBot.settings.lockGuard) {
-                        basicBot.roomUtilities.booth.lockTimer = setTimeout(function() {
-                            API.moderateLockWaitList(basicBot.roomUtilities.booth.locked);
-                        }, basicBot.settings.maximumLocktime * 60 * 1000);
+                    API.moderateLockWaitList(!TMBot.roomUtilities.booth.locked);
+                    TMBot.roomUtilities.booth.locked = false;
+                    if (TMBot.settings.lockGuard) {
+                        TMBot.roomUtilities.booth.lockTimer = setTimeout(function() {
+                            API.moderateLockWaitList(TMBot.roomUtilities.booth.locked);
+                        }, TMBot.settings.maximumLocktime * 60 * 1000);
                     }
                 },
                 unlockBooth: function() {
-                    API.moderateLockWaitList(basicBot.roomUtilities.booth.locked);
-                    clearTimeout(basicBot.roomUtilities.booth.lockTimer);
+                    API.moderateLockWaitList(TMBot.roomUtilities.booth.locked);
+                    clearTimeout(TMBot.roomUtilities.booth.lockTimer);
                 }
             },
             afkCheck: function() {
-                if (!basicBot.status || !basicBot.settings.afkRemoval) return void(0);
-                var rank = basicBot.roomUtilities.rankToNumber(basicBot.settings.afkRankCheck);
+                if (!TMBot.status || !TMBot.settings.afkRemoval) return void(0);
+                var rank = TMBot.roomUtilities.rankToNumber(TMBot.settings.afkRankCheck);
                 var djlist = API.getWaitList();
-                var lastPos = Math.min(djlist.length, basicBot.settings.afkpositionCheck);
+                var lastPos = Math.min(djlist.length, TMBot.settings.afkpositionCheck);
                 if (lastPos - 1 > djlist.length) return void(0);
                 for (var i = 0; i < lastPos; i++) {
                     if (typeof djlist[i] !== 'undefined') {
                         var id = djlist[i].id;
-                        var user = basicBot.userUtilities.lookupUser(id);
+                        var user = TMBot.userUtilities.lookupUser(id);
                         if (typeof user !== 'boolean') {
-                            var plugUser = basicBot.userUtilities.getUser(user);
-                            if (rank !== null && basicBot.userUtilities.getPermission(plugUser) <= rank) {
+                            var plugUser = TMBot.userUtilities.getUser(user);
+                            if (rank !== null && TMBot.userUtilities.getPermission(plugUser) <= rank) {
                                 var name = plugUser.username;
-                                var lastActive = basicBot.userUtilities.getLastActivity(user);
+                                var lastActive = TMBot.userUtilities.getLastActivity(user);
                                 var inactivity = Date.now() - lastActive;
-                                var time = basicBot.roomUtilities.msToStr(inactivity);
+                                var time = TMBot.roomUtilities.msToStr(inactivity);
                                 var warncount = user.afkWarningCount;
-                                if (inactivity > basicBot.settings.maximumAfk * 60 * 1000) {
+                                if (inactivity > TMBot.settings.maximumAfk * 60 * 1000) {
                                     if (warncount === 0) {
-                                        API.sendChat(subChat(basicBot.chat.warning1, {
+                                        API.sendChat(subChat(TMBot.chat.warning1, {
                                             name: name,
                                             time: time
                                         }));
@@ -703,7 +703,7 @@
                                             userToChange.afkWarningCount = 1;
                                         }, 90 * 1000, user);
                                     } else if (warncount === 1) {
-                                        API.sendChat(subChat(basicBot.chat.warning2, {
+                                        API.sendChat(subChat(TMBot.chat.warning2, {
                                             name: name
                                         }));
                                         user.afkWarningCount = 3;
@@ -714,7 +714,7 @@
                                         var pos = API.getWaitListPosition(id);
                                         if (pos !== -1) {
                                             pos++;
-                                            basicBot.room.afkList.push([id, Date.now(), pos]);
+                                            TMBot.room.afkList.push([id, Date.now(), pos]);
                                             user.lastDC = {
 
                                                 time: null,
@@ -722,11 +722,11 @@
                                                 songCount: 0
                                             };
                                             API.moderateRemoveDJ(id);
-                                            API.sendChat(subChat(basicBot.chat.afkremove, {
+                                            API.sendChat(subChat(TMBot.chat.afkremove, {
                                                 name: name,
                                                 time: time,
                                                 position: pos,
-                                                maximumafk: basicBot.settings.maximumAfk
+                                                maximumafk: TMBot.settings.maximumAfk
                                             }));
                                         }
                                         user.afkWarningCount = 0;
@@ -979,7 +979,7 @@
             }
         },
         eventDjadvance: function(obj) {
-            if (basicBot.settings.autowoot) {
+            if (TMBot.settings.autowoot) {
                 $('#woot').click(); // autowoot
             }
 
@@ -1499,7 +1499,7 @@
         commands: {
             executable: function(minRank, chat) {
                 var id = chat.uid;
-                var perm = basicBot.userUtilities.getPermission(id);
+                var perm = TMBot.userUtilities.getPermission(id);
                 var minPerm;
                 switch (minRank) {
                     case 'admin':
@@ -1518,7 +1518,7 @@
                         minPerm = API.ROLE.MANAGER;
                         break;
                     case 'mod':
-                        if (basicBot.settings.bouncerPlus) {
+                        if (TMBot.settings.bouncerPlus) {
                             minPerm = API.ROLE.BOUNCER;
                         } else {
                             minPerm = API.ROLE.MANAGER;
@@ -1547,7 +1547,7 @@
                 type: 'startsWith/exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
 
                     }
