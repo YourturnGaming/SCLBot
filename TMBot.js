@@ -499,7 +499,7 @@
                 return 0;
             },
             moveUser: function(id, pos, priority) {
-                var user = basicBot.userUtilities.lookupUser(id);
+                var user = TMBot.userUtilities.lookupUser(id);
                 var wlist = API.getWaitList();
                 if (API.getWaitListPosition(id) === -1) {
                     if (wlist.length < 50) {
@@ -509,54 +509,54 @@
                         }, 1250, id, pos);
                     } else {
                         var alreadyQueued = -1;
-                        for (var i = 0; i < basicBot.room.queue.id.length; i++) {
-                            if (basicBot.room.queue.id[i] === id) alreadyQueued = i;
+                        for (var i = 0; i < TMBot.room.queue.id.length; i++) {
+                            if (TMBot.room.queue.id[i] === id) alreadyQueued = i;
                         }
                         if (alreadyQueued !== -1) {
-                            basicBot.room.queue.position[alreadyQueued] = pos;
-                            return API.sendChat(subChat(basicBot.chat.alreadyadding, {
-                                position: basicBot.room.queue.position[alreadyQueued]
+                            TMBot.room.queue.position[alreadyQueued] = pos;
+                            return API.sendChat(subChat(TMBot.chat.alreadyadding, {
+                                position: TMBot.room.queue.position[alreadyQueued]
                             }));
                         }
-                        basicBot.roomUtilities.booth.lockBooth();
+                        TMBot.roomUtilities.booth.lockBooth();
                         if (priority) {
-                            basicBot.room.queue.id.unshift(id);
-                            basicBot.room.queue.position.unshift(pos);
+                            TMBot.room.queue.id.unshift(id);
+                            TMBot.room.queue.position.unshift(pos);
                         } else {
-                            basicBot.room.queue.id.push(id);
-                            basicBot.room.queue.position.push(pos);
+                            TMBot.room.queue.id.push(id);
+                            TMBot.room.queue.position.push(pos);
                         }
                         var name = user.username;
-                        return API.sendChat(subChat(basicBot.chat.adding, {
+                        return API.sendChat(subChat(TMBot.chat.adding, {
                             name: name,
-                            position: basicBot.room.queue.position.length
+                            position: TMBot.room.queue.position.length
                         }));
                     }
                 } else API.moderateMoveDJ(id, pos);
             },
             dclookup: function(id) {
-                var user = basicBot.userUtilities.lookupUser(id);
-                if (typeof user === 'boolean') return basicBot.chat.usernotfound;
+                var user = TMBot.userUtilities.lookupUser(id);
+                if (typeof user === 'boolean') return TMBot.chat.usernotfound;
                 var name = user.username;
-                if (user.lastDC.time === null) return subChat(basicBot.chat.notdisconnected, {
+                if (user.lastDC.time === null) return subChat(TMBot.chat.notdisconnected, {
                     name: name
                 });
                 var dc = user.lastDC.time;
                 var pos = user.lastDC.position;
-                if (pos === null) return basicBot.chat.noposition;
+                if (pos === null) return TMBot.chat.noposition;
                 var timeDc = Date.now() - dc;
                 var validDC = false;
-                if (basicBot.settings.maximumDc * 60 * 1000 > timeDc) {
+                if (TMBot.settings.maximumDc * 60 * 1000 > timeDc) {
                     validDC = true;
                 }
-                var time = basicBot.roomUtilities.msToStr(timeDc);
-                if (!validDC) return (subChat(basicBot.chat.toolongago, {
-                    name: basicBot.userUtilities.getUser(user).username,
+                var time = TMBot.roomUtilities.msToStr(timeDc);
+                if (!validDC) return (subChat(TMBot.chat.toolongago, {
+                    name: TMBot.userUtilities.getUser(user).username,
                     time: time
                 }));
-                var songsPassed = basicBot.room.roomstats.songCount - user.lastDC.songCount;
+                var songsPassed = TMBot.room.roomstats.songCount - user.lastDC.songCount;
                 var afksRemoved = 0;
-                var afkList = basicBot.room.afkList;
+                var afkList = TMBot.room.afkList;
                 for (var i = 0; i < afkList.length; i++) {
                     var timeAfk = afkList[i][1];
                     var posAfk = afkList[i][2];
@@ -565,15 +565,15 @@
                     }
                 }
                 var newPosition = user.lastDC.position - songsPassed - afksRemoved;
-                if (newPosition <= 0) return subChat(basicBot.chat.notdisconnected, {
+                if (newPosition <= 0) return subChat(TMBot.chat.notdisconnected, {
                     name: name
                 });
-                var msg = subChat(basicBot.chat.valid, {
-                    name: basicBot.userUtilities.getUser(user).username,
+                var msg = subChat(TMBot.chat.valid, {
+                    name: TMBot.userUtilities.getUser(user).username,
                     time: time,
                     position: newPosition
                 });
-                basicBot.userUtilities.moveUser(user.id, newPosition, true);
+                TMBot.userUtilities.moveUser(user.id, newPosition, true);
                 return msg;
             }
         },
