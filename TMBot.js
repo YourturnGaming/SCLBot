@@ -1009,23 +1009,23 @@
                     }))
                 }
             }
-            basicBot.room.roomstats.totalWoots += lastplay.score.positive;
-            basicBot.room.roomstats.totalMehs += lastplay.score.negative;
-            basicBot.room.roomstats.totalCurates += lastplay.score.grabs;
-            basicBot.room.roomstats.songCount++;
-            basicBot.roomUtilities.intervalMessage();
-            basicBot.room.currentDJID = obj.dj.id;
+            TMBot.room.roomstats.totalWoots += lastplay.score.positive;
+            TMBot.room.roomstats.totalMehs += lastplay.score.negative;
+            TMBot.room.roomstats.totalCurates += lastplay.score.grabs;
+            TMBot.room.roomstats.songCount++;
+            TMBot.roomUtilities.intervalMessage();
+            TMBot.room.currentDJID = obj.dj.id;
 
             var blacklistSkip = setTimeout(function() {
                 var mid = obj.media.format + ':' + obj.media.cid;
-                for (var bl in basicBot.room.blacklists) {
-                    if (basicBot.settings.blacklistEnabled) {
-                        if (basicBot.room.blacklists[bl].indexOf(mid) > -1) {
-                            API.sendChat(subChat(basicBot.chat.isblacklisted, {
+                for (var bl in TMBot.room.blacklists) {
+                    if (TMBot.settings.blacklistEnabled) {
+                        if (TMBot.room.blacklists[bl].indexOf(mid) > -1) {
+                            API.sendChat(subChat(TMBot.chat.isblacklisted, {
                                 blacklist: bl
                             }));
-                            if (basicBot.settings.smartSkip) {
-                                return basicBot.roomUtilities.smartSkip();
+                            if (TMBot.settings.smartSkip) {
+                                return TMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1035,14 +1035,14 @@
             }, 2000);
             var newMedia = obj.media;
             var timeLimitSkip = setTimeout(function() {
-                if (basicBot.settings.timeGuard && newMedia.duration > basicBot.settings.maximumSongLength * 60 && !basicBot.room.roomevent) {
+                if (TMBot.settings.timeGuard && newMedia.duration > TMBot.settings.maximumSongLength * 60 && !TMBot.room.roomevent) {
                     var name = obj.dj.username;
-                    API.sendChat(subChat(basicBot.chat.timelimit, {
+                    API.sendChat(subChat(TMBot.chat.timelimit, {
                         name: name,
-                        maxlength: basicBot.settings.maximumSongLength
+                        maxlength: TMBot.settings.maximumSongLength
                     }));
-                    if (basicBot.settings.smartSkip) {
-                        return basicBot.roomUtilities.smartSkip();
+                    if (TMBot.settings.smartSkip) {
+                        return TMBot.roomUtilities.smartSkip();
                     } else {
                         return API.moderateForceSkip();
                     }
@@ -1055,11 +1055,11 @@
                     $.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + cid + '&key=AIzaSyDcfWu9cGaDnTjPKhg_dy9mUh6H7i4ePZ0&part=snippet&callback=?', function(track) {
                         if (typeof(track.items[0]) === 'undefined') {
                             var name = obj.dj.username;
-                            API.sendChat(subChat(basicBot.chat.notavailable, {
+                            API.sendChat(subChat(TMBot.chat.notavailable, {
                                 name: name
                             }));
-                            if (basicBot.settings.smartSkip) {
-                                return basicBot.roomUtilities.smartSkip();
+                            if (TMBot.settings.smartSkip) {
+                                return TMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1069,11 +1069,11 @@
                     var checkSong = SC.get('/tracks/' + cid, function(track) {
                         if (typeof track.title === 'undefined') {
                             var name = obj.dj.username;
-                            API.sendChat(subChat(basicBot.chat.notavailable, {
+                            API.sendChat(subChat(TMBot.chat.notavailable, {
                                 name: name
                             }));
-                            if (basicBot.settings.smartSkip) {
-                                return basicBot.roomUtilities.smartSkip();
+                            if (TMBot.settings.smartSkip) {
+                                return TMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1082,41 +1082,41 @@
                 }
             }, 2000);
             clearTimeout(historySkip);
-            if (basicBot.settings.historySkip) {
+            if (TMBot.settings.historySkip) {
                 var alreadyPlayed = false;
                 var apihistory = API.getHistory();
                 var name = obj.dj.username;
                 var historySkip = setTimeout(function() {
                     for (var i = 0; i < apihistory.length; i++) {
                         if (apihistory[i].media.cid === obj.media.cid) {
-                            basicBot.room.historyList[i].push(+new Date());
+                            TMBot.room.historyList[i].push(+new Date());
                             alreadyPlayed = true;
-                            API.sendChat(subChat(basicBot.chat.songknown, {
+                            API.sendChat(subChat(TMBot.chat.songknown, {
                                 name: name
                             }));
-                            if (basicBot.settings.smartSkip) {
-                                return basicBot.roomUtilities.smartSkip();
+                            if (TMBot.settings.smartSkip) {
+                                return TMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
                         }
                     }
                     if (!alreadyPlayed) {
-                        basicBot.room.historyList.push([obj.media.cid, +new Date()]);
+                        TMBot.room.historyList.push([obj.media.cid, +new Date()]);
                     }
                 }, 2000);
             }
             if (user.ownSong) {
-                API.sendChat(subChat(basicBot.chat.permissionownsong, {
+                API.sendChat(subChat(TMBot.chat.permissionownsong, {
                     name: user.username
                 }));
                 user.ownSong = false;
             }
-            clearTimeout(basicBot.room.autoskipTimer);
-            if (basicBot.settings.autoskip) {
+            clearTimeout(TMBot.room.autoskipTimer);
+            if (TMBot.settings.autoskip) {
                 var remaining = obj.media.duration * 1000;
                 var startcid = API.getMedia().cid;
-                basicBot.room.autoskipTimer = setTimeout(function() {
+                TMBot.room.autoskipTimer = setTimeout(function() {
                     var endcid = API.getMedia().cid;
                     if (startcid === endcid) {
                         //API.sendChat('Song stuck, skipping...');
@@ -1129,32 +1129,32 @@
         },
         eventWaitlistupdate: function(users) {
             if (users.length < 50) {
-                if (basicBot.room.queue.id.length > 0 && basicBot.room.queueable) {
-                    basicBot.room.queueable = false;
+                if (TMBot.room.queue.id.length > 0 && TMBot.room.queueable) {
+                    TMBot.room.queueable = false;
                     setTimeout(function() {
-                        basicBot.room.queueable = true;
+                        TMBot.room.queueable = true;
                     }, 500);
-                    basicBot.room.queueing++;
+                    TMBot.room.queueing++;
                     var id, pos;
                     setTimeout(
                         function() {
-                            id = basicBot.room.queue.id.splice(0, 1)[0];
-                            pos = basicBot.room.queue.position.splice(0, 1)[0];
+                            id = TMBot.room.queue.id.splice(0, 1)[0];
+                            pos = TMBot.room.queue.position.splice(0, 1)[0];
                             API.moderateAddDJ(id, pos);
                             setTimeout(
                                 function(id, pos) {
                                     API.moderateMoveDJ(id, pos);
-                                    basicBot.room.queueing--;
-                                    if (basicBot.room.queue.id.length === 0) setTimeout(function() {
-                                        basicBot.roomUtilities.booth.unlockBooth();
+                                    TMBot.room.queueing--;
+                                    if (TMBot.room.queue.id.length === 0) setTimeout(function() {
+                                        TMBot.roomUtilities.booth.unlockBooth();
                                     }, 1000);
                                 }, 1000, id, pos);
-                        }, 1000 + basicBot.room.queueing * 2500);
+                        }, 1000 + TMBot.room.queueing * 2500);
                 }
             }
             for (var i = 0; i < users.length; i++) {
-                var user = basicBot.userUtilities.lookupUser(users[i].id);
-                basicBot.userUtilities.updatePosition(user, API.getWaitListPosition(users[i].id) + 1);
+                var user = TMBot.userUtilities.lookupUser(users[i].id);
+                TMBot.userUtilities.updatePosition(user, API.getWaitListPosition(users[i].id) + 1);
             }
         },
         chatcleaner: function(chat) {
