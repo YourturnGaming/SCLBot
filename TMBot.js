@@ -2404,11 +2404,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof basicBot.settings.fbLink === 'string')
-                            API.sendChat(subChat(basicBot.chat.facebook, {
-                                link: basicBot.settings.fbLink
+                        if (typeof TMBot.settings.fbLink === 'string')
+                            API.sendChat(subChat(TMBot.chat.facebook, {
+                                link: TMBot.settings.fbLink
                             }));
                     }
                 }
@@ -2420,19 +2420,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (basicBot.settings.filterChat) {
-                            basicBot.settings.filterChat = !basicBot.settings.filterChat;
-                            return API.sendChat(subChat(basicBot.chat.toggleoff, {
+                        if (TMBot.settings.filterChat) {
+                            TMBot.settings.filterChat = !TMBot.settings.filterChat;
+                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': basicBot.chat.chatfilter
+                                'function': TMBot.chat.chatfilter
                             }));
                         } else {
-                            basicBot.settings.filterChat = !basicBot.settings.filterChat;
-                            return API.sendChat(subChat(basicBot.chat.toggleon, {
+                            TMBot.settings.filterChat = !TMBot.settings.filterChat;
+                            return API.sendChat(subChat(TMBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': basicBot.chat.chatfilter
+                                'function': TMBot.chat.chatfilter
                             }));
                         }
                     }
@@ -2493,7 +2493,7 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         if (msg.length !== cmd.length) {
@@ -2517,13 +2517,13 @@
                             var commatag = tag.replace(/ /g, ', ');
                             get_id(api_key, tag, function(id) {
                                 if (typeof id !== 'undefined') {
-                                    API.sendChat(subChat(basicBot.chat.validgiftags, {
+                                    API.sendChat(subChat(TMBot.chat.validgiftags, {
                                         name: chat.un,
                                         id: id,
                                         tags: commatag
                                     }));
                                 } else {
-                                    API.sendChat(subChat(basicBot.chat.invalidgiftags, {
+                                    API.sendChat(subChat(TMBot.chat.invalidgiftags, {
                                         name: chat.un,
                                         tags: commatag
                                     }));
@@ -2546,12 +2546,12 @@
                             var rating = 'pg-13'; // PG 13 gifs
                             get_random_id(api_key, function(id) {
                                 if (typeof id !== 'undefined') {
-                                    API.sendChat(subChat(basicBot.chat.validgifrandom, {
+                                    API.sendChat(subChat(TMBot.chat.validgifrandom, {
                                         name: chat.un,
                                         id: id
                                     }));
                                 } else {
-                                    API.sendChat(subChat(basicBot.chat.invalidgifrandom, {
+                                    API.sendChat(subChat(TMBot.chat.invalidgifrandom, {
                                         name: chat.un
                                     }));
                                 }
@@ -2567,10 +2567,10 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var link = '(Updated link coming soon)';
-                        API.sendChat(subChat(basicBot.chat.starterhelp, {
+                        API.sendChat(subChat(TMBot.chat.starterhelp, {
                             link: link
                         }));
                     }
@@ -4269,7 +4269,7 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         $('#woot').click();
                     }
@@ -4282,12 +4282,12 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof basicBot.settings.youtubeLink === 'string')
-                            API.sendChat(subChat(basicBot.chat.youtube, {
+                        if (typeof TMBot.settings.youtubeLink === 'string')
+                            API.sendChat(subChat(TMBot.chat.youtube, {
                                 name: chat.un,
-                                link: basicBot.settings.youtubeLink
+                                link: TMBot.settings.youtubeLink
                             }));
                     }
                 }
