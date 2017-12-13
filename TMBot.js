@@ -249,10 +249,10 @@
     var managers = ['',''];
     var CoHosts = ['',''];
     var TMBot = {
-        version: '2.14.4.1',
+        version: '2.14.4.4',
         status: false,
         name: 'TMBot',
-        loggedInID: null,
+        loggedInID: '20168147',
         scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
         cmdLink: 'https://goo.gl/4BQP8Y',
         chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json',
@@ -267,7 +267,7 @@
             scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
             roomLock: false, // Requires an extension to re-load the script
             startupCap: 10, // 1-200
-            startupVolume: 50, // 0-100
+            startupVolume: 0, // 0-100
             startupEmoji: false, // true or false
             autowoot: true,
             autoskip: false,
@@ -285,7 +285,7 @@
             maximumCycletime: 10,
             voteSkip: false,
             voteSkipLimit: 10,
-            historySkip: false,
+            historySkip: true,
             timeGuard: true,
             maximumSongLength: 10,
             autodisable: false,
@@ -309,14 +309,14 @@
             motdInterval: 5,
             motd: 'Check our social media and follow us, forum: https://goo.gl/qbFeGw instagram: https://goo.gl/rEkDti twitter: https://goo.gl/0jzhuz',
             filterChat: true,
-            etaRestriction: false,
+            etaRestriction: true,
             welcome: true,
             opLink: null,
-            rulesLink: null,
-            themeLink: null,
+            rulesLink: 'We have on disocrd rules.',
+            themeLink: 'https://i.imgur.com/wTthxZS.png',
             fbLink: 'Our fb page: https://goo.gl/vLoJ4X and fb group: https://goo.gl/Blw9dV',
             youtubeLink: 'https://www.youtube.com/channel/UCy0RpumtkdJVuseanqnrzsg',
-            website: 'Our website is coming',
+            website: 'http://www.titanmusic.cf/website.php?action=website',
             intervalMessages: [],
             messageInterval: 5,
             songstats: true,
@@ -929,7 +929,7 @@
             for (var i = 0; i < TMBot.room.users.length; i++) {
                 if (TMBot.room.users[i].id === user.id) {
                     TMBot.userUtilities.updateDC(TMBot.room.users[i]);
-                    TMBot.room.users[i].inRoom = false;
+                    TMBot.room.users[i].inRoom = true;
                     if (lastDJ == user.id) {
                         var user = TMBot.userUtilities.lookupUser(TMBot.room.users[i].id);
                         TMBot.userUtilities.updatePosition(user, 0);
@@ -3496,7 +3496,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("There are events coming up pretty soon!");
+                            API.sendChat("Event is here: https://i.imgur.com/wTthxZS.png");
                     }
                 }
             },
