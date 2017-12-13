@@ -249,8 +249,8 @@
     var managers = ['',''];
     var CoHosts = ['',''];
     var TMBot = {
-        version: '2.14.4.4',
-        status: false,
+        version: '2.14.4.5',
+        status: true,
         name: 'TMBot',
         loggedInID: '20168147',
         scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
@@ -3496,7 +3496,33 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("Event is here: https://i.imgur.com/wTthxZS.png");
+                            API.sendChat("Event is here: https://i.imgur.com/dsA1eBx.png?1");
+                    }
+                }
+            },
+		
+	    plugdjCommand: {
+                command: 'plugdj',
+                rank: 'user',
+                type: 'exact',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("plugdj: discord: https://discord.gg/RE8fkzE");
+                    }
+                }
+            },	
+		
+	    plugitCommand: {
+                command: 'Plugit',
+                rank: 'user',
+                type: 'exact',
+                functionality: function (chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("PlugIt: discord: https://discord.gg//DptCswA");
                     }
                 }
             },
@@ -3509,7 +3535,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("plug3: https://goo.gl/UB67zH");
+                            API.sendChat("plug3: https://goo.gl/UB67zH discord: https://discord.gg/AXVZjT");
                     }
                 }
             },
@@ -3522,7 +3548,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("rcs: https://goo.gl/o6sD2H");
+                            API.sendChat("rcs: https://goo.gl/o6sD2H discord: https://discord.gg/QHvpfNP");
                     }
                 }
             },
