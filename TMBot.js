@@ -179,7 +179,7 @@
         var json_sett = null;
         var roominfo = document.getElementById('room-settings');
         info = roominfo.textContent;
-        var ref_bot = '@TMBot=';
+        var ref_bot = '@UGM | Bot=';
         var ind_ref = info.indexOf(ref_bot);
         if (ind_ref > 0) {
             var link = info.substring(ind_ref + ref_bot.length, info.length);
@@ -249,9 +249,9 @@
     var managers = ['',''];
     var CoHosts = ['',''];
     var TMBot = {
-        version: '2.14.4.5',
+        version: '2.14.4.7',
         status: true,
-        name: 'TMBot',
+        name: 'UGMBot',
         loggedInID: '20168147',
         scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
         cmdLink: 'https://goo.gl/4BQP8Y',
@@ -261,7 +261,7 @@
         retrieveSettings: retrieveSettings,
         retrieveFromStorage: retrieveFromStorage,
         settings: {
-            botName: 'TMBot',
+            botName: 'UGMBot',
             language: 'english',
             chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json',
             scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
@@ -307,16 +307,16 @@
             afkRankCheck: 'ambassador',
             motdEnabled: true,
             motdInterval: 5,
-            motd: 'Check our social media and follow us, forum: https://goo.gl/qbFeGw instagram: https://goo.gl/rEkDti twitter: https://goo.gl/0jzhuz',
+            motd: 'Check our social media and follow us, instagram: https://goo.gl/GPhGFq twitter: https://goo.gl/E8USu3',
             filterChat: true,
             etaRestriction: true,
             welcome: true,
             opLink: null,
             rulesLink: 'We have on disocrd rules.',
-            themeLink: 'https://i.imgur.com/wTthxZS.png',
-            fbLink: 'Our fb page: https://goo.gl/vLoJ4X and fb group: https://goo.gl/Blw9dV',
+            themeLink: 'null',
+            fbLink: 'Our fb page: https://goo.gl/4TMJGw and fb group: https://goo.gl/Blw9dV',
             youtubeLink: 'https://www.youtube.com/channel/UCy0RpumtkdJVuseanqnrzsg',
-            website: 'http://www.titanmusic.cf/website.php?action=website',
+            website: 'null',
             intervalMessages: [],
             messageInterval: 5,
             songstats: true,
@@ -1407,7 +1407,7 @@
             TMBot.room.name = window.location.pathname;
             var Check;
 
-            console.log(TMBot.room.name);
+            console.log(UGMBot.room.name);
 
             var detect = function() {
                 if (TMBot.room.name != window.location.pathname) {
@@ -4321,5 +4321,5 @@
         }
     };
 
-    loadChat(TMBot.startup);
+    loadChat(UGMBot.startup);
 }).call(this);
