@@ -2185,23 +2185,23 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var name;
                         if (msg.length === cmd.length) name = chat.un;
                         else {
                             name = msg.substring(cmd.length + 2);
-                            var perm = basicBot.userUtilities.getPermission(chat.uid);
-                            if (perm < API.ROLE.BOUNCER) return API.sendChat(subChat(basicBot.chat.dclookuprank, {
+                            var perm = UGMBot.userUtilities.getPermission(chat.uid);
+                            if (perm < API.ROLE.BOUNCER) return API.sendChat(subChat(UGMBot.chat.dclookuprank, {
                                 name: chat.un
                             }));
                         }
-                        var user = basicBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
+                        var user = UGMBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(UGMBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        var toChat = basicBot.userUtilities.dclookup(user.id);
+                        var toChat = UGMBot.userUtilities.dclookup(user.id);
                         API.sendChat(toChat);
                     }
                 }
