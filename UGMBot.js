@@ -244,16 +244,16 @@
     var botCreator = "xUndisputed";
     var botMaintainer = "TitanMusicDev";
     var botCreatorIDs = ["3669054", "20168147"];
-    var resdjs = ['',''];
-    var bouncers = ['',''];
-    var managers = ['',''];
-    var CoHosts = ['',''];
-    var TMBot = {
+    var resdjs = ["",""];
+    var bouncers = ["",""];
+    var managers = ["",""];
+    var CoHosts = ["",""];
+    var UGMBot = {
         version: "2.14.4.9",
         status: true,
         name: "UGMBot",
         loggedInID: "20168147",
-        scriptLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js",
+        scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UGMBot.js",
         cmdLink: "https://goo.gl/4BQP8Y",
         chatLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json",
         chat: null,
@@ -264,7 +264,7 @@
             botName: "UGMBot",
             language: "english",
             chatLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json",
-            scriptLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js",
+            scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UGMBot.js",
             roomLock: false, // Requires an extension to re-load the script
             startupCap: 10, // 1-200
             startupVolume: 0, // 0-100
@@ -303,7 +303,7 @@
                 ['nsfw', 'The song you contained was NSFW (image or sound). '],
                 ['unavailable', 'The song you played was not available for some users. ']
             ],
-            afkpositionCheck: 15,
+            afkpositionCheck: 30,
             afkRankCheck: "ambassador",
             motdEnabled: true,
             motdInterval: 30,
@@ -312,11 +312,11 @@
             etaRestriction: true,
             welcome: true,
             opLink: null,
-            rulesLink: "We have on disocrd rules. https://discord.gg/zq5RnBx ",
+            rulesLink: "We have on disocrd rules.ttps://discord.gg/zq5RnBx",
             themeLink: null,
             fbLink: "Our fb page: https://goo.gl/4TMJGw and fb group: https://goo.gl/Blw9dV",
             youtubeLink: "https://www.youtube.com/channel/UCy0RpumtkdJVuseanqnrzsg",
-            website: "null",
+            website: null,
             intervalMessages: [],
             messageInterval: 5,
             songstats: true,
@@ -342,7 +342,7 @@
             autoskipTimer: null,
             autodisableInterval: null,
             autodisableFunc: function() {
-                if (TMBot.status && TMBot.settings.autodisable) {
+                if (UGM.status && UGM.settings.autodisable) {
                     API.sendChat('!afkdisable');
                     API.sendChat('!joindisable');
                 }
@@ -382,24 +382,24 @@
                 startRoulette: function() {
                     TMBot.room.roulette.rouletteStatus = true;
                     TMBot.room.roulette.countdown = setTimeout(function() {
-                        TMBot.room.roulette.endRoulette();
+                        UGM.roulette.endRoulette();
                     }, 60 * 1000);
-                    API.sendChat(TMBot.chat.isopen);
+                    API.sendChat(UGM.chat.isopen)
                 },
                 endRoulette: function() {
-                    TMBot.room.roulette.rouletteStatus = false;
-                    var ind = Math.floor(Math.random() * TMBot.room.roulette.participants.length);
-                    var winner = TMBot.room.roulette.participants[ind];
-                    TMBot.room.roulette.participants = [];
+                    UGMroom.roulette.rouletteStatus = false;
+                    var ind = Math.floor(Math.random() * UGM.room.roulette.participants.length);
+                    var winner = UGM.room.roulette.participants[ind];
+                    UGM.room.roulette.participants = [];
                     var pos = Math.floor((Math.random() * API.getWaitList().length) + 1);
-                    var user = TMBot.userUtilities.lookupUser(winner);
+                    var user = UGM.userUtilities.lookupUser(winner);
                     var name = user.username;
-                    API.sendChat(subChat(TMBot.chat.winnerpicked, {
+                    API.sendChat(subChat(UGM.chat.winnerpicked, {
                         name: name,
                         position: pos
                     }));
                     setTimeout(function(winner, pos) {
-                        TMBot.userUtilities.moveUser(winner, pos, false);
+                        UGM.userUtilities.moveUser(winner, pos, false);
                     }, 1 * 1000, winner, pos);
                 }
             },
