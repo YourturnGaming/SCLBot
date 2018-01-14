@@ -249,7 +249,7 @@
     var managers = ["",""];
     var CoHosts = ["",""];
     var UGMBot = {
-        version: "2.14.4.9",
+        version: "2.14.5.0",
         status: true,
         name: "UGMBot",
         loggedInID: "20168147",
@@ -380,26 +380,26 @@
                 participants: [],
                 countdown: null,
                 startRoulette: function() {
-                    TMBot.room.roulette.rouletteStatus = true;
-                    TMBot.room.roulette.countdown = setTimeout(function() {
-                        UGM.roulette.endRoulette();
+                    UGMBot.room.roulette.rouletteStatus = true;
+                    UGMBot.room.roulette.countdown = setTimeout(function() {
+                        UGMBot.room.roulette.endRoulette();
                     }, 60 * 1000);
-                    API.sendChat(UGM.chat.isopen)
+                    API.sendChat(UGMBot.chat.isopen);
                 },
                 endRoulette: function() {
-                    UGMroom.roulette.rouletteStatus = false;
-                    var ind = Math.floor(Math.random() * UGM.room.roulette.participants.length);
-                    var winner = UGM.room.roulette.participants[ind];
+                    UGMBot.room.roulette.rouletteStatus = false;
+                    var ind = Math.floor(Math.random() * UGMBot.room.roulette.participants.length);
+                    var winner = UGMBot.room.roulette.participants[ind];
                     UGM.room.roulette.participants = [];
                     var pos = Math.floor((Math.random() * API.getWaitList().length) + 1);
-                    var user = UGM.userUtilities.lookupUser(winner);
+                    var user = UGMBot.userUtilities.lookupUser(winner);
                     var name = user.username;
-                    API.sendChat(subChat(UGM.chat.winnerpicked, {
+                    API.sendChat(subChat(UGMBot.chat.winnerpicked, {
                         name: name,
                         position: pos
                     }));
                     setTimeout(function(winner, pos) {
-                        UGM.userUtilities.moveUser(winner, pos, false);
+                        UGMBot.userUtilities.moveUser(winner, pos, false);
                     }, 1 * 1000, winner, pos);
                 }
             },
