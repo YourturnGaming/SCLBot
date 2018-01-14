@@ -32,9 +32,9 @@ TMBot can be customized to fit your needs. Please refer to [the customization re
 Please do not try to if you are not confident in your javascript capabilities.
 
 
-TMBot Chrome Extension
+UGMBot Chrome Extension
 -------------------------
-[Get the Official TMBot Chrome Extension is coming]()
+[Get the Official UGMBot Chrome Extension is coming]()
 
 
 Developers
