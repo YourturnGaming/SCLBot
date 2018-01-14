@@ -50,8 +50,8 @@ Credits
 
 I would like to thank the following people:
 
-- ProditorMagnus: His TMBot has been a source of inspiration for most of the features, and his help with coding problems has been invaluable to make this bot.
-- Trigstur, and other TMBot contributors: Their TMBot has inspired features like Roulette.
+- ProditorMagnus: His UGMBot has been a source of inspiration for most of the features, and his help with coding problems has been invaluable to make this bot.
+- Trigstur, and other UGMBot contributors: Their TMBot has inspired features like Roulette.
 - TitanMusic | Developer: Never knew this undertaking would give me a friend too.
 
 |Language | Translator|
