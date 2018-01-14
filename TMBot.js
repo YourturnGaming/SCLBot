@@ -1,6 +1,6 @@
 /**
 
- Copyright © 2017 TMBot
+ Copyright © 2017-2018 UGMBot
 
  Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
  This software is not for profit, any extension, or unauthorised person providing this software is not authorised to be in a position of any monetary gain from this use of this software. Any and all money gained under the use of the software (which includes donations) must be passed on to the original author.
@@ -10,7 +10,7 @@
 (function() {
 
     /*window.onerror = function() {
-        var room = JSON.parse(localStorage.getItem('TMBotRoom'));
+        var room = JSON.parse(localStorage.getItem('UGMBotRoom'));
         window.location = 'https://plug.dj' + room.name;
     };*/
 
@@ -28,8 +28,8 @@
     };
 
     var kill = function() {
-        clearInterval(TMBot.room.autodisableInterval);
-        clearInterval(TMBot.room.afkInterval);
+        clearInterval(UGMBot.room.autodisableInterval);
+        clearInterval(UGMBot.room.afkInterval);
         TMBot.status = false;
     };
 
@@ -241,30 +241,30 @@
         return str;
     };
 
-    var botCreator = 'xUndisputed';
-    var botMaintainer = 'TitanMusicDev';
-    var botCreatorIDs = ['3669054', '20168147'];
+    var botCreator = "xUndisputed";
+    var botMaintainer = "TitanMusicDev";
+    var botCreatorIDs = ["3669054", "20168147"];
     var resdjs = ['',''];
     var bouncers = ['',''];
     var managers = ['',''];
     var CoHosts = ['',''];
     var TMBot = {
-        version: '2.14.4.7',
+        version: "2.14.4.9",
         status: true,
-        name: 'UGMBot',
-        loggedInID: '20168147',
-        scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
-        cmdLink: 'https://goo.gl/4BQP8Y',
-        chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json',
+        name: "UGMBot",
+        loggedInID: "20168147",
+        scriptLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js",
+        cmdLink: "https://goo.gl/4BQP8Y",
+        chatLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json",
         chat: null,
         loadChat: loadChat,
         retrieveSettings: retrieveSettings,
         retrieveFromStorage: retrieveFromStorage,
         settings: {
-            botName: 'UGMBot',
-            language: 'english',
-            chatLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json',
-            scriptLink: 'https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js',
+            botName: "UGMBot",
+            language: "english",
+            chatLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json",
+            scriptLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js",
             roomLock: false, // Requires an extension to re-load the script
             startupCap: 10, // 1-200
             startupVolume: 0, // 0-100
@@ -304,23 +304,23 @@
                 ['unavailable', 'The song you played was not available for some users. ']
             ],
             afkpositionCheck: 15,
-            afkRankCheck: 'ambassador',
+            afkRankCheck: "ambassador",
             motdEnabled: true,
-            motdInterval: 5,
-            motd: 'Check our social media and follow us, instagram: https://goo.gl/GPhGFq twitter: https://goo.gl/E8USu3',
+            motdInterval: 30,
+            motd: "Check our social media and follow us, instagram: https://goo.gl/GPhGFq twitter: https://goo.gl/E8USu3",
             filterChat: true,
             etaRestriction: true,
             welcome: true,
             opLink: null,
-            rulesLink: 'We have on disocrd rules.',
-            themeLink: 'null',
-            fbLink: 'Our fb page: https://goo.gl/4TMJGw and fb group: https://goo.gl/Blw9dV',
-            youtubeLink: 'https://www.youtube.com/channel/UCy0RpumtkdJVuseanqnrzsg',
-            website: 'null',
+            rulesLink: "We have on disocrd rules. https://discord.gg/zq5RnBx ",
+            themeLink: null,
+            fbLink: "Our fb page: https://goo.gl/4TMJGw and fb group: https://goo.gl/Blw9dV",
+            youtubeLink: "https://www.youtube.com/channel/UCy0RpumtkdJVuseanqnrzsg",
+            website: "null",
             intervalMessages: [],
             messageInterval: 5,
             songstats: true,
-            commandLiteral: '!',
+            commandLiteral: "!",
             blacklists: {
                 NSFW: '',
                 OP: '',
@@ -1394,8 +1394,8 @@
         },
         startup: function() {
             var u = API.getUser();
-            if (TMBot.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(TMBot.chat.greyuser);
-            if (TMBot.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(TMBot.chat.bouncer);
+            if (UGMBot.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(UGMBot.chat.greyuser);
+            if (UGMBot.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(UGMBot.chat.bouncer);
             TMBot.connectAPI();
             API.moderateDeleteChat = function(cid) {
                 $.ajax({
@@ -1404,21 +1404,21 @@
                 })
             };
 
-            TMBot.room.name = window.location.pathname;
+            UGMBot.room.name = window.location.pathname;
             var Check;
 
             console.log(UGMBot.room.name);
 
             var detect = function() {
-                if (TMBot.room.name != window.location.pathname) {
+                if (UGMBot.room.name != window.location.pathname) {
                     console.log('Killing bot after room change.');
                     storeToStorage();
-                    TMBot.disconnectAPI();
+                    UGMBot.disconnectAPI();
                     setTimeout(function() {
                         kill();
                     }, 1000);
-                    if (TMBot.settings.roomLock) {
-                        window.location = TMBot.room.name;
+                    if (UGMBot.settings.roomLock) {
+                        window.location = UGMBot.room.name;
                     } else {
                         clearInterval(Check);
                     }
@@ -1431,17 +1431,17 @@
 
             retrieveSettings();
             retrieveFromStorage();
-            window.bot = TMBot;
-            TMBot.roomUtilities.updateBlacklists();
-            setInterval(TMBot.roomUtilities.updateBlacklists, 60 * 60 * 1000);
-            TMBot.getNewBlacklistedSongs = TMBot.roomUtilities.exportNewBlacklistedSongs;
-            TMBot.logNewBlacklistedSongs = TMBot.roomUtilities.logNewBlacklistedSongs;
-            if (TMBot.room.roomstats.launchTime === null) {
-                TMBot.room.roomstats.launchTime = Date.now();
+            window.bot = UGMBot;
+            UGMBot.roomUtilities.updateBlacklists();
+            setInterval(UGMBot.roomUtilities.updateBlacklists, 60 * 60 * 1000);
+            UGMBot.getNewBlacklistedSongs = UGMBot.roomUtilities.exportNewBlacklistedSongs;
+            UGMBot.logNewBlacklistedSongs = UGMBot.roomUtilities.logNewBlacklistedSongs;
+            if (UGMBot.room.roomstats.launchTime === null) {
+                UGMBot.room.roomstats.launchTime = Date.now();
             }
 
             for (var j = 0; j < TMBot.room.users.length; j++) {
-                TMBot.room.users[j].inRoom = false;
+                UGMBot.room.users[j].inRoom = false;
             }
             var userlist = API.getUsers();
             for (var i = 0; i < userlist.length; i++) {
@@ -4295,7 +4295,7 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         $('#woot').click();
                     }
@@ -4308,12 +4308,12 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof TMBot.settings.youtubeLink === 'string')
-                            API.sendChat(subChat(TMBot.chat.youtube, {
+                        if (typeof UGMBot.settings.youtubeLink === 'string')
+                            API.sendChat(subChat(UGMBot.chat.youtube, {
                                 name: chat.un,
-                                link: TMBot.settings.youtubeLink
+                                link: UGMBot.settings.youtubeLink
                             }));
                     }
                 }
