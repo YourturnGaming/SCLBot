@@ -9,7 +9,7 @@ Usage
 Bookmark the following code. To run the bot, run the bookmark.
 
 ```
-javascript:(function(){$.getScript('https://rawgit.com/TitanMusicDev/titanmusic/master/TMBot.js');})();
+javascript:(function(){$.getScript('https://rawgit.com/xUndisputed/titanmusic/master/UGMBot.js');})();
 ```
 
 If this does not work, go to https://raw.githubusercontent.com/TitanMusicDev/titanmusic/master/TMBot.js and copy paste its content into your console (accessible in chrome by pressing F12) when on plug.dj in your community.
@@ -41,7 +41,6 @@ Developers
 ----------
  - [TitanMusicDev](https://github.com/TitanMusicDev) __(Maintainer)__
 
- - [keekz🐺 Hardstyle 2017 ♫]() __(Helper)__
  - [Trigstur]() __(Helper)__
  - [Proditor]() __(Helper)__
 
@@ -65,7 +64,7 @@ __I would also like to thank everyone who contributed in translating the bot via
 
 ### Copyright
 
-Copyright &copy; 2017 TMBot
+Copyright &copy; 2017-2018 UGMBot
 
 Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
 
