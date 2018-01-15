@@ -112,30 +112,30 @@
 
     var loadChat = function(cb) {
         if (!cb) cb = function() {};
-        $.get('https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json', function(json) {
-            var link = TMBot.chatLink;
+        $.get("https://rawgit.com/xUndisputed/titanmusic/master/langIndex.json", function(json) {
+            var link = UGMBot.chatLink;
             if (json !== null && typeof json !== 'undefined') {
                 langIndex = json;
-                link = langIndex[TMBot.settings.language.toLowerCase()];
-                if (TMBot.settings.chatLink !== TMBot.chatLink) {
-                    link = TMBot.settings.chatLink;
+                link = langIndex[UGMBot.settings.language.toLowerCase()];
+                if (UGMBot.settings.chatLink !== UGMBot.chatLink) {
+                    link = UGMBot.settings.chatLink;
                 } else {
                     if (typeof link === 'undefined') {
-                        link = TMBot.chatLink;
+                        link = UGMBot.chatLink;
                     }
                 }
                 $.get(link, function(json) {
                     if (json !== null && typeof json !== 'undefined') {
                         if (typeof json === 'string') json = JSON.parse(json);
-                        TMBot.chat = json;
+                        UGMBot.chat = json;
                         cb();
                     }
                 });
             } else {
-                $.get(TMBot.chatLink, function(json) {
+                $.get(UGMBot.chatLink, function(json) {
                     if (json !== null && typeof json !== 'undefined') {
                         if (typeof json === 'string') json = JSON.parse(json);
-                        TMBot.chat = json;
+                        UGMBot.chat = json;
                         cb();
                     }
                 });
@@ -144,10 +144,10 @@
     };
 
     var retrieveSettings = function() {
-        var settings = JSON.parse(localStorage.getItem('TMBotsettings'));
+        var settings = JSON.parse(localStorage.getItem("UGMBotsettings"));
         if (settings !== null) {
             for (var prop in settings) {
-                TMBot.settings[prop] = settings[prop];
+                UGMBot.settings[prop] = settings[prop];
             }
         }
     };
@@ -255,7 +255,7 @@
         loggedInID: "20168147",
         scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UGMBot.js",
         cmdLink: "https://goo.gl/4BQP8Y",
-        chatLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json",
+        chatLink: "https://rawgit.com/xUndisputed/titanmusic/master/langIndex.json",
         chat: null,
         loadChat: loadChat,
         retrieveSettings: retrieveSettings,
@@ -263,7 +263,7 @@
         settings: {
             botName: "UGMBot",
             language: "english",
-            chatLink: "https://rawgit.com/TitanMusicDev/titanmusic/master/langIndex.json",
+            chatLink: "https://rawgit.com/xUndisputed/titanmusic/master/langIndex.json",
             scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UGMBot.js",
             roomLock: false, // Requires an extension to re-load the script
             startupCap: 10, // 1-200
@@ -295,13 +295,13 @@
             thorCooldown: 10,
             skipPosition: 3,
             skipReasons: [
-                ['theme', 'This song does not fit the room theme. '],
-                ['op', 'This song is on the OP list. '],
-                ['history', 'This song is in the history. '],
-                ['mix', 'You played a mix, which is against the rules. '],
-                ['sound', 'The song you played had bad sound quality or no sound. '],
-                ['nsfw', 'The song you contained was NSFW (image or sound). '],
-                ['unavailable', 'The song you played was not available for some users. ']
+                ["theme", "This song does not fit the room theme. "],
+                ["op", '"This song is on the OP list. "],
+                ["history", "This song is in the history. "],
+                ["mix", "You played a mix, which is against the rules. "],
+                ["sound", "The song you played had bad sound quality or no sound. "],
+                ["nsfw", "The song you contained was NSFW (image or sound). "],
+                ["unavailable", "The song you played was not available for some users. "]
             ],
             afkpositionCheck: 30,
             afkRankCheck: "ambassador",
