@@ -1396,7 +1396,7 @@
             var u = API.getUser();
             if (UGMBot.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(UGMBot.chat.greyuser);
             if (UGMBot.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(UGMBot.chat.bouncer);
-            TMBot.connectAPI();
+            UGMBot.connectAPI();
             API.moderateDeleteChat = function(cid) {
                 $.ajax({
                     url: '/_/chat/' + cid,
