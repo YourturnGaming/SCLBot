@@ -940,12 +940,12 @@
             }
         },
         eventVoteupdate: function(obj) {
-            for (var i = 0; i < TMBot.room.users.length; i++) {
-                if (TMBot.room.users[i].id === obj.user.id) {
+            for (var i = 0; i < UGMBot.room.users.length; i++) {
+                if (UGMBot.room.users[i].id === obj.user.id) {
                     if (obj.vote === 1) {
-                        TMBot.room.users[i].votes.woot++;
+                        UGMBot.room.users[i].votes.woot++;
                     } else {
-                        TMBot.room.users[i].votes.meh++;
+                        UGMBot.room.users[i].votes.meh++;
                     }
                 }
             }
@@ -956,14 +956,14 @@
             var timeLeft = API.getTimeRemaining();
             var timeElapsed = API.getTimeElapsed();
 
-            if (TMBot.settings.voteSkip) {
-                if ((mehs - woots) >= (TMBot.settings.voteSkipLimit)) {
-                    API.sendChat(subChat(TMBot.chat.voteskipexceededlimit, {
+            if (UGMBot.settings.voteSkip) {
+                if ((mehs - woots) >= (UGMBot.settings.voteSkipLimit)) {
+                    API.sendChat(subChat(UGMBot.chat.voteskipexceededlimit, {
                         name: dj.username,
-                        limit: TMBot.settings.voteSkipLimit
+                        limit: UGMBot.settings.voteSkipLimit
                     }));
-                    if (TMBot.settings.smartSkip && timeLeft > timeElapsed) {
-                        TMBot.roomUtilities.smartSkip();
+                    if (UGMBot.settings.smartSkip && timeLeft > timeElapsed) {
+                        UGMBot.roomUtilities.smartSkip();
                     } else {
                         API.moderateForceSkip();
                     }
@@ -972,21 +972,21 @@
 
         },
         eventCurateupdate: function(obj) {
-            for (var i = 0; i < TMBot.room.users.length; i++) {
-                if (TMBot.room.users[i].id === obj.user.id) {
-                    TMBot.room.users[i].votes.curate++;
+            for (var i = 0; i < UGMBot.room.users.length; i++) {
+                if (UGMBot.room.users[i].id === obj.user.id) {
+                    UGMBot.room.users[i].votes.curate++;
                 }
             }
         },
         eventDjadvance: function(obj) {
-            if (TMBot.settings.autowoot) {
+            if (UGMBot.settings.autowoot) {
                 $('#woot').click(); // autowoot
             }
 
-            var user = TMBot.userUtilities.lookupUser(obj.dj.id)
-            for (var i = 0; i < TMBot.room.users.length; i++) {
-                if (TMBot.room.users[i].id === user.id) {
-                    TMBot.room.users[i].lastDC = {
+            var user = UGMBot.userUtilities.lookupUser(obj.dj.id)
+            for (var i = 0; i < UGMBot.room.users.length; i++) {
+                if (UGMBot.room.users[i].id === user.id) {
+                    UGMBot.room.users[i].lastDC = {
                         time: null,
                         position: null,
                         songCount: 0
@@ -996,11 +996,11 @@
 
             var lastplay = obj.lastPlay;
             if (typeof lastplay === 'undefined') return;
-            if (TMBot.settings.songstats) {
-                if (typeof TMBot.chat.songstatistics === 'undefined') {
+            if (UGMBot.settings.songstats) {
+                if (typeof UGMBot.chat.songstatistics === 'undefined') {
                     API.sendChat('/me ' + lastplay.media.author + ' - ' + lastplay.media.title + ': ' + lastplay.score.positive + 'W/' + lastplay.score.grabs + 'G/' + lastplay.score.negative + 'M.')
                 } else {
-                    API.sendChat(subChat(TMBot.chat.songstatistics, {
+                    API.sendChat(subChat(UGMBot.chat.songstatistics, {
                         artist: lastplay.media.author,
                         title: lastplay.media.title,
                         woots: lastplay.score.positive,
@@ -1307,34 +1307,34 @@
                 }
 
                 if (executed && userPerm === API.ROLE.NONE) {
-                    TMBot.room.usercommand = false;
+                    UGMBot.room.usercommand = false;
                     setTimeout(function() {
-                        TMBot.room.usercommand = true;
-                    }, TMBot.settings.commandCooldown * 1000);
+                        UGMBot.room.usercommand = true;
+                    }, UGMBot.settings.commandCooldown * 1000);
                 }
                 if (executed) {
-                    /*if (TMBot.settings.cmdDeletion) {
+                    /*if (UGMBot.settings.cmdDeletion) {
                         API.moderateDeleteChat(chat.cid);
                     }*/
 
-                    //TMBot.room.allcommand = false;
+                    //UGMBot.room.allcommand = false;
                     //setTimeout(function () {
-                    TMBot.room.allcommand = true;
+                    UGMBot.room.allcommand = true;
                     //}, 5 * 1000);
                 }
                 return executed;
             },
             action: function(chat) {
-                var user = TMBot.userUtilities.lookupUser(chat.uid);
+                var user = UGMBot.userUtilities.lookupUser(chat.uid);
                 if (chat.type === 'message') {
-                    for (var j = 0; j < TMBot.room.users.length; j++) {
-                        if (TMBot.userUtilities.getUser(TMBot.room.users[j]).id === chat.uid) {
-                            TMBot.userUtilities.setLastActivity(TMBot.room.users[j]);
+                    for (var j = 0; j < UGMBot.room.users.length; j++) {
+                        if (UGMBot.userUtilities.getUser(UGMBot.room.users[j]).id === chat.uid) {
+                            UGMBot.userUtilities.setLastActivity(UGMBot.room.users[j]);
                         }
 
                     }
                 }
-                TMBot.room.roomstats.chatmessages++;
+                UGMBot.room.roomstats.chatmessages++;
             },
             spam: [
                 'hueh', 'hu3', 'brbr', 'heu', 'brbr', 'kkkk', 'spoder', 'mafia', 'zuera', 'zueira',
