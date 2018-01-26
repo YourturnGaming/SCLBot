@@ -742,10 +742,10 @@
                 var id = dj.id;
                 var waitlistlength = API.getWaitList().length;
                 var locked = false;
-                TMBot.room.queueable = false;
+                UGMBot.room.queueable = false;
 
                 if (waitlistlength == 50) {
-                    TMBot.roomUtilities.booth.lockBooth();
+                    UGMBot.roomUtilities.booth.lockBooth();
                     locked = true;
                 }
                 setTimeout(function(id) {
@@ -755,16 +755,16 @@
                             API.sendChat(reason);
                         }
                     }, 500);
-                    TMBot.room.skippable = false;
+                    UGMBot.room.skippable = false;
                     setTimeout(function() {
-                        TMBot.room.skippable = true
+                        UGMBot.room.skippable = true
                     }, 5 * 1000);
                     setTimeout(function(id) {
-                        TMBot.userUtilities.moveUser(id, TMBot.settings.skipPosition, false);
-                        TMBot.room.queueable = true;
+                        UGMBot.userUtilities.moveUser(id, UGMBot.settings.skipPosition, false);
+                        UGMBot.room.queueable = true;
                         if (locked) {
                             setTimeout(function() {
-                                TMBot.roomUtilities.booth.unlockBooth();
+                                UGMBot.roomUtilities.booth.unlockBooth();
                             }, 1000);
                         }
                     }, 1500, id);
@@ -774,13 +774,13 @@
                 $.getJSON('/_/rooms/state', function(data) {
                     if (data.data[0].booth.shouldCycle) { // checks if shouldCycle is true
                         API.moderateDJCycle(false); // Disables the DJ Cycle
-                        clearTimeout(TMBot.room.cycleTimer); // Clear the cycleguard timer
+                        clearTimeout(UGMBot.room.cycleTimer); // Clear the cycleguard timer
                     } else { // If cycle is already disable; enable it
-                        if (TMBot.settings.cycleGuard) { // Is cycle guard on?
+                        if (UGMBot.settings.cycleGuard) { // Is cycle guard on?
                             API.moderateDJCycle(true); // Enables DJ cycle
-                            TMBot.room.cycleTimer = setTimeout(function() { // Start timer
+                            UGMBot.room.cycleTimer = setTimeout(function() { // Start timer
                                 API.moderateDJCycle(false); // Disable cycle
-                            }, TMBot.settings.maximumCycletime * 60 * 1000); // The time
+                            }, UGMBot.settings.maximumCycletime * 60 * 1000); // The time
                         } else { // So cycleguard is not on?
                             API.moderateDJCycle(true); // Enables DJ cycle
                         }
@@ -789,16 +789,16 @@
             },
             intervalMessage: function() {
                 var interval;
-                if (TMBot.settings.motdEnabled) interval = TMBot.settings.motdInterval;
-                else interval = TMBot.settings.messageInterval;
-                if ((TMBot.room.roomstats.songCount % interval) === 0 && TMBot.status) {
+                if (UGMBot.settings.motdEnabled) interval = UGMBot.settings.motdInterval;
+                else interval = UGMBot.settings.messageInterval;
+                if ((UGMBot.room.roomstats.songCount % interval) === 0 && UGMBot.status) {
                     var msg;
-                    if (TMBot.settings.motdEnabled) {
-                        msg = TMBot.settings.motd;
+                    if (UGMBot.settings.motdEnabled) {
+                        msg = UGMBot.settings.motd;
                     } else {
-                        if (TMBot.settings.intervalMessages.length === 0) return void(0);
-                        var messageNumber = TMBot.room.roomstats.songCount % TMBot.settings.intervalMessages.length;
-                        msg = TMBot.settings.intervalMessages[messageNumber];
+                        if (UGMBot.settings.intervalMessages.length === 0) return void(0);
+                        var messageNumber = UGMBot.room.roomstats.songCount % UGMBot.settings.intervalMessages.length;
+                        msg = UGMBot.settings.intervalMessages[messageNumber];
                     }
                     API.sendChat('/me ' + msg);
                 }
@@ -837,15 +837,15 @@
             },
             logNewBlacklistedSongs: function() {
                 if (typeof console.table !== 'undefined') {
-                    console.table(TMBot.room.newBlacklisted);
+                    console.table(UGMBot.room.newBlacklisted);
                 } else {
-                    console.log(TMBot.room.newBlacklisted);
+                    console.log(UGMBot.room.newBlacklisted);
                 }
             },
             exportNewBlacklistedSongs: function() {
                 var list = {};
-                for (var i = 0; i < TMBot.room.newBlacklisted.length; i++) {
-                    var track = TMBot.room.newBlacklisted[i];
+                for (var i = 0; i < UGMBot.room.newBlacklisted.length; i++) {
+                    var track = UGMBot.room.newBlacklisted[i];
                     list[track.list] = [];
                     list[track.list].push({
                         title: track.title,
@@ -863,11 +863,11 @@
 
             UGMBot.room.chatMessages.push([chat.cid, chat.message, chat.sub, chat.timestamp, chat.type, chat.uid, chat.un]);
 
-            for (var i = 0; i < TMBot.room.users.length; i++) {
-                if (TMBot.room.users[i].id === chat.uid) {
-                    TMBot.userUtilities.setLastActivity(TMBot.room.users[i]);
-                    if (TMBot.room.users[i].username !== chat.un) {
-                        TMBot.room.users[i].username = chat.un;
+            for (var i = 0; i < UGMBot.room.users.length; i++) {
+                if (UGMBot.room.users[i].id === chat.uid) {
+                    UGMBot.userUtilities.setLastActivity(UGMBot.room.users[i]);
+                    if (UGMBot.room.users[i].username !== chat.un) {
+                        UGMBot.room.users[i].username = chat.un;
                     }
                 }
             }
@@ -908,17 +908,17 @@
             if (botCreatorIDs.indexOf(user.id) > -1) {
               console.log(true);
                 API.sendChat('@'+user.username+' '+':sparkles: :bow: :sparkles:');
-            } else if (TMBot.settings.welcome && greet) {
+            } else if (UGMBot.settings.welcome && greet) {
               console.log(false);
               console.log(botCreatorIDs);
                 welcomeback ?
                     setTimeout(function(user) {
-                        API.sendChat(subChat(TMBot.chat.welcomeback, {
+                        API.sendChat(subChat(UGMBot.chat.welcomeback, {
                             name: user.username
                         }));
                     }, 1 * 1000, user) :
                     setTimeout(function(user) {
-                        API.sendChat(subChat(TMBot.chat.welcome, {
+                        API.sendChat(subChat(UGMBot.chat.welcome, {
                             name: user.username
                         }));
                     }, 1 * 1000, user);
@@ -926,13 +926,13 @@
         },
         eventUserleave: function(user) {
             var lastDJ = API.getHistory()[0].user.id;
-            for (var i = 0; i < TMBot.room.users.length; i++) {
-                if (TMBot.room.users[i].id === user.id) {
-                    TMBot.userUtilities.updateDC(TMBot.room.users[i]);
-                    TMBot.room.users[i].inRoom = true;
+            for (var i = 0; i < UGMBot.room.users.length; i++) {
+                if (UGMBot.room.users[i].id === user.id) {
+                    UGMBot.userUtilities.updateDC(UGMBot.room.users[i]);
+                    UGMBot.room.users[i].inRoom = true;
                     if (lastDJ == user.id) {
-                        var user = TMBot.userUtilities.lookupUser(TMBot.room.users[i].id);
-                        TMBot.userUtilities.updatePosition(user, 0);
+                        var user = UGMBot.userUtilities.lookupUser(UGMBot.room.users[i].id);
+                        UGmBot.userUtilities.updatePosition(user, 0);
                         user.lastDC.time = null;
                         user.lastDC.position = user.lastKnownPosition;
                     }
