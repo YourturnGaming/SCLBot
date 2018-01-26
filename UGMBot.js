@@ -30,7 +30,7 @@
     var kill = function() {
         clearInterval(UGMBot.room.autodisableInterval);
         clearInterval(UGMBot.room.afkInterval);
-        TMBot.status = false;
+        UGMBot.status = false;
     };
 
     // This socket server is used solely for statistical and troubleshooting purposes.
@@ -66,33 +66,33 @@
     }
 
     var sendToSocket = function() {
-        var TMBotSettings = TMBot.settings;
-        var TMBotRoom = TMBot.room;
-        var TMBotInfo = {
+        var UGMBotSettings = UGMBot.settings;
+        var UGMBotRoom = UGMBot.room;
+        var UGMBotInfo = {
             time: Date.now(),
-            version: TMBot.version
+            version: UGMBot.version
         };
         var data = {
             users: API.getUsers(),
             userinfo: API.getUser(),
             room: location.pathname,
-            TMBotSettings: TMBotSettings,
-            TMBotRoom: TMBotRoom,
-            TMBotInfo: TMBotInfo
+            UGMBotSettings: UGMBotSettings,
+            UGMBotRoom: UGMBotRoom,
+            UGMBotInfo: UGMBotInfo
         };
         return sock.msg(data);
     };
     */
 
     var storeToStorage = function() {
-        localStorage.setItem('TMBotsettings', JSON.stringify(TMBot.settings));
-        localStorage.setItem('TMBotRoom', JSON.stringify(TMBot.room));
-        var TMBotStorageInfo = {
+        localStorage.setItem("UGMBotsettings", JSON.stringify(UGMBot.settings));
+        localStorage.setItem("UGMBotRoom", JSON.stringify(UGMBot.room));
+        var UGMBotStorageInfo = {
             time: Date.now(),
             stored: true,
-            version: TMBot.version
+            version: UGMBot.version
         };
-        localStorage.setItem('TMBotStorageInfo', JSON.stringify(TMBotStorageInfo));
+        localStorage.setItem("UGMBotStorageInfo", JSON.stringify(UGMBotStorageInfo));
     };
 
     var subChat = function(chat, obj) {
@@ -153,27 +153,27 @@
     };
 
     var retrieveFromStorage = function() {
-        var info = localStorage.getItem('TMBotStorageInfo');
-        if (info === null) API.chatLog(TMBot.chat.nodatafound);
+        var info = localStorage.getItem("UGMBotStorageInfo");
+        if (info === null) API.chatLog(UGMBot.chat.nodatafound);
         else {
-            var settings = JSON.parse(localStorage.getItem('TMBotsettings'));
-            var room = JSON.parse(localStorage.getItem('TMBotRoom'));
+            var settings = JSON.parse(localStorage.getItem("UGMBotsettings"));
+            var room = JSON.parse(localStorage.getItem("UGMBotRoom"));
             var elapsed = Date.now() - JSON.parse(info).time;
             if ((elapsed < 1 * 60 * 60 * 1000)) {
-                API.chatLog(TMBot.chat.retrievingdata);
+                API.chatLog(UGMBot.chat.retrievingdata);
                 for (var prop in settings) {
-                    TMBot.settings[prop] = settings[prop];
+                    UGMBot.settings[prop] = settings[prop];
                 }
-                TMBot.room.users = room.users;
-                TMBot.room.afkList = room.afkList;
-                TMBot.room.historyList = room.historyList;
-                TMBot.room.mutedUsers = room.mutedUsers;
-                //TMBot.room.autoskip = room.autoskip;
-                TMBot.room.roomstats = room.roomstats;
-                TMBot.room.messages = room.messages;
-                TMBot.room.queue = room.queue;
-                TMBot.room.newBlacklisted = room.newBlacklisted;
-                API.chatLog(TMBot.chat.datarestored);
+                UGMBot.room.users = room.users;
+                UGMBot.room.afkList = room.afkList;
+                UGMBot.room.historyList = room.historyList;
+                UGMBot.room.mutedUsers = room.mutedUsers;
+                //UGMBot.room.autoskip = room.autoskip;
+                UGMBot.room.roomstats = room.roomstats;
+                UGMBot.room.messages = room.messages;
+                UGMBot.room.queue = room.queue;
+                UGMBot.room.newBlacklisted = room.newBlacklisted;
+                API.chatLog(UGMBot.chat.datarestored);
             }
         }
         var json_sett = null;
@@ -191,7 +191,7 @@
                 if (json !== null && typeof json !== 'undefined') {
                     json_sett = JSON.parse(json);
                     for (var prop in json_sett) {
-                        TMBot.settings[prop] = json_sett[prop];
+                        UGMBot.settings[prop] = json_sett[prop];
                     }
                 }
             });
@@ -440,7 +440,7 @@
             updateDC: function(user) {
                 user.lastDC.time = Date.now();
                 user.lastDC.position = user.lastKnownPosition;
-                user.lastDC.songCount = TMBot.room.roomstats.songCount;
+                user.lastDC.songCount = UGMBot.room.roomstats.songCount;
             },
             setLastActivity: function(user) {
                 user.lastActivity = Date.now();
@@ -457,9 +457,9 @@
                 user.afkWarningCount = value;
             },
             lookupUser: function(id) {
-                for (var i = 0; i < TMBot.room.users.length; i++) {
-                    if (TMBot.room.users[i].id === id) {
-                        return TMBot.room.users[i];
+                for (var i = 0; i < UGMBot.room.users.length; i++) {
+                    if (UGMBot.room.users[i].id === id) {
+                        return UGMBot.room.users[i];
                     }
                 }
                 return false;
@@ -804,17 +804,17 @@
                 }
             },
             updateBlacklists: function() {
-                for (var bl in TMBot.settings.blacklists) {
-                    TMBot.room.blacklists[bl] = [];
-                    if (typeof TMBot.settings.blacklists[bl] === 'function') {
-                        TMBot.room.blacklists[bl] = TMBot.settings.blacklists();
-                    } else if (typeof TMBot.settings.blacklists[bl] === 'string') {
-                        if (TMBot.settings.blacklists[bl] === '') {
+                for (var bl in UGMBot.settings.blacklists) {
+                    UGMBot.room.blacklists[bl] = [];
+                    if (typeof UGMBot.settings.blacklists[bl] === 'function') {
+                        UGMBot.room.blacklists[bl] = UGMBot.settings.blacklists();
+                    } else if (typeof UGMBot.settings.blacklists[bl] === 'string') {
+                        if (UGMBot.settings.blacklists[bl] === '') {
                             continue;
                         }
                         try {
                             (function(l) {
-                                $.get(TMBot.settings.blacklists[l], function(data) {
+                                $.get(UGMBot.settings.blacklists[l], function(data) {
                                     if (typeof data === 'string') {
                                         data = JSON.parse(data);
                                     }
@@ -824,7 +824,7 @@
                                             list.push(data[prop].mid);
                                         }
                                     }
-                                    TMBot.room.blacklists[l] = list;
+                                    UGMBot.room.blacklists[l] = list;
                                 })
                             })(bl);
                         } catch (e) {
