@@ -249,7 +249,7 @@
     var managers = ["",""];
     var CoHosts = ["",""];
     var UGMBot = {
-        version: "2.14.5.0",
+        version: "2.14.5.4",
         status: true,
         name: "UGMBot",
         loggedInID: "20168147",
