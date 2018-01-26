@@ -465,16 +465,16 @@
                 return false;
             },
             lookupUserName: function(name) {
-                for (var i = 0; i < TMBot.room.users.length; i++) {
-                    var match = TMBot.room.users[i].username.trim() == name.trim();
+                for (var i = 0; i < UGMBot.room.users.length; i++) {
+                    var match = UGMBot.room.users[i].username.trim() == name.trim();
                     if (match) {
-                        return TMBot.room.users[i];
+                        return UGMBot.room.users[i];
                     }
                 }
                 return false;
             },
             voteRatio: function(id) {
-                var user = TMBot.userUtilities.lookupUser(id);
+                var user = UGMBot.userUtilities.lookupUser(id);
                 var votes = user.votes;
                 if (votes.meh === 0) votes.ratio = 1;
                 else votes.ratio = (votes.woot / votes.meh).toFixed(2);
@@ -499,7 +499,7 @@
                 return 0;
             },
             moveUser: function(id, pos, priority) {
-                var user = TMBot.userUtilities.lookupUser(id);
+                var user = UGMBot.userUtilities.lookupUser(id);
                 var wlist = API.getWaitList();
                 if (API.getWaitListPosition(id) === -1) {
                     if (wlist.length < 50) {
@@ -509,54 +509,54 @@
                         }, 1250, id, pos);
                     } else {
                         var alreadyQueued = -1;
-                        for (var i = 0; i < TMBot.room.queue.id.length; i++) {
-                            if (TMBot.room.queue.id[i] === id) alreadyQueued = i;
+                        for (var i = 0; i < UGMBot.room.queue.id.length; i++) {
+                            if (UGMBot.room.queue.id[i] === id) alreadyQueued = i;
                         }
                         if (alreadyQueued !== -1) {
-                            TMBot.room.queue.position[alreadyQueued] = pos;
-                            return API.sendChat(subChat(TMBot.chat.alreadyadding, {
-                                position: TMBot.room.queue.position[alreadyQueued]
+                            UGMBot.room.queue.position[alreadyQueued] = pos;
+                            return API.sendChat(subChat(UGMBot.chat.alreadyadding, {
+                                position: UGMBot.room.queue.position[alreadyQueued]
                             }));
                         }
-                        TMBot.roomUtilities.booth.lockBooth();
+                        UGMBot.roomUtilities.booth.lockBooth();
                         if (priority) {
-                            TMBot.room.queue.id.unshift(id);
-                            TMBot.room.queue.position.unshift(pos);
+                            UGMBot.room.queue.id.unshift(id);
+                            UGMBot.room.queue.position.unshift(pos);
                         } else {
-                            TMBot.room.queue.id.push(id);
-                            TMBot.room.queue.position.push(pos);
+                            UGMBot.room.queue.id.push(id);
+                            UGMBot.room.queue.position.push(pos);
                         }
                         var name = user.username;
-                        return API.sendChat(subChat(TMBot.chat.adding, {
+                        return API.sendChat(subChat(UGMBot.chat.adding, {
                             name: name,
-                            position: TMBot.room.queue.position.length
+                            position: UGMBot.room.queue.position.length
                         }));
                     }
                 } else API.moderateMoveDJ(id, pos);
             },
             dclookup: function(id) {
-                var user = TMBot.userUtilities.lookupUser(id);
-                if (typeof user === 'boolean') return TMBot.chat.usernotfound;
+                var user = UGMBot.userUtilities.lookupUser(id);
+                if (typeof user === 'boolean') return UGMBot.chat.usernotfound;
                 var name = user.username;
-                if (user.lastDC.time === null) return subChat(TMBot.chat.notdisconnected, {
+                if (user.lastDC.time === null) return subChat(UGMBot.chat.notdisconnected, {
                     name: name
                 });
                 var dc = user.lastDC.time;
                 var pos = user.lastDC.position;
-                if (pos === null) return TMBot.chat.noposition;
+                if (pos === null) return UGMBot.chat.noposition;
                 var timeDc = Date.now() - dc;
                 var validDC = false;
-                if (TMBot.settings.maximumDc * 60 * 1000 > timeDc) {
+                if (UGMBot.settings.maximumDc * 60 * 1000 > timeDc) {
                     validDC = true;
                 }
-                var time = TMBot.roomUtilities.msToStr(timeDc);
-                if (!validDC) return (subChat(TMBot.chat.toolongago, {
-                    name: TMBot.userUtilities.getUser(user).username,
+                var time = UGMBot.roomUtilities.msToStr(timeDc);
+                if (!validDC) return (subChat(UGMBot.chat.toolongago, {
+                    name: UGMBot.userUtilities.getUser(user).username,
                     time: time
                 }));
-                var songsPassed = TMBot.room.roomstats.songCount - user.lastDC.songCount;
+                var songsPassed = UGMBot.room.roomstats.songCount - user.lastDC.songCount;
                 var afksRemoved = 0;
-                var afkList = TMBot.room.afkList;
+                var afkList = UGMBot.room.afkList;
                 for (var i = 0; i < afkList.length; i++) {
                     var timeAfk = afkList[i][1];
                     var posAfk = afkList[i][2];
@@ -565,15 +565,15 @@
                     }
                 }
                 var newPosition = user.lastDC.position - songsPassed - afksRemoved;
-                if (newPosition <= 0) return subChat(TMBot.chat.notdisconnected, {
+                if (newPosition <= 0) return subChat(UGMBot.chat.notdisconnected, {
                     name: name
                 });
-                var msg = subChat(TMBot.chat.valid, {
-                    name: TMBot.userUtilities.getUser(user).username,
+                var msg = subChat(UGMBot.chat.valid, {
+                    name: UGMBot.userUtilities.getUser(user).username,
                     time: time,
                     position: newPosition
                 });
-                TMBot.userUtilities.moveUser(user.id, newPosition, true);
+                UGMBot.userUtilities.moveUser(user.id, newPosition, true);
                 return msg;
             }
         },
@@ -861,7 +861,7 @@
             chat.message = decodeEntities(chat.message);
             chat.message = chat.message.trim();
 
-            TMBot.room.chatMessages.push([chat.cid, chat.message, chat.sub, chat.timestamp, chat.type, chat.uid, chat.un]);
+            UGMBot.room.chatMessages.push([chat.cid, chat.message, chat.sub, chat.timestamp, chat.type, chat.uid, chat.un]);
 
             for (var i = 0; i < TMBot.room.users.length; i++) {
                 if (TMBot.room.users[i].id === chat.uid) {
@@ -871,15 +871,15 @@
                     }
                 }
             }
-            if (TMBot.chatUtilities.chatFilter(chat)) return void(0);
-            if (!TMBot.chatUtilities.commandCheck(chat))
-                TMBot.chatUtilities.action(chat);
+            if (UGMBot.chatUtilities.chatFilter(chat)) return void(0);
+            if (!UGMBot.chatUtilities.commandCheck(chat))
+                UGMBot.chatUtilities.action(chat);
         },
         eventUserjoin: function(user) {
             var known = false;
             var index = null;
-            for (var i = 0; i < TMBot.room.users.length; i++) {
-                if (TMBot.room.users[i].id === user.id) {
+            for (var i = 0; i < UGMBot.room.users.length; i++) {
+                if (UGMBot.room.users[i].id === user.id) {
                     known = true;
                     index = i;
                 }
@@ -887,20 +887,20 @@
             var greet = true;
             var welcomeback = null;
             if (known) {
-                TMBot.room.users[index].inRoom = true;
-                var u = TMBot.userUtilities.lookupUser(user.id);
+                UGMBot.room.users[index].inRoom = true;
+                var u = UGMBot.userUtilities.lookupUser(user.id);
                 var jt = u.jointime;
                 var t = Date.now() - jt;
                 if (t < 10 * 1000) greet = false;
                 else welcomeback = true;
             } else {
-                TMBot.room.users.push(new TMBot.User(user.id, user.username));
+                UGMBot.room.users.push(new UGMBot.User(user.id, user.username));
                 welcomeback = false;
             }
-            for (var j = 0; j < TMBot.room.users.length; j++) {
-                if (TMBot.userUtilities.getUser(TMBot.room.users[j]).id === user.id) {
-                    TMBot.userUtilities.setLastActivity(TMBot.room.users[j]);
-                    TMBot.room.users[j].jointime = Date.now();
+            for (var j = 0; j < UGMBot.room.users.length; j++) {
+                if (UGMBot.userUtilities.getUser(UGMBot.room.users[j]).id === user.id) {
+                    UGMBot.userUtilities.setLastActivity(UGMBot.room.users[j]);
+                    UGMBot.room.users[j].jointime = Date.now();
                 }
 
             }
