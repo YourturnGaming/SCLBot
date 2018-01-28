@@ -1600,21 +1600,21 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(UGMBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substr(cmd.length + 2);
-                        var user = TMBot.userUtilities.lookupUserName(name);
+                        var user = UGMBot.userUtilities.lookupUserName(name);
                         if (msg.length > cmd.length + 2) {
                             if (typeof user !== 'undefined') {
-                                if (TMBot.room.roomevent) {
-                                    TMBot.room.eventArtists.push(user.id);
+                                if (UGMBot.room.roomevent) {
+                                    UGMBot.room.eventArtists.push(user.id);
                                 }
                                 API.moderateAddDJ(user.id);
-                            } else API.sendChat(subChat(TMBot.chat.invaliduserspecified, {
+                            } else API.sendChat(subChat(UGMBot.chat.invaliduserspecified, {
                                 name: chat.un
                             }));
                         }
@@ -1628,20 +1628,20 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(TMBot.chat.nolimitspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(UGMBot.chat.nolimitspecified, {
                             name: chat.un
                         }));
                         var limit = msg.substring(cmd.length + 1);
                         if (!isNaN(limit)) {
-                            TMBot.settings.maximumAfk = parseInt(limit, 10);
-                            API.sendChat(subChat(TMBot.chat.maximumafktimeset, {
+                            UGMBot.settings.maximumAfk = parseInt(limit, 10);
+                            API.sendChat(subChat(UGMBot.chat.maximumafktimeset, {
                                 name: chat.un,
-                                time: TMBot.settings.maximumAfk
+                                time: UGMBot.settings.maximumAfk
                             }));
-                        } else API.sendChat(subChat(TMBot.chat.invalidlimitspecified, {
+                        } else API.sendChat(subChat(UGMBot.chat.invalidlimitspecified, {
                             name: chat.un
                         }));
                     }
@@ -2404,11 +2404,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof TMBot.settings.fbLink === 'string')
-                            API.sendChat(subChat(TMBot.chat.facebook, {
-                                link: TMBot.settings.fbLink
+                        if (typeof UGMBot.settings.fbLink === 'string')
+                            API.sendChat(subChat(UGMBot.chat.facebook, {
+                                link: UGMBot.settings.fbLink
                             }));
                     }
                 }
@@ -2420,19 +2420,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.filterChat) {
-                            TMBot.settings.filterChat = !TMBot.settings.filterChat;
-                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (UGMBot.settings.filterChat) {
+                            UGMBot.settings.filterChat = !UGMBot.settings.filterChat;
+                            return API.sendChat(subChat(UGMBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.chatfilter
+                                'function': UGMBot.chat.chatfilter
                             }));
                         } else {
-                            TMBot.settings.filterChat = !TMBot.settings.filterChat;
-                            return API.sendChat(subChat(TMBot.chat.toggleon, {
+                            UGMBot.settings.filterChat = !UGMBot.settings.filterChat;
+                            return API.sendChat(subChat(UGMBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.chatfilter
+                                'function': UGMBot.chat.chatfilter
                             }));
                         }
                     }
