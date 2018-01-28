@@ -242,14 +242,14 @@
     };
 
     var botCreator = "xUndisputed";
-    var botMaintainer = "TitanMusicDev";
+    var botMaintainer = "xUndisputed";
     var botCreatorIDs = ["3669054", "20168147"];
     var resdjs = ["",""];
     var bouncers = ["",""];
     var managers = ["",""];
     var CoHosts = ["",""];
     var UGMBot = {
-        version: "2.14.5.5",
+        version: "2.14.5.6",
         status: true,
         name: "UGMBot",
         loggedInID: "20168147",
@@ -1009,23 +1009,23 @@
                     }))
                 }
             }
-            TMBot.room.roomstats.totalWoots += lastplay.score.positive;
-            TMBot.room.roomstats.totalMehs += lastplay.score.negative;
-            TMBot.room.roomstats.totalCurates += lastplay.score.grabs;
-            TMBot.room.roomstats.songCount++;
-            TMBot.roomUtilities.intervalMessage();
-            TMBot.room.currentDJID = obj.dj.id;
+            UGMBot.room.roomstats.totalWoots += lastplay.score.positive;
+            UGMBot.room.roomstats.totalMehs += lastplay.score.negative;
+            UGMBot.room.roomstats.totalCurates += lastplay.score.grabs;
+            UGMBot.room.roomstats.songCount++;
+            UGMBot.roomUtilities.intervalMessage();
+            UGMBot.room.currentDJID = obj.dj.id;
 
             var blacklistSkip = setTimeout(function() {
                 var mid = obj.media.format + ':' + obj.media.cid;
-                for (var bl in TMBot.room.blacklists) {
-                    if (TMBot.settings.blacklistEnabled) {
-                        if (TMBot.room.blacklists[bl].indexOf(mid) > -1) {
-                            API.sendChat(subChat(TMBot.chat.isblacklisted, {
+                for (var bl in UGMBot.room.blacklists) {
+                    if (UGMBot.settings.blacklistEnabled) {
+                        if (UGMBot.room.blacklists[bl].indexOf(mid) > -1) {
+                            API.sendChat(subChat(UGMBot.chat.isblacklisted, {
                                 blacklist: bl
                             }));
-                            if (TMBot.settings.smartSkip) {
-                                return TMBot.roomUtilities.smartSkip();
+                            if (UGMBot.settings.smartSkip) {
+                                return UGMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1035,14 +1035,14 @@
             }, 2000);
             var newMedia = obj.media;
             var timeLimitSkip = setTimeout(function() {
-                if (TMBot.settings.timeGuard && newMedia.duration > TMBot.settings.maximumSongLength * 60 && !TMBot.room.roomevent) {
+                if (UGMBot.settings.timeGuard && newMedia.duration > UGMBot.settings.maximumSongLength * 60 && !UGMBot.room.roomevent) {
                     var name = obj.dj.username;
-                    API.sendChat(subChat(TMBot.chat.timelimit, {
+                    API.sendChat(subChat(UGMBot.chat.timelimit, {
                         name: name,
-                        maxlength: TMBot.settings.maximumSongLength
+                        maxlength: UGMBot.settings.maximumSongLength
                     }));
-                    if (TMBot.settings.smartSkip) {
-                        return TMBot.roomUtilities.smartSkip();
+                    if (UGMBot.settings.smartSkip) {
+                        return UGMBot.roomUtilities.smartSkip();
                     } else {
                         return API.moderateForceSkip();
                     }
@@ -1055,11 +1055,11 @@
                     $.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + cid + '&key=AIzaSyDcfWu9cGaDnTjPKhg_dy9mUh6H7i4ePZ0&part=snippet&callback=?', function(track) {
                         if (typeof(track.items[0]) === 'undefined') {
                             var name = obj.dj.username;
-                            API.sendChat(subChat(TMBot.chat.notavailable, {
+                            API.sendChat(subChat(UGMBot.chat.notavailable, {
                                 name: name
                             }));
-                            if (TMBot.settings.smartSkip) {
-                                return TMBot.roomUtilities.smartSkip();
+                            if (UGMBot.settings.smartSkip) {
+                                return UGMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1069,11 +1069,11 @@
                     var checkSong = SC.get('/tracks/' + cid, function(track) {
                         if (typeof track.title === 'undefined') {
                             var name = obj.dj.username;
-                            API.sendChat(subChat(TMBot.chat.notavailable, {
+                            API.sendChat(subChat(UGMBot.chat.notavailable, {
                                 name: name
                             }));
-                            if (TMBot.settings.smartSkip) {
-                                return TMBot.roomUtilities.smartSkip();
+                            if (UGMBot.settings.smartSkip) {
+                                return UGMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1082,41 +1082,41 @@
                 }
             }, 2000);
             clearTimeout(historySkip);
-            if (TMBot.settings.historySkip) {
+            if (UGMBot.settings.historySkip) {
                 var alreadyPlayed = false;
                 var apihistory = API.getHistory();
                 var name = obj.dj.username;
                 var historySkip = setTimeout(function() {
                     for (var i = 0; i < apihistory.length; i++) {
                         if (apihistory[i].media.cid === obj.media.cid) {
-                            TMBot.room.historyList[i].push(+new Date());
+                            UGMBot.room.historyList[i].push(+new Date());
                             alreadyPlayed = true;
-                            API.sendChat(subChat(TMBot.chat.songknown, {
+                            API.sendChat(subChat(UGMBot.chat.songknown, {
                                 name: name
                             }));
-                            if (TMBot.settings.smartSkip) {
-                                return TMBot.roomUtilities.smartSkip();
+                            if (UGMBot.settings.smartSkip) {
+                                return UGMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
                         }
                     }
                     if (!alreadyPlayed) {
-                        TMBot.room.historyList.push([obj.media.cid, +new Date()]);
+                        UGMBot.room.historyList.push([obj.media.cid, +new Date()]);
                     }
                 }, 2000);
             }
             if (user.ownSong) {
-                API.sendChat(subChat(TMBot.chat.permissionownsong, {
+                API.sendChat(subChat(UGMBot.chat.permissionownsong, {
                     name: user.username
                 }));
                 user.ownSong = false;
             }
-            clearTimeout(TMBot.room.autoskipTimer);
-            if (TMBot.settings.autoskip) {
+            clearTimeout(UGMBot.room.autoskipTimer);
+            if (UGMBot.settings.autoskip) {
                 var remaining = obj.media.duration * 1000;
                 var startcid = API.getMedia().cid;
-                TMBot.room.autoskipTimer = setTimeout(function() {
+                UGMBot.room.autoskipTimer = setTimeout(function() {
                     var endcid = API.getMedia().cid;
                     if (startcid === endcid) {
                         //API.sendChat('Song stuck, skipping...');
@@ -1129,37 +1129,37 @@
         },
         eventWaitlistupdate: function(users) {
             if (users.length < 50) {
-                if (TMBot.room.queue.id.length > 0 && TMBot.room.queueable) {
-                    TMBot.room.queueable = false;
+                if (UGMBot.room.queue.id.length > 0 && UGMBot.room.queueable) {
+                    UGMBot.room.queueable = false;
                     setTimeout(function() {
-                        TMBot.room.queueable = true;
+                        UGMBot.room.queueable = true;
                     }, 500);
-                    TMBot.room.queueing++;
+                    UGMBot.room.queueing++;
                     var id, pos;
                     setTimeout(
                         function() {
-                            id = TMBot.room.queue.id.splice(0, 1)[0];
-                            pos = TMBot.room.queue.position.splice(0, 1)[0];
+                            id = UGMBot.room.queue.id.splice(0, 1)[0];
+                            pos = UGMBot.room.queue.position.splice(0, 1)[0];
                             API.moderateAddDJ(id, pos);
                             setTimeout(
                                 function(id, pos) {
                                     API.moderateMoveDJ(id, pos);
-                                    TMBot.room.queueing--;
-                                    if (TMBot.room.queue.id.length === 0) setTimeout(function() {
-                                        TMBot.roomUtilities.booth.unlockBooth();
+                                    UGMBot.room.queueing--;
+                                    if (UGMBot.room.queue.id.length === 0) setTimeout(function() {
+                                        UGMBot.roomUtilities.booth.unlockBooth();
                                     }, 1000);
                                 }, 1000, id, pos);
-                        }, 1000 + TMBot.room.queueing * 2500);
+                        }, 1000 + UGMBot.room.queueing * 2500);
                 }
             }
             for (var i = 0; i < users.length; i++) {
-                var user = TMBot.userUtilities.lookupUser(users[i].id);
-                TMBot.userUtilities.updatePosition(user, API.getWaitListPosition(users[i].id) + 1);
+                var user = UGMBot.userUtilities.lookupUser(users[i].id);
+                UGMBot.userUtilities.updatePosition(user, API.getWaitListPosition(users[i].id) + 1);
             }
         },
         chatcleaner: function(chat) {
-            if (!TMBot.settings.filterChat) return false;
-            if (TMBot.userUtilities.getPermission(chat.uid) >= API.ROLE.BOUNCER) return false;
+            if (!UGMBot.settings.filterChat) return false;
+            if (UGMBot.userUtilities.getPermission(chat.uid) >= API.ROLE.BOUNCER) return false;
             var msg = chat.message;
             var containsLetters = false;
             for (var i = 0; i < msg.length; i++) {
@@ -1178,21 +1178,21 @@
                 if (ch >= 'A' && ch <= 'Z') capitals++;
             }
             if (capitals >= 40) {
-                API.sendChat(subChat(TMBot.chat.caps, {
+                API.sendChat(subChat(UGMBot.chat.caps, {
                     name: chat.un
                 }));
                 return true;
             }
             msg = msg.toLowerCase();
             if (msg === 'skip') {
-                API.sendChat(subChat(TMBot.chat.askskip, {
+                API.sendChat(subChat(UGMBot.chat.askskip, {
                     name: chat.un
                 }));
                 return true;
             }
-            for (var j = 0; j < TMBot.chatUtilities.spam.length; j++) {
-                if (msg === TMBot.chatUtilities.spam[j]) {
-                    API.sendChat(subChat(TMBot.chat.spam, {
+            for (var j = 0; j < UGMBot.chatUtilities.spam.length; j++) {
+                if (msg === UGMBot.chatUtilities.spam[j]) {
+                    API.sendChat(subChat(UGMBot.chat.spam, {
                         name: chat.un
                     }));
                     return true;
@@ -1203,34 +1203,34 @@
         chatUtilities: {
             chatFilter: function(chat) {
                 var msg = chat.message;
-                var perm = TMBot.userUtilities.getPermission(chat.uid);
-                var user = TMBot.userUtilities.lookupUser(chat.uid);
+                var perm = UGMBot.userUtilities.getPermission(chat.uid);
+                var user = UGMBot.userUtilities.lookupUser(chat.uid);
                 var isMuted = false;
-                for (var i = 0; i < TMBot.room.mutedUsers.length; i++) {
-                    if (TMBot.room.mutedUsers[i] === chat.uid) isMuted = true;
+                for (var i = 0; i < UGMBot.room.mutedUsers.length; i++) {
+                    if (UGMBot.room.mutedUsers[i] === chat.uid) isMuted = true;
                 }
                 if (isMuted) {
                     API.moderateDeleteChat(chat.cid);
                     return true;
                 }
-                if (TMBot.settings.lockdownEnabled) {
+                if (UGMBot.settings.lockdownEnabled) {
                     if (perm === API.ROLE.NONE) {
                         API.moderateDeleteChat(chat.cid);
                         return true;
                     }
                 }
-                if (TMBot.chatcleaner(chat)) {
+                if (UGMBot.chatcleaner(chat)) {
                     API.moderateDeleteChat(chat.cid);
                     return true;
                 }
-                if (TMBot.settings.cmdDeletion && msg.startsWith(TMBot.settings.commandLiteral)) {
+                if (UGMBot.settings.cmdDeletion && msg.startsWith(UGMBot.settings.commandLiteral)) {
                     API.moderateDeleteChat(chat.cid);
                 }
                 /**
                  var plugRoomLinkPatt = /(\bhttps?:\/\/(www.)?plug\.dj[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
                  if (plugRoomLinkPatt.exec(msg)) {
                     if (perm === API.ROLE.NONE) {
-                        API.sendChat(subChat(TMBot.chat.roomadvertising, {name: chat.un}));
+                        API.sendChat(subChat(UGMBot.chat.roomadvertising, {name: chat.un}));
                         API.moderateDeleteChat(chat.cid);
                         return true;
                     }
@@ -1238,7 +1238,7 @@
                  **/
                 if (msg.indexOf('http://adf.ly/') > -1) {
                     API.moderateDeleteChat(chat.cid);
-                    API.sendChat(subChat(TMBot.chat.adfly, {
+                    API.sendChat(subChat(UGMBot.chat.adfly, {
                         name: chat.un
                     }));
                     return true;
@@ -1248,8 +1248,8 @@
                     return true;
                 }
 
-                var rlJoinChat = TMBot.chat.roulettejoin;
-                var rlLeaveChat = TMBot.chat.rouletteleave;
+                var rlJoinChat = UGMBot.chat.roulettejoin;
+                var rlLeaveChat = UGMBot.chat.rouletteleave;
 
                 var joinedroulette = rlJoinChat.split('%%NAME%%');
                 if (joinedroulette[1].length > joinedroulette[0].length) joinedroulette = joinedroulette[1];
@@ -1259,7 +1259,7 @@
                 if (leftroulette[1].length > leftroulette[0].length) leftroulette = leftroulette[1];
                 else leftroulette = leftroulette[0];
 
-                if ((msg.indexOf(joinedroulette) > -1 || msg.indexOf(leftroulette) > -1) && chat.uid === TMBot.loggedInID) {
+                if ((msg.indexOf(joinedroulette) > -1 || msg.indexOf(leftroulette) > -1) && chat.uid === UGMBot.loggedInID) {
                     setTimeout(function(id) {
                         API.moderateDeleteChat(id);
                     }, 5 * 1000, chat.cid);
@@ -1269,21 +1269,21 @@
             },
             commandCheck: function(chat) {
                 var cmd;
-                if (chat.message.charAt(0) === TMBot.settings.commandLiteral) {
+                if (chat.message.charAt(0) === UGMBot.settings.commandLiteral) {
                     var space = chat.message.indexOf(' ');
                     if (space === -1) {
                         cmd = chat.message;
                     } else cmd = chat.message.substring(0, space);
                 } else return false;
-                var userPerm = TMBot.userUtilities.getPermission(chat.uid);
+                var userPerm = UGMBot.userUtilities.getPermission(chat.uid);
                 //console.log('name: ' + chat.un + ', perm: ' + userPerm);
-                if (chat.message !== TMBot.settings.commandLiteral + 'join' && chat.message !== TMBot.settings.commandLiteral + 'leave') {       
-                    if (userPerm === API.ROLE.NONE && !TMBot.room.usercommand) return void(0);
-                    if (!TMBot.room.allcommand) return void(0);
+                if (chat.message !== UGMBot.settings.commandLiteral + 'join' && chat.message !== UGMBot.settings.commandLiteral + 'leave') {       
+                    if (userPerm === API.ROLE.NONE && !UGMBot.room.usercommand) return void(0);
+                    if (!UGMBot.room.allcommand) return void(0);
                 }
-                if (chat.message === TMBot.settings.commandLiteral + 'eta' && TMBot.settings.etaRestriction) {
+                if (chat.message === UGMBot.settings.commandLiteral + 'eta' && UGMBot.settings.etaRestriction) {
                     if (userPerm < API.ROLE.BOUNCER) {
-                        var u = TMBot.userUtilities.lookupUser(chat.uid);
+                        var u = UGMBot.userUtilities.lookupUser(chat.uid);
                         if (u.lastEta !== null && (Date.now() - u.lastEta) < 1 * 60 * 60 * 1000) {
                             API.moderateDeleteChat(chat.cid);
                             return void(0);
@@ -1292,14 +1292,14 @@
                 }
                 var executed = false;
 
-                for (var comm in TMBot.commands) {
-                    var cmdCall = TMBot.commands[comm].command;
+                for (var comm in UGMBot.commands) {
+                    var cmdCall = UGMBot.commands[comm].command;
                     if (!Array.isArray(cmdCall)) {
                         cmdCall = [cmdCall]
                     }
                     for (var i = 0; i < cmdCall.length; i++) {
-                        if (TMBot.settings.commandLiteral + cmdCall[i] === cmd) {
-                            TMBot.commands[comm].functionality(chat, TMBot.settings.commandLiteral + cmdCall[i]);
+                        if (UGMBot.settings.commandLiteral + cmdCall[i] === cmd) {
+                            UGMBot.commands[comm].functionality(chat, UGMBot.settings.commandLiteral + cmdCall[i]);
                             executed = true;
                             break;
                         }
@@ -1561,31 +1561,31 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var now = Date.now();
                         var chatters = 0;
                         var time;
 
-                        var launchT = TMBot.room.roomstats.launchTime;
+                        var launchT = UGMBot.room.roomstats.launchTime;
                         var durationOnline = Date.now() - launchT;
                         var since = durationOnline / 1000;
 
                         if (msg.length === cmd.length) time = since;
                         else {
                             time = msg.substring(cmd.length + 1);
-                            if (isNaN(time)) return API.sendChat(subChat(TMBot.chat.invalidtime, {
+                            if (isNaN(time)) return API.sendChat(subChat(UGMBot.chat.invalidtime, {
                                 name: chat.un
                             }));
                         }
-                        for (var i = 0; i < TMBot.room.users.length; i++) {
-                            userTime = TMBot.userUtilities.getLastActivity(TMBot.room.users[i]);
+                        for (var i = 0; i < UGMBot.room.users.length; i++) {
+                            userTime = UGMBot.userUtilities.getLastActivity(UGMBot.room.users[i]);
                             if ((now - userTime) <= (time * 60 * 1000)) {
                                 chatters++;
                             }
                         }
-                        API.sendChat(subChat(TMBot.chat.activeusersintime, {
+                        API.sendChat(subChat(UGMBot.chat.activeusersintime, {
                             name: chat.un,
                             amount: chatters,
                             time: time
