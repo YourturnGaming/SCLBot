@@ -39,10 +39,9 @@ UGMBot Chrome Extension
 
 Developers
 ----------
- - [TitanMusicDev](https://github.com/TitanMusicDev) __(Maintainer)__
+ - [xUndisputed](https://github.com/xUndisputed) __(Maintainer)__
 
  - [Trigstur]() __(Helper)__
- - [Proditor]() __(Helper)__
 
 
 Credits
@@ -50,9 +49,9 @@ Credits
 
 I would like to thank the following people:
 
-- ProditorMagnus: His UGMBot has been a source of inspiration for most of the features, and his help with coding problems has been invaluable to make this bot.
+- xUndisputed: His UGMBot has been a source of inspiration for most of the features, and his help with coding problems has been invaluable to make this bot.
 - Trigstur, and other UGMBot contributors: Their TMBot has inspired features like Roulette.
-- TitanMusic | Developer: Never knew this undertaking would give me a friend too.
+- xUndisputed: Never knew this undertaking would give me a friend too.
 
 |Language | Translator|
 |:------:|:---------:|
