@@ -1,6 +1,6 @@
 /**
 
- Copyright © 2017-2018 UGMBot
+ Copyright © 2017-2018 UNMBot
 
  Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
  This software is not for profit, any extension, or unauthorised person providing this software is not authorised to be in a position of any monetary gain from this use of this software. Any and all money gained under the use of the software (which includes donations) must be passed on to the original author.
@@ -249,11 +249,11 @@
     var managers = ["",""];
     var CoHosts = ["",""];
     var UGMBot = {
-        version: "2.14.5.6",
+        version: "2.14.5.9",
         status: true,
-        name: "UGMBot",
+        name: "UNMBot",
         loggedInID: "20168147",
-        scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UGMBot.js",
+        scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UNMBot.js",
         cmdLink: "https://goo.gl/4BQP8Y",
         chatLink: "https://rawgit.com/xUndisputed/titanmusic/master/langIndex.json",
         chat: null,
@@ -261,10 +261,10 @@
         retrieveSettings: retrieveSettings,
         retrieveFromStorage: retrieveFromStorage,
         settings: {
-            botName: "UGMBot",
+            botName: "UNMBot",
             language: "english",
             chatLink: "https://rawgit.com/xUndisputed/titanmusic/master/langIndex.json",
-            scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UGMBot.js",
+            scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UNMBot.js",
             roomLock: false, // Requires an extension to re-load the script
             startupCap: 10, // 1-200
             startupVolume: 0, // 0-100
@@ -747,9 +747,9 @@
                 if (waitlistlength == 50) {
                     UGMBot.roomUtilities.booth.lockBooth();
                     locked = true;
-                }
-                setTimeout(function(id) {
-                    API.moderateForceSkip();
+            },
+            setTimeout(function(id) {
+                API.moderateForceSkip();
                     setTimeout(function() {
                         if (typeof reason !== 'undefined') {
                             API.sendChat(reason);
@@ -904,7 +904,6 @@
                 }
 
             }
-
             if (botCreatorIDs.indexOf(user.id) > -1) {
               console.log(true);
                 API.sendChat('@'+user.username+' '+':sparkles: :bow: :sparkles:');
@@ -1334,13 +1333,13 @@
 
                     }
                 }
-                UGMBot.room.roomstats.chatmessages++;
+                UNMBot.room.roomstats.chatmessages++;
             },
             spam: [
                 'hueh', 'hu3', 'brbr', 'heu', 'brbr', 'kkkk', 'spoder', 'mafia', 'zuera', 'zueira',
                 'zueria', 'aehoo', 'aheu', 'alguem', 'algum', 'brazil', 'zoeira', 'fuckadmins', 'affff', 'vaisefoder', 'huenaarea',
-                'hitler', 'ashua', 'ahsu', 'ashau', 'lulz', 'huehue', 'hue', 'huehuehue', 'merda', 'pqp', 'puta', 'mulher', 'pula', 'retarda', 'caralho', 'filha', 'ppk',
-                'gringo', 'fuder', 'foder', 'hua', 'ahue', 'modafuka', 'modafoka', 'mudafuka', 'mudafoka', 'ooooooooooooooo', 'foda'
+                'hitler', 'ashua', 'ahsu', 'ashau', 'lulz', 'merda', 'pqp', 'puta', 'mulher', 'pula', 'retarda', 'caralho', 'filha', 'ppk',
+                'gringo', 'fuder', 'foder', 'hua', 'ahue', 'modafuka', 'modafoka', 'mudafuka', 'mudafoka', 'foda'
             ],
             curses: [
                 'nigger', 'faggot', 'nigga', 'niqqa', 'motherfucker', 'modafocka'
@@ -1394,9 +1393,9 @@
         },
         startup: function() {
             var u = API.getUser();
-            if (UGMBot.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(UGMBot.chat.greyuser);
-            if (UGMBot.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(UGMBot.chat.bouncer);
-            UGMBot.connectAPI();
+            if (UNMBot.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(UNMBot.chat.greyuser);
+            if (UNMBot.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(UNMBot.chat.bouncer);
+            UGNBot.connectAPI();
             API.moderateDeleteChat = function(cid) {
                 $.ajax({
                     url: '/_/chat/' + cid,
@@ -1404,21 +1403,21 @@
                 })
             };
 
-            UGMBot.room.name = window.location.pathname;
+            UNMBot.room.name = window.location.pathname;
             var Check;
 
-            console.log(UGMBot.room.name);
+            console.log(UNMBot.room.name);
 
             var detect = function() {
-                if (UGMBot.room.name != window.location.pathname) {
+                if (UNMBot.room.name != window.location.pathname) {
                     console.log('Killing bot after room change.');
                     storeToStorage();
-                    UGMBot.disconnectAPI();
+                    UNMBot.disconnectAPI();
                     setTimeout(function() {
                         kill();
                     }, 1000);
-                    if (UGMBot.settings.roomLock) {
-                        window.location = UGMBot.room.name;
+                    if (UNMBot.settings.roomLock) {
+                        window.location = UNMBot.room.name;
                     } else {
                         clearInterval(Check);
                     }
@@ -1499,7 +1498,7 @@
         commands: {
             executable: function(minRank, chat) {
                 var id = chat.uid;
-                var perm = UGMBot.userUtilities.getPermission(id);
+                var perm = UNMBot.userUtilities.getPermission(id);
                 var minPerm;
                 switch (minRank) {
                     case 'admin':
@@ -4310,10 +4309,10 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
                     if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof UGMBot.settings.youtubeLink === 'string')
-                            API.sendChat(subChat(UGMBot.chat.youtube, {
+                        if (typeof UNMBot.settings.youtubeLink === 'string')
+                            API.sendChat(subChat(UNMBot.chat.youtube, {
                                 name: chat.un,
-                                link: UGMBot.settings.youtubeLink
+                                link: UNMBot.settings.youtubeLink
                             }));
                     }
                 }
@@ -4321,5 +4320,5 @@
         }
     };
 
-    loadChat(UGMBot.startup);
+    loadChat(UNMBot.startup);
 }).call(this);
