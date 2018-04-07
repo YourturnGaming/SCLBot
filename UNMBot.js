@@ -10,7 +10,7 @@
 (function() {
 
     /*window.onerror = function() {
-        var room = JSON.parse(localStorage.getItem('UGMBotRoom'));
+        var room = JSON.parse(localStorage.getItem('UNMBotRoom'));
         window.location = 'https://plug.dj' + room.name;
     };*/
 
@@ -28,9 +28,9 @@
     };
 
     var kill = function() {
-        clearInterval(UGMBot.room.autodisableInterval);
-        clearInterval(UGMBot.room.afkInterval);
-        UGMBot.status = false;
+        clearInterval(UNM.room.autodisableInterval);
+        clearInterval(UNM.room.afkInterval);
+        UNM.status = false;
     };
 
     // This socket server is used solely for statistical and troubleshooting purposes.
