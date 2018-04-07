@@ -1394,9 +1394,9 @@
         },
         startup: function() {
             var u = API.getUser();
-            if (UNM.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(UNM.chat.greyuser);
-            if (UNM.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(UNM.chat.bouncer);
-            UNM.connectAPI();
+            if (UNMBot.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(UNMBot.chat.greyuser);
+            if (UNMBot.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(UNMBot.chat.bouncer);
+            UNMBot.connectAPI();
             API.moderateDeleteChat = function(cid) {
                 $.ajax({
                     url: '/_/chat/' + cid,
@@ -1410,15 +1410,15 @@
             console.log(UNMBot.room.name);
 
             var detect = function() {
-                if (UNM.room.name != window.location.pathname) {
-                    console.log('Killing bot after room change.');
+                if (UNMBot.room.name != window.location.pathname) {
+                    console.log('Killing bot after room change. <3');
                     storeToStorage();
-                    UNM.disconnectAPI();
+                    UNMBot.disconnectAPI();
                     setTimeout(function() {
                         kill();
                     }, 1000);
-                    if (UNM.settings.roomLock) {
-                        window.location = UNM.room.name;
+                    if (UNMBot.settings.roomLock) {
+                        window.location = UNMBot.room.name;
                     } else {
                         clearInterval(Check);
                     }
@@ -1431,51 +1431,51 @@
 
             retrieveSettings();
             retrieveFromStorage();
-            window.bot = UGMBot;
-            UGMBot.roomUtilities.updateBlacklists();
-            setInterval(UGMBot.roomUtilities.updateBlacklists, 60 * 60 * 1000);
-            UGMBot.getNewBlacklistedSongs = UGMBot.roomUtilities.exportNewBlacklistedSongs;
-            UGMBot.logNewBlacklistedSongs = UGMBot.roomUtilities.logNewBlacklistedSongs;
-            if (UGMBot.room.roomstats.launchTime === null) {
-                UGMBot.room.roomstats.launchTime = Date.now();
+            window.bot = UNMBot;
+            UNMBot.roomUtilities.updateBlacklists();
+            setInterval(UNMBot.roomUtilities.updateBlacklists, 60 * 60 * 1000);
+            UNMBot.getNewBlacklistedSongs = UNMBot.roomUtilities.exportNewBlacklistedSongs;
+            UNMBot.logNewBlacklistedSongs = UNMBot.roomUtilities.logNewBlacklistedSongs;
+            if (UNMBot.room.roomstats.launchTime === null) {
+                UNMBot.room.roomstats.launchTime = Date.now();
             }
 
-            for (var j = 0; j < UGMBot.room.users.length; j++) {
-                UGMBot.room.users[j].inRoom = false;
+            for (var j = 0; j < UNMBot.room.users.length; j++) {
+                UNMBot.room.users[j].inRoom = false;
             }
             var userlist = API.getUsers();
             for (var i = 0; i < userlist.length; i++) {
                 var known = false;
                 var ind = null;
-                for (var j = 0; j < UGMBot.room.users.length; j++) {
-                    if (UGMBot.room.users[j].id === userlist[i].id) {
+                for (var j = 0; j < UNMBot.room.users.length; j++) {
+                    if (UNMBot.room.users[j].id === userlist[i].id) {
                         known = true;
                         ind = j;
                     }
                 }
                 if (known) {
-                    UGMBot.room.users[ind].inRoom = true;
+                    UNMBot.room.users[ind].inRoom = true;
                 } else {
-                    UGMBot.room.users.push(new UGMBot.User(userlist[i].id, userlist[i].username));
-                    ind = UGMBot.room.users.length - 1;
+                    UNMBot.room.users.push(new UNMBot.User(userlist[i].id, userlist[i].username));
+                    ind = UNMBot.room.users.length - 1;
                 }
-                var wlIndex = API.getWaitListPosition(UGMBot.room.users[ind].id) + 1;
-                UGMBot.userUtilities.updatePosition(UGMBot.room.users[ind], wlIndex);
+                var wlIndex = API.getWaitListPosition(UNMBot.room.users[ind].id) + 1;
+                UNMBot.userUtilities.updatePosition(UNMBot.room.users[ind], wlIndex);
             }
-            UGMBot.room.afkInterval = setInterval(function() {
-                UGMBot.roomUtilities.afkCheck()
+            UNMBot.room.afkInterval = setInterval(function() {
+                UNMBot.roomUtilities.afkCheck()
             }, 10 * 1000);
-            UGMBot.room.autodisableInterval = setInterval(function() {
-                UGMBot.room.autodisableFunc();
+            UNMBot.room.autodisableInterval = setInterval(function() {
+                UNMBot.room.autodisableFunc();
             }, 60 * 60 * 1000);
-            UGMBot.loggedInID = API.getUser().id;
-            UGMBot.status = true;
-            API.sendChat('/cap ' + UGMBot.settings.startupCap);
-            API.setVolume(UGMBot.settings.startupVolume);
-            if (UGMBot.settings.autowoot) {
+            UNMBot.loggedInID = API.getUser().id;
+            UNMBot.status = true;
+            API.sendChat('/cap ' + UNMBot.settings.startupCap);
+            API.setVolume(UNMBot.settings.startupVolume);
+            if (UNMBot.settings.autowoot) {
                 $('#woot').click();
             }
-            if (UGMBot.settings.startupEmoji) {
+            if (UNMBot.settings.startupEmoji) {
                 var emojibuttonoff = $('.icon-emoji-off');
                 if (emojibuttonoff.length > 0) {
                     emojibuttonoff[0].click();
@@ -1488,12 +1488,12 @@
                 }
                 API.chatLog('Emojis disabled.');
             }
-            API.chatLog('Avatars capped at ' + UGMBot.settings.startupCap);
-            API.chatLog('Volume set to ' + UGMBot.settings.startupVolume);
+            API.chatLog('Avatars capped at ' + UNMBot.settings.startupCap);
+            API.chatLog('Volume set to ' + UNMBot.settings.startupVolume);
             //socket();
-            loadChat(API.sendChat(subChat(UGMBot.chat.online, {
-                botname: UGMBot.settings.botName,
-                version: UGMBot.version
+            loadChat(API.sendChat(subChat(UNMBot.chat.online, {
+                botname: UNMBot.settings.botName,
+                version: UNMBot.version
             })));
         },
         commands: {
@@ -1547,7 +1547,7 @@
                 type: 'startsWith/exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
 
                     }
@@ -1561,31 +1561,31 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var now = Date.now();
                         var chatters = 0;
                         var time;
 
-                        var launchT = UGMBot.room.roomstats.launchTime;
+                        var launchT = UNMBot.room.roomstats.launchTime;
                         var durationOnline = Date.now() - launchT;
                         var since = durationOnline / 1000;
 
                         if (msg.length === cmd.length) time = since;
                         else {
                             time = msg.substring(cmd.length + 1);
-                            if (isNaN(time)) return API.sendChat(subChat(UGMBot.chat.invalidtime, {
+                            if (isNaN(time)) return API.sendChat(subChat(UNMBot.chat.invalidtime, {
                                 name: chat.un
                             }));
                         }
-                        for (var i = 0; i < UGMBot.room.users.length; i++) {
-                            userTime = UGMBot.userUtilities.getLastActivity(UGMBot.room.users[i]);
+                        for (var i = 0; i < UNMBot.room.users.length; i++) {
+                            userTime = UNMBot.userUtilities.getLastActivity(UNMBot.room.users[i]);
                             if ((now - userTime) <= (time * 60 * 1000)) {
                                 chatters++;
                             }
                         }
-                        API.sendChat(subChat(UGMBot.chat.activeusersintime, {
+                        API.sendChat(subChat(UNMBot.chat.activeusersintime, {
                             name: chat.un,
                             amount: chatters,
                             time: time
@@ -1600,21 +1600,21 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(UGMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(UNMBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substr(cmd.length + 2);
-                        var user = UGMBot.userUtilities.lookupUserName(name);
+                        var user = UNMBot.userUtilities.lookupUserName(name);
                         if (msg.length > cmd.length + 2) {
                             if (typeof user !== 'undefined') {
-                                if (UGMBot.room.roomevent) {
-                                    UGMBot.room.eventArtists.push(user.id);
+                                if (UNMBot.room.roomevent) {
+                                    UNMBot.room.eventArtists.push(user.id);
                                 }
                                 API.moderateAddDJ(user.id);
-                            } else API.sendChat(subChat(UGMBot.chat.invaliduserspecified, {
+                            } else API.sendChat(subChat(UNMBot.chat.invaliduserspecified, {
                                 name: chat.un
                             }));
                         }
