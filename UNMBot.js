@@ -249,9 +249,9 @@
     var managers = ["",""];
     var CoHosts = ["",""];
     var UGMBot = {
-        version: "2.14.5.9",
+        version: "2.15.7.1",
         status: true,
-        name: "UNMBot",
+        name: "UNM",
         loggedInID: "20168147",
         scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UNMBot.js",
         cmdLink: "https://goo.gl/4BQP8Y",
@@ -261,7 +261,7 @@
         retrieveSettings: retrieveSettings,
         retrieveFromStorage: retrieveFromStorage,
         settings: {
-            botName: "UNMBot",
+            botName: "UNM",
             language: "english",
             chatLink: "https://rawgit.com/xUndisputed/titanmusic/master/langIndex.json",
             scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UNMBot.js",
@@ -4200,7 +4200,7 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var name;
@@ -4271,7 +4271,7 @@
                                     var profile = '~';
                                 }
 
-                                API.sendChat(subChat(basicBot.chat.whois, {
+                                API.sendChat(subChat(UNM.chat.whois, {
                                     name1: chat.un,
                                     name2: name,
                                     id: id,
@@ -4294,7 +4294,7 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
                     else {
                         $('#woot').click();
                     }
@@ -4307,12 +4307,12 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof UNMBot.settings.youtubeLink === 'string')
+                        if (typeof UNM.settings.youtubeLink === 'string')
                             API.sendChat(subChat(UNMBot.chat.youtube, {
                                 name: chat.un,
-                                link: UNMBot.settings.youtubeLink
+                                link: UNM.settings.youtubeLink
                             }));
                     }
                 }
