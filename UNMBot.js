@@ -1,6 +1,6 @@
 /**
 
- Copyright © 2017-2018 UNMBot
+ Copyright © 2017-2018 UNM
 
  Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
  This software is not for profit, any extension, or unauthorised person providing this software is not authorised to be in a position of any monetary gain from this use of this software. Any and all money gained under the use of the software (which includes donations) must be passed on to the original author.
@@ -10,7 +10,7 @@
 (function() {
 
     /*window.onerror = function() {
-        var room = JSON.parse(localStorage.getItem('UNMBotRoom'));
+        var room = JSON.parse(localStorage.getItem('UNMRoom'));
         window.location = 'https://plug.dj' + room.name;
     };*/
 
@@ -1312,28 +1312,28 @@
                     }, UGMBot.settings.commandCooldown * 1000);
                 }
                 if (executed) {
-                    /*if (UGMBot.settings.cmdDeletion) {
+                    /*if (UGNM.settings.cmdDeletion) {
                         API.moderateDeleteChat(chat.cid);
                     }*/
 
-                    //UGMBot.room.allcommand = false;
+                    //UNM.room.allcommand = false;
                     //setTimeout(function () {
-                    UGMBot.room.allcommand = true;
+                    UNM.room.allcommand = true;
                     //}, 5 * 1000);
                 }
                 return executed;
             },
             action: function(chat) {
-                var user = UGMBot.userUtilities.lookupUser(chat.uid);
+                var user = UNM.userUtilities.lookupUser(chat.uid);
                 if (chat.type === 'message') {
-                    for (var j = 0; j < UGMBot.room.users.length; j++) {
-                        if (UGMBot.userUtilities.getUser(UGMBot.room.users[j]).id === chat.uid) {
-                            UGMBot.userUtilities.setLastActivity(UGMBot.room.users[j]);
+                    for (var j = 0; j < UNM.room.users.length; j++) {
+                        if (UNM.userUtilities.getUser(UNM.room.users[j]).id === chat.uid) {
+                            UNM.userUtilities.setLastActivity(UNM.room.users[j]);
                         }
 
                     }
                 }
-                UNMBot.room.roomstats.chatmessages++;
+                UNM.room.roomstats.chatmessages++;
             },
             spam: [
                 'hueh', 'hu3', 'brbr', 'heu', 'brbr', 'kkkk', 'spoder', 'mafia', 'zuera', 'zueira',
@@ -1393,9 +1393,9 @@
         },
         startup: function() {
             var u = API.getUser();
-            if (UNMBot.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(UNMBot.chat.greyuser);
-            if (UNMBot.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(UNMBot.chat.bouncer);
-            UGNBot.connectAPI();
+            if (UNM.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(UNM.chat.greyuser);
+            if (UNM.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(UNM.chat.bouncer);
+            UNM.connectAPI();
             API.moderateDeleteChat = function(cid) {
                 $.ajax({
                     url: '/_/chat/' + cid,
@@ -1403,21 +1403,21 @@
                 })
             };
 
-            UNMBot.room.name = window.location.pathname;
+            UNM.room.name = window.location.pathname;
             var Check;
 
-            console.log(UNMBot.room.name);
+            console.log(UNM.room.name);
 
             var detect = function() {
-                if (UNMBot.room.name != window.location.pathname) {
+                if (UNM.room.name != window.location.pathname) {
                     console.log('Killing bot after room change.');
                     storeToStorage();
-                    UNMBot.disconnectAPI();
+                    UNM.disconnectAPI();
                     setTimeout(function() {
                         kill();
                     }, 1000);
-                    if (UNMBot.settings.roomLock) {
-                        window.location = UNMBot.room.name;
+                    if (UNM.settings.roomLock) {
+                        window.location = UNM.room.name;
                     } else {
                         clearInterval(Check);
                     }
@@ -4310,7 +4310,7 @@
                     if (!UNM.commands.executable(this.rank, chat)) return void(0);
                     else {
                         if (typeof UNM.settings.youtubeLink === 'string')
-                            API.sendChat(subChat(UNMBot.chat.youtube, {
+                            API.sendChat(subChat(UNM.chat.youtube, {
                                 name: chat.un,
                                 link: UNM.settings.youtubeLink
                             }));
