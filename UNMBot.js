@@ -747,7 +747,7 @@
                 if (waitlistlength == 50) {
                     UGMBot.roomUtilities.booth.lockBooth();
                     locked = true;
-            },
+            }
             setTimeout(function(id) {
                 API.moderateForceSkip();
                     setTimeout(function() {
@@ -2259,24 +2259,24 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(basicBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(UNM.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = basicBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
+                        var user = UNM.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(UNM.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        for (var i = 1; i < basicBot.room.chatMessages.length; i++) {
-                            if (basicBot.room.chatMessages[i].indexOf(user.id) > -1) {
-                                API.moderateDeleteChat(basicBot.room.chatMessages[i][0]);
-                                basicBot.room.chatMessages[i].splice(0);
+                        for (var i = 1; i < UNM.room.chatMessages.length; i++) {
+                            if (UNM.room.chatMessages[i].indexOf(user.id) > -1) {
+                                API.moderateDeleteChat(UNM.room.chatMessages[i][0]);
+                                UNM.room.chatMessages[i].splice(0);
                             }
                         }
-                        API.sendChat(subChat(basicBot.chat.deletechat, {
+                        API.sendChat(subChat(UNM.chat.deletechat, {
                             name: chat.un,
                             username: name
                         }));
@@ -2290,10 +2290,10 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var link = 'http://www.emoji-cheat-sheet.com/';
-                        API.sendChat(subChat(basicBot.chat.emojilist, {
+                        API.sendChat(subChat(UNM.chat.emojilist, {
                             link: link
                         }));
                     }
@@ -2306,13 +2306,13 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (chat.message.length === cmd.length) return API.sendChat('/me No user specified.');
+                        if (chat.message.length === cmd.length) return API.sendChat('/me Please talk English!');
                         var name = chat.message.substring(cmd.length + 2);
-                        var user = basicBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat('/me Invalid user specified.');
-                        var lang = basicBot.userUtilities.getUser(user).language;
+                        var user = UNM.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat('/me Please talk English!');
+                        var lang = UNM.userUtilities.getUser(user).language;
                         var ch = '/me @' + name + ' ';
                         switch (lang) {
                             case 'en':
@@ -2360,9 +2360,9 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        var perm = basicBot.userUtilities.getPermission(chat.uid);
+                        var perm = UNM.userUtilities.getPermission(chat.uid);
                         var msg = chat.message;
                         var dj = API.getDJ().username;
                         var name;
@@ -2370,25 +2370,25 @@
                             if (perm < API.ROLE.BOUNCER) return void(0);
                             name = msg.substring(cmd.length + 2);
                         } else name = chat.un;
-                        var user = basicBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(basicBot.chat.invaliduserspecified, {
+                        var user = UNM.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(UNM.chat.invaliduserspecified, {
                             name: chat.un
                         }));
                         var pos = API.getWaitListPosition(user.id);
                         var realpos = pos + 1;
-                        if (name == dj) return API.sendChat(subChat(basicBot.chat.youaredj, {
+                        if (name == dj) return API.sendChat(subChat(UNM.chat.youaredj, {
                             name: name
                         }));
-                        if (pos < 0) return API.sendChat(subChat(basicBot.chat.notinwaitlist, {
+                        if (pos < 0) return API.sendChat(subChat(UNM.chat.notinwaitlist, {
                             name: name
                         }));
-                        if (pos == 0) return API.sendChat(subChat(basicBot.chat.youarenext, {
+                        if (pos == 0) return API.sendChat(subChat(UNM.chat.youarenext, {
                             name: name
                         }));
                         var timeRemaining = API.getTimeRemaining();
                         var estimateMS = ((pos + 1) * 4 * 60 + timeRemaining) * 1000;
-                        var estimateString = basicBot.roomUtilities.msToStr(estimateMS);
-                        API.sendChat(subChat(basicBot.chat.eta, {
+                        var estimateString = UNM.roomUtilities.msToStr(estimateMS);
+                        API.sendChat(subChat(UNM.chat.eta, {
                             name: name,
                             time: estimateString,
                             position: realpos
