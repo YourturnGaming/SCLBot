@@ -113,29 +113,29 @@
     var loadChat = function(cb) {
         if (!cb) cb = function() {};
         $.get("https://rawgit.com/xUndisputed/titanmusic/master/langIndex.json", function(json) {
-            var link = UGMBot.chatLink;
+            var link = UNMBot.chatLink;
             if (json !== null && typeof json !== 'undefined') {
                 langIndex = json;
-                link = langIndex[UGMBot.settings.language.toLowerCase()];
-                if (UGMBot.settings.chatLink !== UGMBot.chatLink) {
-                    link = UGMBot.settings.chatLink;
+                link = langIndex[UNMBot.settings.language.toLowerCase()];
+                if (UNMBot.settings.chatLink !== UNMBot.chatLink) {
+                    link = UNMBot.settings.chatLink;
                 } else {
                     if (typeof link === 'undefined') {
-                        link = UGMBot.chatLink;
+                        link = UNMBot.chatLink;
                     }
                 }
                 $.get(link, function(json) {
                     if (json !== null && typeof json !== 'undefined') {
                         if (typeof json === 'string') json = JSON.parse(json);
-                        UGMBot.chat = json;
+                        UNMBot.chat = json;
                         cb();
                     }
                 });
             } else {
-                $.get(UGMBot.chatLink, function(json) {
+                $.get(UNMBot.chatLink, function(json) {
                     if (json !== null && typeof json !== 'undefined') {
                         if (typeof json === 'string') json = JSON.parse(json);
-                        UGMBot.chat = json;
+                        UNMBot.chat = json;
                         cb();
                     }
                 });
