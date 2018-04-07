@@ -2444,15 +2444,15 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(subChat(basicBot.chat.forceskip, {
+                        API.sendChat(subChat(UNM.chat.forceskip, {
                             name: chat.un
                         }));
                         API.moderateForceSkip();
-                        basicBot.room.skippable = false;
+                        UNM.room.skippable = false;
                         setTimeout(function() {
-                            basicBot.room.skippable = true
+                            UNM.room.skippable = true
                         }, 5 * 1000);
                     }
                 }
@@ -4320,5 +4320,5 @@
         }
     };
 
-    loadChat(UNMBot.startup);
+    loadChat(UNM.startup);
 }).call(this);
