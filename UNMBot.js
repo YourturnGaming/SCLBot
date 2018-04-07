@@ -244,14 +244,15 @@
     var botCreator = "xUndisputed";
     var botMaintainer = "xUndisputed";
     var botCreatorIDs = ["3669054", "20168147"];
+    var users = ["",""];
     var resdjs = ["",""];
     var bouncers = ["",""];
     var managers = ["",""];
     var CoHosts = ["",""];
-    var UGMBot = {
+    var UNMBot = {
         version: "2.15.7.1",
         status: true,
-        name: "UNM",
+        name: "UNMBot",
         loggedInID: "20168147",
         scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UNMBot.js",
         cmdLink: "https://goo.gl/4BQP8Y",
@@ -261,7 +262,7 @@
         retrieveSettings: retrieveSettings,
         retrieveFromStorage: retrieveFromStorage,
         settings: {
-            botName: "UNM",
+            botName: "UNMBot",
             language: "english",
             chatLink: "https://rawgit.com/xUndisputed/titanmusic/master/langIndex.json",
             scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UNMBot.js",
@@ -1403,10 +1404,10 @@
                 })
             };
 
-            UNM.room.name = window.location.pathname;
+            UNMBot.room.name = window.location.pathname;
             var Check;
 
-            console.log(UNM.room.name);
+            console.log(UNMBot.room.name);
 
             var detect = function() {
                 if (UNM.room.name != window.location.pathname) {
@@ -4320,5 +4321,5 @@
         }
     };
 
-    loadChat(UNM.startup);
+    loadChat(UNMBot.startup);
 }).call(this);
