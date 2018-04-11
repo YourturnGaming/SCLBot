@@ -1,6 +1,6 @@
 /**
 
- Copyright © 2017-2018 UNM
+ Copyright © 2017-2018 UNMBot
 
  Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
  This software is not for profit, any extension, or unauthorised person providing this software is not authorised to be in a position of any monetary gain from this use of this software. Any and all money gained under the use of the software (which includes donations) must be passed on to the original author.
@@ -10,7 +10,7 @@
 (function() {
 
     /*window.onerror = function() {
-        var room = JSON.parse(localStorage.getItem('UNMRoom'));
+        var room = JSON.parse(localStorage.getItem('UNMBotRoom'));
         window.location = 'https://plug.dj' + room.name;
     };*/
 
@@ -28,8 +28,8 @@
     };
 
     var kill = function() {
-        clearInterval(UNM.room.autodisableInterval);
-        clearInterval(UNM.room.afkInterval);
+        clearInterval(UNMBot.room.autodisableInterval);
+        clearInterval(UNMBot.room.afkInterval);
         UNM.status = false;
     };
 
@@ -66,33 +66,33 @@
     }
 
     var sendToSocket = function() {
-        var UGMBotSettings = UGMBot.settings;
-        var UGMBotRoom = UGMBot.room;
-        var UGMBotInfo = {
+        var UNMBotSettings = UNMBot.settings;
+        var UNMBotRoom = UNMBot.room;
+        var UNMBotInfo = {
             time: Date.now(),
-            version: UGMBot.version
+            version: UNMBot.version
         };
         var data = {
             users: API.getUsers(),
             userinfo: API.getUser(),
             room: location.pathname,
-            UGMBotSettings: UGMBotSettings,
-            UGMBotRoom: UGMBotRoom,
-            UGMBotInfo: UGMBotInfo
+            UNMBotSettings: UNMBotSettings,
+            UNMBotRoom: UNMBotRoom,
+            UNMBotInfo: UNMBotInfo
         };
         return sock.msg(data);
     };
     */
 
     var storeToStorage = function() {
-        localStorage.setItem("UGMBotsettings", JSON.stringify(UGMBot.settings));
-        localStorage.setItem("UGMBotRoom", JSON.stringify(UGMBot.room));
-        var UGMBotStorageInfo = {
+        localStorage.setItem("UNMBotsettings", JSON.stringify(UNMBot.settings));
+        localStorage.setItem("UNMBotRoom", JSON.stringify(UNMBot.room));
+        var UNMBotStorageInfo = {
             time: Date.now(),
             stored: true,
-            version: UGMBot.version
+            version: UNMBot.version
         };
-        localStorage.setItem("UGMBotStorageInfo", JSON.stringify(UGMBotStorageInfo));
+        localStorage.setItem("UNMBotStorageInfo", JSON.stringify(UNMBotStorageInfo));
     };
 
     var subChat = function(chat, obj) {
@@ -144,42 +144,42 @@
     };
 
     var retrieveSettings = function() {
-        var settings = JSON.parse(localStorage.getItem("UGMBotsettings"));
+        var settings = JSON.parse(localStorage.getItem("UNMBotsettings"));
         if (settings !== null) {
             for (var prop in settings) {
-                UGMBot.settings[prop] = settings[prop];
+                UNMBot.settings[prop] = settings[prop];
             }
         }
     };
 
     var retrieveFromStorage = function() {
-        var info = localStorage.getItem("UGMBotStorageInfo");
-        if (info === null) API.chatLog(UGMBot.chat.nodatafound);
+        var info = localStorage.getItem("UNMBotStorageInfo");
+        if (info === null) API.chatLog(UNMBot.chat.nodatafound);
         else {
-            var settings = JSON.parse(localStorage.getItem("UGMBotsettings"));
-            var room = JSON.parse(localStorage.getItem("UGMBotRoom"));
+            var settings = JSON.parse(localStorage.getItem("UNMBotsettings"));
+            var room = JSON.parse(localStorage.getItem("UNMBotRoom"));
             var elapsed = Date.now() - JSON.parse(info).time;
             if ((elapsed < 1 * 60 * 60 * 1000)) {
-                API.chatLog(UGMBot.chat.retrievingdata);
+                API.chatLog(UNMBot.chat.retrievingdata);
                 for (var prop in settings) {
-                    UGMBot.settings[prop] = settings[prop];
+                    UNMBot.settings[prop] = settings[prop];
                 }
-                UGMBot.room.users = room.users;
-                UGMBot.room.afkList = room.afkList;
-                UGMBot.room.historyList = room.historyList;
-                UGMBot.room.mutedUsers = room.mutedUsers;
-                //UGMBot.room.autoskip = room.autoskip;
-                UGMBot.room.roomstats = room.roomstats;
-                UGMBot.room.messages = room.messages;
-                UGMBot.room.queue = room.queue;
-                UGMBot.room.newBlacklisted = room.newBlacklisted;
-                API.chatLog(UGMBot.chat.datarestored);
+                UNMBot.room.users = room.users;
+                UNMBot.room.afkList = room.afkList;
+                UNMBot.room.historyList = room.historyList;
+                UNMBot.room.mutedUsers = room.mutedUsers;
+                //UNMBot.room.autoskip = room.autoskip;
+                UNMBot.room.roomstats = room.roomstats;
+                UNMBot.room.messages = room.messages;
+                UNMBot.room.queue = room.queue;
+                UNMBot.room.newBlacklisted = room.newBlacklisted;
+                API.chatLog(UNMBot.chat.datarestored);
             }
         }
         var json_sett = null;
         var roominfo = document.getElementById('room-settings');
         info = roominfo.textContent;
-        var ref_bot = '@UGM | Bot=';
+        var ref_bot = '@UNM | Bot';
         var ind_ref = info.indexOf(ref_bot);
         if (ind_ref > 0) {
             var link = info.substring(ind_ref + ref_bot.length, info.length);
@@ -191,7 +191,7 @@
                 if (json !== null && typeof json !== 'undefined') {
                     json_sett = JSON.parse(json);
                     for (var prop in json_sett) {
-                        UGMBot.settings[prop] = json_sett[prop];
+                        UNMBot.settings[prop] = json_sett[prop];
                     }
                 }
             });
@@ -381,26 +381,26 @@
                 participants: [],
                 countdown: null,
                 startRoulette: function() {
-                    UGMBot.room.roulette.rouletteStatus = true;
-                    UGMBot.room.roulette.countdown = setTimeout(function() {
-                        UGMBot.room.roulette.endRoulette();
+                    UNMBot.room.roulette.rouletteStatus = true;
+                    UNMBot.room.roulette.countdown = setTimeout(function() {
+                        UNMBot.room.roulette.endRoulette();
                     }, 60 * 1000);
-                    API.sendChat(UGMBot.chat.isopen);
+                    API.sendChat(UNMBot.chat.isopen);
                 },
                 endRoulette: function() {
-                    UGMBot.room.roulette.rouletteStatus = false;
-                    var ind = Math.floor(Math.random() * UGMBot.room.roulette.participants.length);
-                    var winner = UGMBot.room.roulette.participants[ind];
+                    UNMBot.room.roulette.rouletteStatus = false;
+                    var ind = Math.floor(Math.random() * UNMBot.room.roulette.participants.length);
+                    var winner = UNMBot.room.roulette.participants[ind];
                     UGM.room.roulette.participants = [];
                     var pos = Math.floor((Math.random() * API.getWaitList().length) + 1);
-                    var user = UGMBot.userUtilities.lookupUser(winner);
+                    var user = UNMBot.userUtilities.lookupUser(winner);
                     var name = user.username;
-                    API.sendChat(subChat(UGMBot.chat.winnerpicked, {
+                    API.sendChat(subChat(UNMBot.chat.winnerpicked, {
                         name: name,
                         position: pos
                     }));
                     setTimeout(function(winner, pos) {
-                        UGMBot.userUtilities.moveUser(winner, pos, false);
+                        UNMBot.userUtilities.moveUser(winner, pos, false);
                     }, 1 * 1000, winner, pos);
                 }
             },
@@ -441,7 +441,7 @@
             updateDC: function(user) {
                 user.lastDC.time = Date.now();
                 user.lastDC.position = user.lastKnownPosition;
-                user.lastDC.songCount = UGMBot.room.roomstats.songCount;
+                user.lastDC.songCount = UNMBot.room.roomstats.songCount;
             },
             setLastActivity: function(user) {
                 user.lastActivity = Date.now();
