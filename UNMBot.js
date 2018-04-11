@@ -343,7 +343,7 @@
             autoskipTimer: null,
             autodisableInterval: null,
             autodisableFunc: function() {
-                if (UGM.status && UGM.settings.autodisable) {
+                if (UNMBot.status && UNMBot.settings.autodisable) {
                     API.sendChat('!afkdisable');
                     API.sendChat('!joindisable');
                 }
@@ -391,7 +391,7 @@
                     UNMBot.room.roulette.rouletteStatus = false;
                     var ind = Math.floor(Math.random() * UNMBot.room.roulette.participants.length);
                     var winner = UNMBot.room.roulette.participants[ind];
-                    UGM.room.roulette.participants = [];
+                    UNMBot.room.roulette.participants = [];
                     var pos = Math.floor((Math.random() * API.getWaitList().length) + 1);
                     var user = UNMBot.userUtilities.lookupUser(winner);
                     var name = user.username;
@@ -458,24 +458,24 @@
                 user.afkWarningCount = value;
             },
             lookupUser: function(id) {
-                for (var i = 0; i < UGMBot.room.users.length; i++) {
-                    if (UGMBot.room.users[i].id === id) {
-                        return UGMBot.room.users[i];
+                for (var i = 0; i < UNMBot.room.users.length; i++) {
+                    if (UNMBot.room.users[i].id === id) {
+                        return UNMBot.room.users[i];
                     }
                 }
                 return false;
             },
             lookupUserName: function(name) {
-                for (var i = 0; i < UGMBot.room.users.length; i++) {
-                    var match = UGMBot.room.users[i].username.trim() == name.trim();
+                for (var i = 0; i < UNMBot.room.users.length; i++) {
+                    var match = UNMBot.room.users[i].username.trim() == name.trim();
                     if (match) {
-                        return UGMBot.room.users[i];
+                        return UNMBot.room.users[i];
                     }
                 }
                 return false;
             },
             voteRatio: function(id) {
-                var user = UGMBot.userUtilities.lookupUser(id);
+                var user = UNMBot.userUtilities.lookupUser(id);
                 var votes = user.votes;
                 if (votes.meh === 0) votes.ratio = 1;
                 else votes.ratio = (votes.woot / votes.meh).toFixed(2);
@@ -862,7 +862,7 @@
             chat.message = decodeEntities(chat.message);
             chat.message = chat.message.trim();
 
-            UGMBot.room.chatMessages.push([chat.cid, chat.message, chat.sub, chat.timestamp, chat.type, chat.uid, chat.un]);
+            UNMBot.room.chatMessages.push([chat.cid, chat.message, chat.sub, chat.timestamp, chat.type, chat.uid, chat.un]);
 
             for (var i = 0; i < UGMBot.room.users.length; i++) {
                 if (UGMBot.room.users[i].id === chat.uid) {
