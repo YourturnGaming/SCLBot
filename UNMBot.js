@@ -4089,7 +4089,7 @@
                             }));
                         } else {
                             UNMBot.settings.welcome = !UNMBot.settings.welcome;
-                            return API.sendChat(subChat(TMBot.chat.toggleon, {
+                            return API.sendChat(subChat(UNMBot.chat.toggleon, {
                                 name: chat.un,
                                 'function': UNMBot.chat.welcomemsg
                             }));
