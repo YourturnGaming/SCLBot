@@ -2,14 +2,14 @@
 
 [![Discord](http://is1.mzstatic.com/image/thumb/Purple117/v4/a1/d8/3a/a1d83a42-e84e-5965-c006-610fb8a1fd45/source/300x300bb.jpg)](https://discord.gg/hvWTZrZ) [![facebook group](https://img.shields.io/badge/facebook-group-3b5998.svg?style=flat)](https://goo.gl/3EybNI) [![twitter](https://img.shields.io/twitter/follow/TittanMusic.svg?style=social)](https://goo.gl/0jzhuz)
 
-Email enquiries: [hi [at] TitanMusicDev [dot] io](estmercyclan@gmail.com)
+Email enquiries: [hi [at] xUndisputed [dot] io](estmercyclan@gmail.com)
 
 Usage
 -----
 Bookmark the following code. To run the bot, run the bookmark.
 
 ```
-javascript:(function(){$.getScript('https://rawgit.com/xUndisputed/titanmusic/master/UGMBot.js');})();
+javascript:(function(){$.getScript('https://rawgit.com/xUndisputed/titanmusic/master/UNMBot.js');})();
 ```
 
 If this does not work, go to https://raw.githubusercontent.com/xUndisputed/titanmusic/master/UNMBot.js and copy paste its content into your console (accessible in chrome by pressing F12) when on plug.dj in your community.
@@ -32,9 +32,9 @@ TMBot can be customized to fit your needs. Please refer to [the customization re
 Please do not try to if you are not confident in your javascript capabilities.
 
 
-UGMBot Chrome Extension
+UNMBot Chrome Extension
 -------------------------
-[Get the Official UGMBot Chrome Extension is coming]()
+[Get the Official UNMBot Chrome Extension is coming]()
 
 
 Developers
@@ -63,7 +63,7 @@ __I would also like to thank everyone who contributed in translating the bot via
 
 ### Copyright
 
-Copyright &copy; 2017-2018 UGMBot
+Copyright &copy; 2017-2018 UNMBot
 
 Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
 
