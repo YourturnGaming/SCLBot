@@ -28,7 +28,7 @@ You can add blacklists in the settings of the bot via the methods given in that 
 
 Extending functionality and custom default settings
 ---------------------------------------------------
-TMBot can be customized to fit your needs. Please refer to [the customization repository](https://github.com/TitanMusicDev/titanmusic) for more info.
+UNMBot can be customized to fit your needs. Please refer to [the customization repository](https://github.com/TitanMusicDev/titanmusic) for more info.
 Please do not try to if you are not confident in your javascript capabilities.
 
 
