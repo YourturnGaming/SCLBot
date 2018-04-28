@@ -250,7 +250,7 @@
     var managers = ["",""];
     var CoHosts = ["",""];
     var UNMBot = {
-        version: "3.16.8.1",
+        version: "3.16.8.2",
         status: true,
         name: "UNMBot",
         loggedInID: "20168147",
