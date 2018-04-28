@@ -1997,7 +1997,6 @@
                     }
                 }
             },
-
             clearchatCommand: {
                 command: 'clearchat',
                 rank: 'manager',
@@ -2016,7 +2015,6 @@
                     }
                 }
             },
-
             clearlocalstorageCommand: {
                 command: 'clearlocalstorage',
                 rank: 'manager',
@@ -2030,7 +2028,6 @@
                     }
                 }
             },
-
             cmddeletionCommand: {
                 command: ['commanddeletion', 'cmddeletion', 'cmddel'],
                 rank: 'mod',
@@ -2055,7 +2052,6 @@
                     }
                 }
             },
-
             commandsCommand: {
                 command: 'commands',
                 rank: 'user',
@@ -2071,7 +2067,6 @@
                     }
                 }
             },
-
             cookieCommand: {
                 command: 'cookie',
                 rank: 'user',
@@ -2112,7 +2107,6 @@
                     }
                 }
             },
-
             cycleCommand: {
                 command: 'cycle',
                 rank: 'manager',
@@ -2125,7 +2119,6 @@
                     }
                 }
             },
-
             cycleguardCommand: {
                 command: 'cycleguard',
                 rank: 'bouncer',
@@ -2151,7 +2144,6 @@
                     }
                 }
             },
-
             cycletimerCommand: {
                 command: 'cycletimer',
                 rank: 'manager',
@@ -2175,7 +2167,6 @@
                     }
                 }
             },
-
             dclookupCommand: {
                 command: ['dclookup', 'dc'],
                 rank: 'user',
@@ -2203,7 +2194,6 @@
                     }
                 }
             },
-
             /*
             // This does not work anymore.
             deletechatCommand: {
@@ -2250,7 +2240,6 @@
                 }
             },
             */
-
             deletechatCommand: {
                 command: 'deletechat',
                 rank: 'mod',
@@ -2281,7 +2270,6 @@
                     }
                 }
             },
-
             emojiCommand: {
                 command: 'emoji',
                 rank: 'user',
@@ -2297,7 +2285,6 @@
                     }
                 }
             },
-
             englishCommand: {
                 command: 'english',
                 rank: 'bouncer',
@@ -2351,7 +2338,6 @@
                     }
                 }
             },
-
             etaCommand: {
                 command: 'eta',
                 rank: 'user',
@@ -2394,7 +2380,6 @@
                     }
                 }
             },
-
             fbCommand: {
                 command: 'fb',
                 rank: 'user',
@@ -2410,7 +2395,6 @@
                     }
                 }
             },
-
             filterCommand: {
                 command: 'filter',
                 rank: 'bouncer',
@@ -2435,7 +2419,6 @@
                     }
                 }
             },
-
             forceskipCommand: {
                 command: ['forceskip', 'fs'],
                 rank: 'bouncer',
@@ -2455,7 +2438,6 @@
                     }
                 }
             },
-
             ghostbusterCommand: {
                 command: 'ghostbuster',
                 rank: 'user',
@@ -2483,7 +2465,6 @@
                     }
                 }
             },
-
             gifCommand: {
                 command: ['gif', 'giphy'],
                 rank: 'user',
@@ -2557,7 +2538,6 @@
                     }
                 }
             },
-
             helpCommand: {
                 command: 'help',
                 rank: 'user',
@@ -2574,7 +2554,6 @@
                     }
                 }
             },
-
             historyskipCommand: {
                 command: 'historyskip',
                 rank: 'bouncer',
@@ -2599,7 +2578,6 @@
                     }
                 }
             },
-
             joinCommand: {
                 command: 'join',
                 rank: 'user',
@@ -2617,7 +2595,6 @@
                     }
                 }
             },
-
             jointimeCommand: {
                 command: 'jointime',
                 rank: 'bouncer',
@@ -2646,7 +2623,6 @@
                     }
                 }
             },
-
             kickCommand: {
                 command: 'kick',
                 rank: 'bouncer',
@@ -2699,7 +2675,6 @@
                     }
                 }
             },
-
             killCommand: {
                 command: 'kill',
                 rank: 'bouncer',
@@ -2718,7 +2693,6 @@
                     }
                 }
             },
-
             languageCommand: {
                 command: 'language',
                 rank: 'manager',
@@ -2751,7 +2725,6 @@
                     }
                 }
             },
-
             leaveCommand: {
                 command: 'leave',
                 rank: 'user',
@@ -2770,7 +2743,6 @@
                     }
                 }
             },
-
             linkCommand: {
                 command: 'link',
                 rank: 'user',
@@ -2806,7 +2778,6 @@
                     }
                 }
             },
-
             lockCommand: {
                 command: 'lock',
                 rank: 'mod',
@@ -2819,7 +2790,6 @@
                     }
                 }
             },
-
             lockdownCommand: {
                 command: 'lockdown',
                 rank: 'mod',
@@ -2842,7 +2812,6 @@
                     }
                 }
             },
-
             lockguardCommand: {
                 command: 'lockguard',
                 rank: 'bouncer',
@@ -2867,7 +2836,6 @@
                     }
                 }
             },
-
             lockskipCommand: {
                 command: 'lockskip',
                 rank: 'bouncer',
@@ -2940,7 +2908,6 @@
                     }
                 }
             },
-
             locktimerCommand: {
                 command: 'locktimer',
                 rank: 'manager',
@@ -2963,7 +2930,6 @@
                     }
                 }
             },
-
             logoutCommand: {
                 command: 'logout',
                 rank: 'manager',
@@ -2982,7 +2948,6 @@
                     }
                 }
             },
-
             maxlengthCommand: {
                 command: 'maxlength',
                 rank: 'manager',
@@ -3005,7 +2970,6 @@
                     }
                 }
             },
-
             mehCommand: {
                 command: 'meh',
                 rank: 'mod',
@@ -3018,7 +2982,6 @@
                     }
                 }
             },
-
             motdCommand: {
                 command: 'motd',
                 rank: 'bouncer',
@@ -3045,7 +3008,6 @@
                     }
                 }
             },
-
             moveCommand: {
                 command: 'move',
                 rank: 'mod',
@@ -3087,7 +3049,6 @@
                     }
                 }
             },
-
             muteCommand: {
                 command: 'mute',
                 rank: 'bouncer',
@@ -3163,7 +3124,6 @@
                     }
                 }
             },
-
             opCommand: {
                 command: 'op',
                 rank: 'user',
@@ -3179,7 +3139,6 @@
                     }
                 }
             },
-
             pingCommand: {
                 command: 'ping',
                 rank: 'user',
@@ -3192,7 +3151,6 @@
                     }
                 }
             },
-
             refreshCommand: {
                 command: 'refresh',
                 rank: 'manager',
@@ -3211,7 +3169,6 @@
                     }
                 }
             },
-
             reloadCommand: {
                 command: 'reload',
                 rank: 'bouncer',
@@ -3231,7 +3188,6 @@
                     }
                 }
             },
-
             removeCommand: {
                 command: 'remove',
                 rank: 'mod',
@@ -3266,7 +3222,6 @@
                     }
                 }
             },
-
             restrictetaCommand: {
                 command: 'restricteta',
                 rank: 'bouncer',
@@ -3291,7 +3246,6 @@
                     }
                 }
             },
-
             rouletteCommand: {
                 command: 'roulette',
                 rank: 'mod',
@@ -3306,7 +3260,6 @@
                     }
                 }
             },
-
             rulesCommand: {
                 command: 'rules',
                 rank: 'user',
@@ -3322,7 +3275,6 @@
                     }
                 }
             },
-
             sessionstatsCommand: {
                 command: 'sessionstats',
                 rank: 'bouncer',
@@ -3344,7 +3296,6 @@
                     }
                 }
             },
-
             skipCommand: {
                 command: ['skip', 'smartskip'],
                 rank: 'bouncer',
@@ -3398,7 +3349,6 @@
                     }
                 }
             },
-
             skipposCommand: {
                 command: 'skippos',
                 rank: 'manager',
@@ -3421,7 +3371,6 @@
                     }
                 }
             },
-
             songstatsCommand: {
                 command: 'songstats',
                 rank: 'mod',
@@ -3446,7 +3395,6 @@
                     }
                 }
             },
-
             sourceCommand: {
                 command: 'source',
                 rank: 'user',
@@ -3459,8 +3407,7 @@
                     }
                 }
             },
-		
-	    discordCommand: {
+	        discordCommand: {
                 command: 'discord',
                 rank: 'user',
                 type: 'exact',
@@ -3468,102 +3415,94 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!bot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("/me Titan Music public discord: https://discord.gg/zq5RnBx");
+                            API.sendChat("/me Ultra Night Music public discord: https://discord.gg/zq5RnBx");
                     }
                 }
             },
-			
-	    stayCommand: {
+	        stayCommand: {
                 command: 'stay',
                 rank: 'bouncer',
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("Enjoy your stay in Titan Music!");
+                            API.sendChat("Enjoy your stay in Ultra Night Music!");
                     }
                 }
             },
-			
-	    eventCommand: {
+	        eventCommand: {
                 command: 'event',
                 rank: 'bouncer',
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
                             API.sendChat("Event is here: https://i.imgur.com/dsA1eBx.png?1");
                     }
                 }
             },
-		
-	    plugdjCommand: {
+	        plugdjCommand: {
                 command: 'plugdj',
                 rank: 'user',
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
                             API.sendChat("plugdj: discord: https://discord.gg/RE8fkzE");
                     }
                 }
             },	
-		
-	    plugitCommand: {
+	        plugitCommand: {
                 command: 'Plugit',
                 rank: 'user',
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
                             API.sendChat("PlugIt: discord: https://discord.gg//DptCswA");
                     }
                 }
             },
-			
             plug3Command: {
                 command: 'plug3',
                 rank: 'user',
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
                             API.sendChat("plug3: https://goo.gl/UB67zH discord: https://discord.gg/AXVZjT");
                     }
                 }
             },
-         
             rcsCommand: {
                 command: 'rcs',
                 rank: 'user',
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
                             API.sendChat("rcs: https://goo.gl/o6sD2H discord: https://discord.gg/QHvpfNP");
                     }
                 }
             },
-
             guideCommand: {
                  command: 'guide',
                  rank: 'user',
                  type: 'exact',
                  functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void (0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
                             API.sendChat("plug.dj guide: http://i.imgur.com/ZeRR07N.png");
                     }
                  }
             },	
-
             statusCommand: {
                 command: 'status',
                 rank: 'bouncer',
@@ -3673,7 +3612,6 @@
                     }
                 }
             },
-
             swapCommand: {
                 command: 'swap',
                 rank: 'mod',
@@ -3731,7 +3669,6 @@
                     }
                 }
             },
-
             themeCommand: {
                 command: 'theme',
                 rank: 'user',
@@ -3747,7 +3684,6 @@
                     }
                 }
             },
-
             thorCommand: {
                 command: 'thor',
                 rank: 'user',
@@ -3834,7 +3770,6 @@
                     }
                 }
             },
-
             timeguardCommand: {
                 command: 'timeguard',
                 rank: 'bouncer',
@@ -3860,7 +3795,6 @@
                     }
                 }
             },
-
             toggleblCommand: {
                 command: 'togglebl',
                 rank: 'bouncer',
@@ -3883,7 +3817,6 @@
                     }
                 }
             },
-
             togglemotdCommand: {
                 command: 'togglemotd',
                 rank: 'bouncer',
@@ -3908,7 +3841,6 @@
                     }
                 }
             },
-
             togglevoteskipCommand: {
                 command: 'togglevoteskip',
                 rank: 'bouncer',
@@ -3933,7 +3865,6 @@
                     }
                 }
             },
-
             unbanCommand: {
                 command: 'unban',
                 rank: 'bouncer',
@@ -3965,7 +3896,6 @@
                     }
                 }
             },
-
             unlockCommand: {
                 command: 'unlock',
                 rank: 'mod',
@@ -3978,7 +3908,6 @@
                     }
                 }
             },
-
             unmuteCommand: {
                 command: 'unmute',
                 rank: 'bouncer',
@@ -4025,7 +3954,6 @@
                     }
                 }
             },
-
             uptimeCommand: {
                 command: 'uptime',
                 rank: 'bouncer',
@@ -4043,7 +3971,6 @@
                     }
                 }
             },
-
             usercmdcdCommand: {
                 command: 'usercmdcd',
                 rank: 'manager',
@@ -4066,7 +3993,6 @@
                     }
                 }
             },
-
             usercommandsCommand: {
                 command: 'usercommands',
                 rank: 'manager',
@@ -4091,7 +4017,6 @@
                     }
                 }
             },
-
             voteratioCommand: {
                 command: 'voteratio',
                 rank: 'bouncer',
