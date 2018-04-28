@@ -1129,37 +1129,37 @@
         },
         eventWaitlistupdate: function(users) {
             if (users.length < 50) {
-                if (UGMBot.room.queue.id.length > 0 && UGMBot.room.queueable) {
-                    UGMBot.room.queueable = false;
+                if (UNMBot.room.queue.id.length > 0 && UNMBot.room.queueable) {
+                    UNMBot.room.queueable = false;
                     setTimeout(function() {
-                        UGMBot.room.queueable = true;
+                        UNMBot.room.queueable = true;
                     }, 500);
-                    UGMBot.room.queueing++;
+                    UNMBot.room.queueing++;
                     var id, pos;
                     setTimeout(
                         function() {
-                            id = UGMBot.room.queue.id.splice(0, 1)[0];
-                            pos = UGMBot.room.queue.position.splice(0, 1)[0];
+                            id = UNMBot.room.queue.id.splice(0, 1)[0];
+                            pos = UNMBot.room.queue.position.splice(0, 1)[0];
                             API.moderateAddDJ(id, pos);
                             setTimeout(
                                 function(id, pos) {
                                     API.moderateMoveDJ(id, pos);
-                                    UGMBot.room.queueing--;
-                                    if (UGMBot.room.queue.id.length === 0) setTimeout(function() {
-                                        UGMBot.roomUtilities.booth.unlockBooth();
+                                    UNMBot.room.queueing--;
+                                    if (UNMBot.room.queue.id.length === 0) setTimeout(function() {
+                                        UNMBot.roomUtilities.booth.unlockBooth();
                                     }, 1000);
                                 }, 1000, id, pos);
-                        }, 1000 + UGMBot.room.queueing * 2500);
+                        }, 1000 + UNMBot.room.queueing * 2500);
                 }
             }
             for (var i = 0; i < users.length; i++) {
-                var user = UGMBot.userUtilities.lookupUser(users[i].id);
-                UGMBot.userUtilities.updatePosition(user, API.getWaitListPosition(users[i].id) + 1);
+                var user = UNMBot.userUtilities.lookupUser(users[i].id);
+                UNMBot.userUtilities.updatePosition(user, API.getWaitListPosition(users[i].id) + 1);
             }
         },
         chatcleaner: function(chat) {
-            if (!UGMBot.settings.filterChat) return false;
-            if (UGMBot.userUtilities.getPermission(chat.uid) >= API.ROLE.BOUNCER) return false;
+            if (!UNMBot.settings.filterChat) return false;
+            if (UNMBot.userUtilities.getPermission(chat.uid) >= API.ROLE.BOUNCER) return false;
             var msg = chat.message;
             var containsLetters = false;
             for (var i = 0; i < msg.length; i++) {
@@ -1178,21 +1178,21 @@
                 if (ch >= 'A' && ch <= 'Z') capitals++;
             }
             if (capitals >= 40) {
-                API.sendChat(subChat(UGMBot.chat.caps, {
+                API.sendChat(subChat(UNMBot.chat.caps, {
                     name: chat.un
                 }));
                 return true;
             }
             msg = msg.toLowerCase();
             if (msg === 'skip') {
-                API.sendChat(subChat(UGMBot.chat.askskip, {
+                API.sendChat(subChat(UNMBot.chat.askskip, {
                     name: chat.un
                 }));
                 return true;
             }
-            for (var j = 0; j < UGMBot.chatUtilities.spam.length; j++) {
-                if (msg === UGMBot.chatUtilities.spam[j]) {
-                    API.sendChat(subChat(UGMBot.chat.spam, {
+            for (var j = 0; j < UNMBot.chatUtilities.spam.length; j++) {
+                if (msg === UNMBot.chatUtilities.spam[j]) {
+                    API.sendChat(subChat(UNMBot.chat.spam, {
                         name: chat.un
                     }));
                     return true;
@@ -1203,34 +1203,34 @@
         chatUtilities: {
             chatFilter: function(chat) {
                 var msg = chat.message;
-                var perm = UGMBot.userUtilities.getPermission(chat.uid);
-                var user = UGMBot.userUtilities.lookupUser(chat.uid);
+                var perm = UNMBot.userUtilities.getPermission(chat.uid);
+                var user = UNMBot.userUtilities.lookupUser(chat.uid);
                 var isMuted = false;
-                for (var i = 0; i < UGMBot.room.mutedUsers.length; i++) {
-                    if (UGMBot.room.mutedUsers[i] === chat.uid) isMuted = true;
+                for (var i = 0; i < UNMBot.room.mutedUsers.length; i++) {
+                    if (UNMBot.room.mutedUsers[i] === chat.uid) isMuted = true;
                 }
                 if (isMuted) {
                     API.moderateDeleteChat(chat.cid);
                     return true;
                 }
-                if (UGMBot.settings.lockdownEnabled) {
+                if (UNMBot.settings.lockdownEnabled) {
                     if (perm === API.ROLE.NONE) {
                         API.moderateDeleteChat(chat.cid);
                         return true;
                     }
                 }
-                if (UGMBot.chatcleaner(chat)) {
+                if (UNMBot.chatcleaner(chat)) {
                     API.moderateDeleteChat(chat.cid);
                     return true;
                 }
-                if (UGMBot.settings.cmdDeletion && msg.startsWith(UGMBot.settings.commandLiteral)) {
+                if (UNMBot.settings.cmdDeletion && msg.startsWith(UNMBot.settings.commandLiteral)) {
                     API.moderateDeleteChat(chat.cid);
                 }
                 /**
                  var plugRoomLinkPatt = /(\bhttps?:\/\/(www.)?plug\.dj[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
                  if (plugRoomLinkPatt.exec(msg)) {
                     if (perm === API.ROLE.NONE) {
-                        API.sendChat(subChat(UGMBot.chat.roomadvertising, {name: chat.un}));
+                        API.sendChat(subChat(UNMBot.chat.roomadvertising, {name: chat.un}));
                         API.moderateDeleteChat(chat.cid);
                         return true;
                     }
@@ -1238,7 +1238,7 @@
                  **/
                 if (msg.indexOf('http://adf.ly/') > -1) {
                     API.moderateDeleteChat(chat.cid);
-                    API.sendChat(subChat(UGMBot.chat.adfly, {
+                    API.sendChat(subChat(UNMBot.chat.adfly, {
                         name: chat.un
                     }));
                     return true;
@@ -1248,8 +1248,8 @@
                     return true;
                 }
 
-                var rlJoinChat = UGMBot.chat.roulettejoin;
-                var rlLeaveChat = UGMBot.chat.rouletteleave;
+                var rlJoinChat = UNMBot.chat.roulettejoin;
+                var rlLeaveChat = UNMBot.chat.rouletteleave;
 
                 var joinedroulette = rlJoinChat.split('%%NAME%%');
                 if (joinedroulette[1].length > joinedroulette[0].length) joinedroulette = joinedroulette[1];
