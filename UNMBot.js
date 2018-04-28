@@ -1515,7 +1515,7 @@
                         minPerm = API.ROLE.MANAGER;
                         break;
                     case 'mod':
-                        if (UGMBot.settings.bouncerPlus) {
+                        if (UNMBot.settings.bouncerPlus) {
                             minPerm = API.ROLE.BOUNCER;
                         } else {
                             minPerm = API.ROLE.MANAGER;
@@ -1625,20 +1625,20 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UGMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(UGMBot.chat.nolimitspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(UNMBot.chat.nolimitspecified, {
                             name: chat.un
                         }));
                         var limit = msg.substring(cmd.length + 1);
                         if (!isNaN(limit)) {
-                            UGMBot.settings.maximumAfk = parseInt(limit, 10);
-                            API.sendChat(subChat(UGMBot.chat.maximumafktimeset, {
+                            UNMBot.settings.maximumAfk = parseInt(limit, 10);
+                            API.sendChat(subChat(UNMBot.chat.maximumafktimeset, {
                                 name: chat.un,
-                                time: UGMBot.settings.maximumAfk
+                                time: UNMBot.settings.maximumAfk
                             }));
-                        } else API.sendChat(subChat(UGMBot.chat.invalidlimitspecified, {
+                        } else API.sendChat(subChat(UNMBot.chat.invalidlimitspecified, {
                             name: chat.un
                         }));
                     }
@@ -1651,23 +1651,23 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (UNM.settings.afkRemoval) {
-                            UNM.settings.afkRemoval = !UNM.settings.afkRemoval;
-                            clearInterval(UNM.room.afkInterval);
-                            API.sendChat(subChat(UNM.chat.toggleoff, {
+                        if (UNMBot.settings.afkRemoval) {
+                            UNMBot.settings.afkRemoval = !UNMBot.settings.afkRemoval;
+                            clearInterval(UNMBpt.room.afkInterval);
+                            API.sendChat(subChat(UNMBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': UNM.chat.afkremoval
+                                'function': UNMBot.chat.afkremoval
                             }));
                         } else {
-                            UNM.settings.afkRemoval = !UNM.settings.afkRemoval;
-                            UNM.room.afkInterval = setInterval(function() {
-                                UNM.roomUtilities.afkCheck()
+                            UNMBot.settings.afkRemoval = !UNMBot.settings.afkRemoval;
+                            UNMBot.room.afkInterval = setInterval(function() {
+                                UNMBot.roomUtilities.afkCheck()
                             }, 2 * 1000);
-                            API.sendChat(subChat(UNM.chat.toggleon, {
+                            API.sendChat(subChat(UNMBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': UNM.chat.afkremoval
+                                'function': UNMBot.chat.afkremoval
                             }));
                         }
                     }
@@ -1680,19 +1680,19 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(UNM.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(UNMBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = UNM.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(UNM.chat.invaliduserspecified, {
+                        var user = UNMBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(UNMBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        UNM.userUtilities.setLastActivity(user);
-                        API.sendChat(subChat(UNM.chat.afkstatusreset, {
+                        UNMBot.userUtilities.setLastActivity(user);
+                        API.sendChat(subChat(UNMBot.chat.afkstatusreset, {
                             name: chat.un,
                             username: name
                         }));
@@ -1706,32 +1706,32 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(UNM.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(UNMBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = UNM.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(UNM.chat.invaliduserspecified, {
+                        var user = UNMBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(UNMBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        var lastActive = UNM.userUtilities.getLastActivity(user);
+                        var lastActive = UNMBot.userUtilities.getLastActivity(user);
                         var inactivity = Date.now() - lastActive;
-                        var time = UNM.roomUtilities.msToStr(inactivity);
+                        var time = UNMBot.roomUtilities.msToStr(inactivity);
 
-                        var launchT = UNM.room.roomstats.launchTime;
+                        var launchT = UNMBot.room.roomstats.launchTime;
                         var durationOnline = Date.now() - launchT;
 
                         if (inactivity == durationOnline) {
-                            API.sendChat(subChat(UNM.chat.inactivelonger, {
-                                botname: UNM.settings.botName,
+                            API.sendChat(subChat(UNMBot.chat.inactivelonger, {
+                                botname: UNMBot.settings.botName,
                                 name: chat.un,
                                 username: name
                             }));
                         } else {
-                            API.sendChat(subChat(UNM.chat.inactivefor, {
+                            API.sendChat(subChat(UNMBot.chat.inactivefor, {
                                 name: chat.un,
                                 username: name,
                                 time: time
@@ -1747,19 +1747,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (UNM.settings.autodisable) {
-                            UNM.settings.autodisable = !UNM.settings.autodisable;
-                            return API.sendChat(subChat(UNM.chat.toggleoff, {
+                        if (UNMBot.settings.autodisable) {
+                            UNMBot.settings.autodisable = !UNMBot.settings.autodisable;
+                            return API.sendChat(subChat(UNMBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': UNM.chat.autodisable
+                                'function': UNMBot.chat.autodisable
                             }));
                         } else {
-                            UNM.settings.autodisable = !UNM.settings.autodisable;
-                            return API.sendChat(subChat(UNM.chat.toggleon, {
+                            UNMBot.settings.autodisable = !UNMBot.settings.autodisable;
+                            return API.sendChat(subChat(UNMBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': UNM.chat.autodisable
+                                'function': UNMBot.chat.autodisable
                             }));
                         }
 
@@ -1773,20 +1773,20 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (UNM.settings.autoskip) {
-                            UNM.settings.autoskip = !UNM.settings.autoskip;
-                            clearTimeout(UNM.room.autoskipTimer);
-                            return API.sendChat(subChat(UNM.chat.toggleoff, {
+                        if (UNMBot.settings.autoskip) {
+                            UNMBot.settings.autoskip = !UNMBot.settings.autoskip;
+                            clearTimeout(UNMBot.room.autoskipTimer);
+                            return API.sendChat(subChat(UNMBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': UNM.chat.autoskip
+                                'function': UNMBot.chat.autoskip
                             }));
                         } else {
-                            UNM.settings.autoskip = !UNM.settings.autoskip;
-                            return API.sendChat(subChat(UNM.chat.toggleon, {
+                            UNMBot.settings.autoskip = !UNMBot.settings.autoskip;
+                            return API.sendChat(subChat(UNMBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': UNM.chat.autoskip
+                                'function': UNMBot.chat.autoskip
                             }));
                         }
                     }
@@ -1799,9 +1799,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(UNM.chat.autowoot);
+                        API.sendChat(UNMBot.chat.autowoot);
                     }
                 }
             },
@@ -1812,9 +1812,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(UNM.chat.brandambassador);
+                        API.sendChat(UNMBot.chat.brandambassador);
                     }
                 }
             },
@@ -1825,19 +1825,19 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var crowd = API.getUsers();
                         var msg = chat.message;
                         var argument = msg.substring(cmd.length + 1).replace(/@/g, '');
                         var randomUser = Math.floor(Math.random() * crowd.length);
-                        var randomBall = Math.floor(Math.random() * UNM.chat.balls.length);
+                        var randomBall = Math.floor(Math.random() * UNMBot.chat.balls.length);
                         var randomSentence = Math.floor(Math.random() * 1);
-                        API.sendChat(subChat(UNM.chat.ball, {
+                        API.sendChat(subChat(UNMBot.chat.ball, {
                             name: chat.un,
-                            botname: UNM.settings.botName,
+                            botname: UNMBot.settings.botName,
                             question: argument,
-                            response: UNM.chat.balls[randomBall]
+                            response: UNMBot.chat.balls[randomBall]
                         }));
                     }
                 }
@@ -1849,19 +1849,19 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(UNM.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(UNMBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substr(cmd.length + 2);
-                        var user = UNM.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(UNM.chat.invaliduserspecified, {
+                        var user = UNMBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(UNMBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        var permFrom = UNM.userUtilities.getPermission(chat.uid);
-                        var permUser = UNM.userUtilities.getPermission(user.id);
+                        var permFrom = UNMBot.userUtilities.getPermission(chat.uid);
+                        var permUser = UNMBot.userUtilities.getPermission(user.id);
                         if (permUser >= permFrom) return void(0);
                         API.moderateBanUser(user.id, 1, API.BAN.DAY);
                     }
@@ -1874,14 +1874,14 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(UNM.chat.nolistspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(UNMBot.chat.nolistspecified, {
                             name: chat.un
                         }));
                         var list = msg.substr(cmd.length + 1);
-                        if (typeof UNM.room.blacklists[list] === 'undefined') return API.sendChat(subChat(UNM.chat.invalidlistspecified, {
+                        if (typeof UNMBot.room.blacklists[list] === 'undefined') return API.sendChat(subChat(UNMBot.chat.invalidlistspecified, {
                             name: chat.un
                         }));
                         else {
@@ -1894,22 +1894,22 @@
                                 title: media.title,
                                 mid: media.format + ':' + media.cid
                             };
-                            UNM.room.newBlacklisted.push(track);
-                            UNM.room.blacklists[list].push(media.format + ':' + media.cid);
-                            API.sendChat(subChat(UNM.chat.newblacklisted, {
+                            UNMBot.room.newBlacklisted.push(track);
+                            UNMBot.room.blacklists[list].push(media.format + ':' + media.cid);
+                            API.sendChat(subChat(UNMBot.chat.newblacklisted, {
                                 name: chat.un,
                                 blacklist: list,
                                 author: media.author,
                                 title: media.title,
                                 mid: media.format + ':' + media.cid
                             }));
-                            if (UNM.settings.smartSkip && timeLeft > timeElapsed) {
-                                UNM.roomUtilities.smartSkip();
+                            if (UNMBot.settings.smartSkip && timeLeft > timeElapsed) {
+                                UNMBot.roomUtilities.smartSkip();
                             } else {
                                 API.moderateForceSkip();
                             }
-                            if (typeof UNM.room.newBlacklistedSongFunction === 'function') {
-                                UNM.room.newBlacklistedSongFunction(track);
+                            if (typeof UNMBot.room.newBlacklistedSongFunction === 'function') {
+                                UNMBot.room.newBlacklistedSongFunction(track);
                             }
                         }
                     }
@@ -2490,7 +2490,7 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         if (msg.length !== cmd.length) {
@@ -2514,13 +2514,13 @@
                             var commatag = tag.replace(/ /g, ', ');
                             get_id(api_key, tag, function(id) {
                                 if (typeof id !== 'undefined') {
-                                    API.sendChat(subChat(TMBot.chat.validgiftags, {
+                                    API.sendChat(subChat(UNMBot.chat.validgiftags, {
                                         name: chat.un,
                                         id: id,
                                         tags: commatag
                                     }));
                                 } else {
-                                    API.sendChat(subChat(TMBot.chat.invalidgiftags, {
+                                    API.sendChat(subChat(UNMBot.chat.invalidgiftags, {
                                         name: chat.un,
                                         tags: commatag
                                     }));
@@ -2543,12 +2543,12 @@
                             var rating = 'pg-13'; // PG 13 gifs
                             get_random_id(api_key, function(id) {
                                 if (typeof id !== 'undefined') {
-                                    API.sendChat(subChat(TMBot.chat.validgifrandom, {
+                                    API.sendChat(subChat(UNMBot.chat.validgifrandom, {
                                         name: chat.un,
                                         id: id
                                     }));
                                 } else {
-                                    API.sendChat(subChat(TMBot.chat.invalidgifrandom, {
+                                    API.sendChat(subChat(UNMBot.chat.invalidgifrandom, {
                                         name: chat.un
                                     }));
                                 }
@@ -2564,10 +2564,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.
+                    rank, chat)) return void(0);
                     else {
                         var link = '(Updated link coming soon)';
-                        API.sendChat(subChat(TMBot.chat.starterhelp, {
+                        API.sendChat(subChat(UNMBot.chat.starterhelp, {
                             link: link
                         }));
                     }
