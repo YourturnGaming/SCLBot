@@ -49,8 +49,8 @@ Credits
 
 I would like to thank the following people:
 
-- xUndisputed: His UGMBot has been a source of inspiration for most of the features, and his help with coding problems has been invaluable to make this bot.
-- Trigstur, and other UGMBot contributors: Their TMBot has inspired features like Roulette.
+- xUndisputed: His UNMBot has been a source of inspiration for most of the features, and his help with coding problems has been invaluable to make this bot.
+- Trigstur, and other UNMBot contributors: Their TMBot has inspired features like Roulette.
 - xUndisputed: Never knew this undertaking would give me a friend too.
 
 |Language | Translator|
