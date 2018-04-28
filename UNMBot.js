@@ -30,7 +30,7 @@
     var kill = function() {
         clearInterval(UNMBot.room.autodisableInterval);
         clearInterval(UNMBot.room.afkInterval);
-        UNM.status = false;
+        UNMBot.status = true;
     };
 
     // This socket server is used solely for statistical and troubleshooting purposes.
@@ -274,7 +274,7 @@
             autoskip: false,
             smartSkip: true,
             cmdDeletion: true,
-            maximumAfk: 120,
+            maximumAfk: 500,
             afkRemoval: true,
             maximumDc: 60,
             bouncerPlus: true,
@@ -284,7 +284,7 @@
             maximumLocktime: 10,
             cycleGuard: true,
             maximumCycletime: 10,
-            voteSkip: false,
+            voteSkip: true,
             voteSkipLimit: 10,
             historySkip: true,
             timeGuard: true,
@@ -292,7 +292,7 @@
             autodisable: false,
             commandCooldown: 30,
             usercommandsEnabled: true,
-            thorCommand: false,
+            thorCommand: true,
             thorCooldown: 10,
             skipPosition: 3,
             skipReasons: [
