@@ -676,7 +676,7 @@
                 }
             },
             afkCheck: function() {
-                if (!UMMBot.status || !UNMBot.settings.afkRemoval) return void(0);
+                if (!UNMBot.status || !UNMBot.settings.afkRemoval) return void(0);
                 var rank = UNMBot.roomUtilities.rankToNumber(UNMBot.settings.afkRankCheck);
                 var djlist = API.getWaitList();
                 var lastPos = Math.min(djlist.length, UNMBot.settings.afkpositionCheck);
@@ -717,7 +717,7 @@
                                             pos++;
                                             UNMBot.room.afkList.push([id, Date.now(), pos]);
                                             user.lastDC = {
-
+                                             
                                                 time: null,
                                                 position: null,
                                                 songCount: 0
@@ -1259,7 +1259,7 @@
                 if (leftroulette[1].length > leftroulette[0].length) leftroulette = leftroulette[1];
                 else leftroulette = leftroulette[0];
 
-                if ((msg.indexOf(joinedroulette) > -1 || msg.indexOf(leftroulette) > -1) && chat.uid === UGMBot.loggedInID) {
+                if ((msg.indexOf(joinedroulette) > -1 || msg.indexOf(leftroulette) > -1) && chat.uid === UNMBot.loggedInID) {
                     setTimeout(function(id) {
                         API.moderateDeleteChat(id);
                     }, 5 * 1000, chat.cid);
@@ -1269,21 +1269,21 @@
             },
             commandCheck: function(chat) {
                 var cmd;
-                if (chat.message.charAt(0) === UGMBot.settings.commandLiteral) {
+                if (chat.message.charAt(0) === UNMBot.settings.commandLiteral) {
                     var space = chat.message.indexOf(' ');
                     if (space === -1) {
                         cmd = chat.message;
                     } else cmd = chat.message.substring(0, space);
                 } else return false;
-                var userPerm = UGMBot.userUtilities.getPermission(chat.uid);
+                var userPerm = UNMBot.userUtilities.getPermission(chat.uid);
                 //console.log('name: ' + chat.un + ', perm: ' + userPerm);
-                if (chat.message !== UGMBot.settings.commandLiteral + 'join' && chat.message !== UGMBot.settings.commandLiteral + 'leave') {       
-                    if (userPerm === API.ROLE.NONE && !UGMBot.room.usercommand) return void(0);
-                    if (!UGMBot.room.allcommand) return void(0);
+                if (chat.message !== UNMBot.settings.commandLiteral + 'join' && chat.message !== UNMBot.settings.commandLiteral + 'leave') {       
+                    if (userPerm === API.ROLE.NONE && !UNMBot.room.usercommand) return void(0);
+                    if (!UNMBot.room.allcommand) return void(0);
                 }
-                if (chat.message === UGMBot.settings.commandLiteral + 'eta' && UGMBot.settings.etaRestriction) {
+                if (chat.message === UNMBot.settings.commandLiteral + 'eta' && UNMBot.settings.etaRestriction) {
                     if (userPerm < API.ROLE.BOUNCER) {
-                        var u = UGMBot.userUtilities.lookupUser(chat.uid);
+                        var u = UNMBot.userUtilities.lookupUser(chat.uid);
                         if (u.lastEta !== null && (Date.now() - u.lastEta) < 1 * 60 * 60 * 1000) {
                             API.moderateDeleteChat(chat.cid);
                             return void(0);
@@ -1292,14 +1292,14 @@
                 }
                 var executed = false;
 
-                for (var comm in UGMBot.commands) {
-                    var cmdCall = UGMBot.commands[comm].command;
+                for (var comm in UNMBot.commands) {
+                    var cmdCall = UNMBot.commands[comm].command;
                     if (!Array.isArray(cmdCall)) {
                         cmdCall = [cmdCall]
                     }
                     for (var i = 0; i < cmdCall.length; i++) {
-                        if (UGMBot.settings.commandLiteral + cmdCall[i] === cmd) {
-                            UGMBot.commands[comm].functionality(chat, UGMBot.settings.commandLiteral + cmdCall[i]);
+                        if (UNMBot.settings.commandLiteral + cmdCall[i] === cmd) {
+                            UNMBot.commands[comm].functionality(chat, UNMBot.settings.commandLiteral + cmdCall[i]);
                             executed = true;
                             break;
                         }
@@ -1307,43 +1307,40 @@
                 }
 
                 if (executed && userPerm === API.ROLE.NONE) {
-                    UGMBot.room.usercommand = false;
+                    UNMBot.room.usercommand = false;
                     setTimeout(function() {
-                        UGMBot.room.usercommand = true;
-                    }, UGMBot.settings.commandCooldown * 1000);
+                        UNMBot.room.usercommand = true;
+                    }, UNMBot.settings.commandCooldown * 1000);
                 }
                 if (executed) {
-                    /*if (UGNM.settings.cmdDeletion) {
+                    /*if (UNMBot.settings.cmdDeletion) {
                         API.moderateDeleteChat(chat.cid);
                     }*/
 
-                    //UNM.room.allcommand = false;
+                    //UNMBot.room.allcommand = false;
                     //setTimeout(function () {
-                    UNM.room.allcommand = true;
+                    UNMBot.room.allcommand = true;
                     //}, 5 * 1000);
                 }
                 return executed;
             },
             action: function(chat) {
-                var user = UNM.userUtilities.lookupUser(chat.uid);
+                var user = UNMBot.userUtilities.lookupUser(chat.uid);
                 if (chat.type === 'message') {
                     for (var j = 0; j < UNM.room.users.length; j++) {
-                        if (UNM.userUtilities.getUser(UNM.room.users[j]).id === chat.uid) {
-                            UNM.userUtilities.setLastActivity(UNM.room.users[j]);
+                        if (UNMBot.userUtilities.getUser(UNMBot.room.users[j]).id === chat.uid) {
+                            UNMBot.userUtilities.setLastActivity(UNMBot.room.users[j]);
                         }
 
                     }
                 }
-                UNM.room.roomstats.chatmessages++;
+                UNMBot.room.roomstats.chatmessages++;
             },
             spam: [
-                'hueh', 'hu3', 'brbr', 'heu', 'brbr', 'kkkk', 'spoder', 'mafia', 'zuera', 'zueira',
-                'zueria', 'aehoo', 'aheu', 'alguem', 'algum', 'brazil', 'zoeira', 'fuckadmins', 'affff', 'vaisefoder', 'huenaarea',
-                'hitler', 'ashua', 'ahsu', 'ashau', 'lulz', 'merda', 'pqp', 'puta', 'mulher', 'pula', 'retarda', 'caralho', 'filha', 'ppk',
-                'gringo', 'fuder', 'foder', 'hua', 'ahue', 'modafuka', 'modafoka', 'mudafuka', 'mudafoka', 'foda'
+
             ],
             curses: [
-                'nigger', 'faggot', 'nigga', 'niqqa', 'motherfucker', 'modafocka'
+                
             ]
         },
         connectAPI: function() {
