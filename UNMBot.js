@@ -4157,11 +4157,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!basicBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof basicBot.settings.website === 'string')
-                            API.sendChat(subChat(basicBot.chat.website, {
-                                link: basicBot.settings.website
+                        if (typeof UNMBot.settings.website === 'string')
+                            API.sendChat(subChat(UNMBot.chat.website, {
+                                link: UNMBot.settings.website
                             }));
                     }
                 }
@@ -4173,32 +4173,31 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!TMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (TMBot.settings.welcome) {
-                            TMBot.settings.welcome = !TMBot.settings.welcome;
-                            return API.sendChat(subChat(TMBot.chat.toggleoff, {
+                        if (UNMBot.settings.welcome) {
+                            UNMBot.settings.welcome = !UNMBot.settings.welcome;
+                            return API.sendChat(subChat(UNMBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': TMBot.chat.welcomemsg
+                                'function': UNMBot.chat.welcomemsg
                             }));
                         } else {
-                            TMBot.settings.welcome = !TMBot.settings.welcome;
+                            UNMBot.settings.welcome = !UNMBot.settings.welcome;
                             return API.sendChat(subChat(TMBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': TMBot.chat.welcomemsg
+                                'function': UNMBot.chat.welcomemsg
                             }));
                         }
                     }
                 }
             },
-
             whoisCommand: {
                 command: 'whois',
                 rank: 'bouncer',
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var name;
@@ -4269,7 +4268,7 @@
                                     var profile = '~';
                                 }
 
-                                API.sendChat(subChat(UNM.chat.whois, {
+                                API.sendChat(subChat(UNMBot.chat.whois, {
                                     name1: chat.un,
                                     name2: name,
                                     id: id,
@@ -4292,7 +4291,7 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         $('#woot').click();
                     }
@@ -4305,12 +4304,12 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNM.commands.executable(this.rank, chat)) return void(0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof UNM.settings.youtubeLink === 'string')
-                            API.sendChat(subChat(UNM.chat.youtube, {
+                        if (typeof UNMBot.settings.youtubeLink === 'string')
+                            API.sendChat(subChat(UNMBot.chat.youtube, {
                                 name: chat.un,
-                                link: UNM.settings.youtubeLink
+                                link: UNMBot.settings.youtubeLink
                             }));
                     }
                 }
