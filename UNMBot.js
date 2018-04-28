@@ -250,7 +250,7 @@
     var managers = ["",""];
     var CoHosts = ["",""];
     var UNMBot = {
-        version: "2.16.8.0",
+        version: "3.16.8.1",
         status: true,
         name: "UNMBot",
         loggedInID: "20168147",
@@ -1536,7 +1536,6 @@
                 return perm >= minPerm;
 
             },
-
             /*
             command: {
                 command: 'cmd',
@@ -1551,7 +1550,6 @@
                 }
             },
             */
-
             activeCommand: {
                 command: 'active',
                 rank: 'bouncer',
@@ -1590,7 +1588,6 @@
                     }
                 }
             },
-
             addCommand: {
                 command: 'add',
                 rank: 'mod',
@@ -1618,7 +1615,6 @@
                     }
                 }
             },
-
             afklimitCommand: {
                 command: 'afklimit',
                 rank: 'manager',
@@ -1644,7 +1640,6 @@
                     }
                 }
             },
-
             afkremovalCommand: {
                 command: 'afkremoval',
                 rank: 'mod',
@@ -1673,7 +1668,6 @@
                     }
                 }
             },
-
             afkresetCommand: {
                 command: 'afkreset',
                 rank: 'bouncer',
@@ -1699,7 +1693,6 @@
                     }
                 }
             },
-
             afktimeCommand: {
                 command: 'afktime',
                 rank: 'bouncer',
@@ -1740,7 +1733,6 @@
                     }
                 }
             },
-
             autodisableCommand: {
                 command: 'autodisable',
                 rank: 'bouncer',
@@ -1766,7 +1758,6 @@
                     }
                 }
             },
-
             autoskipCommand: {
                 command: 'autoskip',
                 rank: 'mod',
@@ -1792,7 +1783,6 @@
                     }
                 }
             },
-
             autowootCommand: {
                 command: 'autowoot',
                 rank: 'user',
@@ -1805,7 +1795,6 @@
                     }
                 }
             },
-
             baCommand: {
                 command: 'ba',
                 rank: 'user',
@@ -1818,7 +1807,6 @@
                     }
                 }
             },
-
             ballCommand: {
                 command: ['8ball', 'ask'],
                 rank: 'user',
@@ -1842,7 +1830,6 @@
                     }
                 }
             },
-
             banCommand: {
                 command: 'ban',
                 rank: 'bouncer',
@@ -1867,7 +1854,6 @@
                     }
                 }
             },
-
             blacklistCommand: {
                 command: ['blacklist', 'bl'],
                 rank: 'bouncer',
@@ -1915,7 +1901,6 @@
                     }
                 }
             },
-
             blinfoCommand: {
                 command: 'blinfo',
                 rank: 'bouncer',
@@ -1940,7 +1925,6 @@
                     }
                 }
             },
-
             bouncerPlusCommand: {
                 command: 'bouncer+',
                 rank: 'manager',
@@ -1974,7 +1958,6 @@
                     }
                 }
             },
-
             botnameCommand: {
                 command: 'botname',
                 rank: 'manager',
