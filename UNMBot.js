@@ -250,7 +250,7 @@
     var managers = ["",""];
     var CoHosts = ["",""];
     var UNMBot = {
-        version: "2.15.7.1",
+        version: "2.15.7.6",
         status: true,
         name: "UNMBot",
         loggedInID: "20168147",
@@ -662,40 +662,40 @@
                 lockTimer: setTimeout(function() {}, 1000),
                 locked: false,
                 lockBooth: function() {
-                    API.moderateLockWaitList(!UGMBot.roomUtilities.booth.locked);
-                    UGMBot.roomUtilities.booth.locked = false;
-                    if (UGMBot.settings.lockGuard) {
-                        UGMBot.roomUtilities.booth.lockTimer = setTimeout(function() {
-                            API.moderateLockWaitList(UGMBot.roomUtilities.booth.locked);
-                        }, UGMBot.settings.maximumLocktime * 60 * 1000);
+                    API.moderateLockWaitList(!UNMBot.roomUtilities.booth.locked);
+                    UNMBot.roomUtilities.booth.locked = false;
+                    if (UNMBot.settings.lockGuard) {
+                        UNMBot.roomUtilities.booth.lockTimer = setTimeout(function() {
+                            API.moderateLockWaitList(UNMBot.roomUtilities.booth.locked);
+                        }, UNMBot.settings.maximumLocktime * 60 * 1000);
                     }
                 },
                 unlockBooth: function() {
-                    API.moderateLockWaitList(UGMBot.roomUtilities.booth.locked);
-                    clearTimeout(UGMBot.roomUtilities.booth.lockTimer);
+                    API.moderateLockWaitList(UNMBot.roomUtilities.booth.locked);
+                    clearTimeout(UNMBot.roomUtilities.booth.lockTimer);
                 }
             },
             afkCheck: function() {
-                if (!UGMBot.status || !UGMBot.settings.afkRemoval) return void(0);
-                var rank = UGMBot.roomUtilities.rankToNumber(UGMBot.settings.afkRankCheck);
+                if (!UMMBot.status || !UNMBot.settings.afkRemoval) return void(0);
+                var rank = UNMBot.roomUtilities.rankToNumber(UNMBot.settings.afkRankCheck);
                 var djlist = API.getWaitList();
-                var lastPos = Math.min(djlist.length, UGMBot.settings.afkpositionCheck);
+                var lastPos = Math.min(djlist.length, UNMBot.settings.afkpositionCheck);
                 if (lastPos - 1 > djlist.length) return void(0);
                 for (var i = 0; i < lastPos; i++) {
                     if (typeof djlist[i] !== 'undefined') {
                         var id = djlist[i].id;
-                        var user = UGMBot.userUtilities.lookupUser(id);
+                        var user = UNMBot.userUtilities.lookupUser(id);
                         if (typeof user !== 'boolean') {
-                            var plugUser = UGMBot.userUtilities.getUser(user);
-                            if (rank !== null && UGMBot.userUtilities.getPermission(plugUser) <= rank) {
+                            var plugUser = UNMBot.userUtilities.getUser(user);
+                            if (rank !== null && UNMBot.userUtilities.getPermission(plugUser) <= rank) {
                                 var name = plugUser.username;
-                                var lastActive = UGMBot.userUtilities.getLastActivity(user);
+                                var lastActive = UNMBot.userUtilities.getLastActivity(user);
                                 var inactivity = Date.now() - lastActive;
-                                var time = UGMBot.roomUtilities.msToStr(inactivity);
+                                var time = UNMBot.roomUtilities.msToStr(inactivity);
                                 var warncount = user.afkWarningCount;
-                                if (inactivity > UGMBot.settings.maximumAfk * 60 * 1000) {
+                                if (inactivity > UNMBot.settings.maximumAfk * 60 * 1000) {
                                     if (warncount === 0) {
-                                        API.sendChat(subChat(UGMBot.chat.warning1, {
+                                        API.sendChat(subChat(UNMBot.chat.warning1, {
                                             name: name,
                                             time: time
                                         }));
@@ -704,7 +704,7 @@
                                             userToChange.afkWarningCount = 1;
                                         }, 90 * 1000, user);
                                     } else if (warncount === 1) {
-                                        API.sendChat(subChat(UGMBot.chat.warning2, {
+                                        API.sendChat(subChat(UNMBot.chat.warning2, {
                                             name: name
                                         }));
                                         user.afkWarningCount = 3;
@@ -715,7 +715,7 @@
                                         var pos = API.getWaitListPosition(id);
                                         if (pos !== -1) {
                                             pos++;
-                                            UGMBot.room.afkList.push([id, Date.now(), pos]);
+                                            UNMBot.room.afkList.push([id, Date.now(), pos]);
                                             user.lastDC = {
 
                                                 time: null,
@@ -723,11 +723,11 @@
                                                 songCount: 0
                                             };
                                             API.moderateRemoveDJ(id);
-                                            API.sendChat(subChat(UGMBot.chat.afkremove, {
+                                            API.sendChat(subChat(UNMBot.chat.afkremove, {
                                                 name: name,
                                                 time: time,
                                                 position: pos,
-                                                maximumafk: UGMBot.settings.maximumAfk
+                                                maximumafk: UNMBot.settings.maximumAfk
                                             }));
                                         }
                                         user.afkWarningCount = 0;
@@ -743,10 +743,10 @@
                 var id = dj.id;
                 var waitlistlength = API.getWaitList().length;
                 var locked = false;
-                UGMBot.room.queueable = false;
+                UNMBot.room.queueable = false;
 
                 if (waitlistlength == 50) {
-                    UGMBot.roomUtilities.booth.lockBooth();
+                    UNMBot.roomUtilities.booth.lockBooth();
                     locked = true;
             }
             setTimeout(function(id) {
@@ -756,16 +756,16 @@
                             API.sendChat(reason);
                         }
                     }, 500);
-                    UGMBot.room.skippable = false;
+                    UNMBot.room.skippable = false;
                     setTimeout(function() {
-                        UGMBot.room.skippable = true
+                        UNMBot.room.skippable = true
                     }, 5 * 1000);
                     setTimeout(function(id) {
-                        UGMBot.userUtilities.moveUser(id, UGMBot.settings.skipPosition, false);
-                        UGMBot.room.queueable = true;
+                        UNMBot.userUtilities.moveUser(id, UNMBot.settings.skipPosition, false);
+                        UNMBot.room.queueable = true;
                         if (locked) {
                             setTimeout(function() {
-                                UGMBot.roomUtilities.booth.unlockBooth();
+                                UNMBot.roomUtilities.booth.unlockBooth();
                             }, 1000);
                         }
                     }, 1500, id);
@@ -775,13 +775,13 @@
                 $.getJSON('/_/rooms/state', function(data) {
                     if (data.data[0].booth.shouldCycle) { // checks if shouldCycle is true
                         API.moderateDJCycle(false); // Disables the DJ Cycle
-                        clearTimeout(UGMBot.room.cycleTimer); // Clear the cycleguard timer
+                        clearTimeout(UNMBot.room.cycleTimer); // Clear the cycleguard timer
                     } else { // If cycle is already disable; enable it
-                        if (UGMBot.settings.cycleGuard) { // Is cycle guard on?
+                        if (UNMBot.settings.cycleGuard) { // Is cycle guard on?
                             API.moderateDJCycle(true); // Enables DJ cycle
-                            UGMBot.room.cycleTimer = setTimeout(function() { // Start timer
+                            UNMBot.room.cycleTimer = setTimeout(function() { // Start timer
                                 API.moderateDJCycle(false); // Disable cycle
-                            }, UGMBot.settings.maximumCycletime * 60 * 1000); // The time
+                            }, UNMBot.settings.maximumCycletime * 60 * 1000); // The time
                         } else { // So cycleguard is not on?
                             API.moderateDJCycle(true); // Enables DJ cycle
                         }
@@ -790,32 +790,32 @@
             },
             intervalMessage: function() {
                 var interval;
-                if (UGMBot.settings.motdEnabled) interval = UGMBot.settings.motdInterval;
-                else interval = UGMBot.settings.messageInterval;
-                if ((UGMBot.room.roomstats.songCount % interval) === 0 && UGMBot.status) {
+                if (UNMBot.settings.motdEnabled) interval = UNMBot.settings.motdInterval;
+                else interval = UNMBot.settings.messageInterval;
+                if ((UNMBot.room.roomstats.songCount % interval) === 0 && UNMBot.status) {
                     var msg;
-                    if (UGMBot.settings.motdEnabled) {
-                        msg = UGMBot.settings.motd;
+                    if (UNMBot.settings.motdEnabled) {
+                        msg = UNMBot.settings.motd;
                     } else {
-                        if (UGMBot.settings.intervalMessages.length === 0) return void(0);
-                        var messageNumber = UGMBot.room.roomstats.songCount % UGMBot.settings.intervalMessages.length;
-                        msg = UGMBot.settings.intervalMessages[messageNumber];
+                        if (UNMBot.settings.intervalMessages.length === 0) return void(0);
+                        var messageNumber = UNMBot.room.roomstats.songCount % UNMBot.settings.intervalMessages.length;
+                        msg = UNMBot.settings.intervalMessages[messageNumber];
                     }
                     API.sendChat('/me ' + msg);
                 }
             },
             updateBlacklists: function() {
-                for (var bl in UGMBot.settings.blacklists) {
-                    UGMBot.room.blacklists[bl] = [];
-                    if (typeof UGMBot.settings.blacklists[bl] === 'function') {
-                        UGMBot.room.blacklists[bl] = UGMBot.settings.blacklists();
-                    } else if (typeof UGMBot.settings.blacklists[bl] === 'string') {
-                        if (UGMBot.settings.blacklists[bl] === '') {
+                for (var bl in UNMBot.settings.blacklists) {
+                    UNMBot.room.blacklists[bl] = [];
+                    if (typeof UNMBot.settings.blacklists[bl] === 'function') {
+                        UNMBot.room.blacklists[bl] = UNMBot.settings.blacklists();
+                    } else if (typeof UNMBot.settings.blacklists[bl] === 'string') {
+                        if (UNMBot.settings.blacklists[bl] === '') {
                             continue;
                         }
                         try {
                             (function(l) {
-                                $.get(UGMBot.settings.blacklists[l], function(data) {
+                                $.get(UNMBot.settings.blacklists[l], function(data) {
                                     if (typeof data === 'string') {
                                         data = JSON.parse(data);
                                     }
@@ -825,7 +825,7 @@
                                             list.push(data[prop].mid);
                                         }
                                     }
-                                    UGMBot.room.blacklists[l] = list;
+                                    UNMBot.room.blacklists[l] = list;
                                 })
                             })(bl);
                         } catch (e) {
@@ -838,15 +838,15 @@
             },
             logNewBlacklistedSongs: function() {
                 if (typeof console.table !== 'undefined') {
-                    console.table(UGMBot.room.newBlacklisted);
+                    console.table(UNMBot.room.newBlacklisted);
                 } else {
-                    console.log(UGMBot.room.newBlacklisted);
+                    console.log(UNMBot.room.newBlacklisted);
                 }
             },
             exportNewBlacklistedSongs: function() {
                 var list = {};
-                for (var i = 0; i < UGMBot.room.newBlacklisted.length; i++) {
-                    var track = UGMBot.room.newBlacklisted[i];
+                for (var i = 0; i < UNMBot.room.newBlacklisted.length; i++) {
+                    var track = UNMBot.room.newBlacklisted[i];
                     list[track.list] = [];
                     list[track.list].push({
                         title: track.title,
@@ -864,23 +864,23 @@
 
             UNMBot.room.chatMessages.push([chat.cid, chat.message, chat.sub, chat.timestamp, chat.type, chat.uid, chat.un]);
 
-            for (var i = 0; i < UGMBot.room.users.length; i++) {
-                if (UGMBot.room.users[i].id === chat.uid) {
-                    UGMBot.userUtilities.setLastActivity(UGMBot.room.users[i]);
-                    if (UGMBot.room.users[i].username !== chat.un) {
-                        UGMBot.room.users[i].username = chat.un;
+            for (var i = 0; i < UNMBot.room.users.length; i++) {
+                if (UNMBot.room.users[i].id === chat.uid) {
+                    UNMBot.userUtilities.setLastActivity(UNMBot.room.users[i]);
+                    if (UNMBot.room.users[i].username !== chat.un) {
+                        UNMBot.room.users[i].username = chat.un;
                     }
                 }
             }
-            if (UGMBot.chatUtilities.chatFilter(chat)) return void(0);
-            if (!UGMBot.chatUtilities.commandCheck(chat))
-                UGMBot.chatUtilities.action(chat);
+            if (UNMBot.chatUtilities.chatFilter(chat)) return void(0);
+            if (!UNMBot.chatUtilities.commandCheck(chat))
+                UNMBot.chatUtilities.action(chat);
         },
         eventUserjoin: function(user) {
             var known = false;
             var index = null;
-            for (var i = 0; i < UGMBot.room.users.length; i++) {
-                if (UGMBot.room.users[i].id === user.id) {
+            for (var i = 0; i < UNMBot.room.users.length; i++) {
+                if (UNMBot.room.users[i].id === user.id) {
                     known = true;
                     index = i;
                 }
@@ -888,37 +888,37 @@
             var greet = true;
             var welcomeback = null;
             if (known) {
-                UGMBot.room.users[index].inRoom = true;
-                var u = UGMBot.userUtilities.lookupUser(user.id);
+                UNMBot.room.users[index].inRoom = true;
+                var u = UNMBot.userUtilities.lookupUser(user.id);
                 var jt = u.jointime;
                 var t = Date.now() - jt;
                 if (t < 10 * 1000) greet = false;
                 else welcomeback = true;
             } else {
-                UGMBot.room.users.push(new UGMBot.User(user.id, user.username));
+                UNMBot.room.users.push(new UNMBot.User(user.id, user.username));
                 welcomeback = false;
             }
-            for (var j = 0; j < UGMBot.room.users.length; j++) {
-                if (UGMBot.userUtilities.getUser(UGMBot.room.users[j]).id === user.id) {
-                    UGMBot.userUtilities.setLastActivity(UGMBot.room.users[j]);
-                    UGMBot.room.users[j].jointime = Date.now();
+            for (var j = 0; j < UNMBot.room.users.length; j++) {
+                if (UNMBot.userUtilities.getUser(UNMBot.room.users[j]).id === user.id) {
+                    UNMBot.userUtilities.setLastActivity(UNMBot.room.users[j]);
+                    UNMBot.room.users[j].jointime = Date.now();
                 }
 
             }
             if (botCreatorIDs.indexOf(user.id) > -1) {
               console.log(true);
                 API.sendChat('@'+user.username+' '+':sparkles: :bow: :sparkles:');
-            } else if (UGMBot.settings.welcome && greet) {
+            } else if (UNMBot.settings.welcome && greet) {
               console.log(false);
               console.log(botCreatorIDs);
                 welcomeback ?
                     setTimeout(function(user) {
-                        API.sendChat(subChat(UGMBot.chat.welcomeback, {
+                        API.sendChat(subChat(UNMBot.chat.welcomeback, {
                             name: user.username
                         }));
                     }, 1 * 1000, user) :
                     setTimeout(function(user) {
-                        API.sendChat(subChat(UGMBot.chat.welcome, {
+                        API.sendChat(subChat(UNMBot.chat.welcome, {
                             name: user.username
                         }));
                     }, 1 * 1000, user);
@@ -1018,14 +1018,14 @@
 
             var blacklistSkip = setTimeout(function() {
                 var mid = obj.media.format + ':' + obj.media.cid;
-                for (var bl in UGMBot.room.blacklists) {
-                    if (UGMBot.settings.blacklistEnabled) {
-                        if (UGMBot.room.blacklists[bl].indexOf(mid) > -1) {
-                            API.sendChat(subChat(UGMBot.chat.isblacklisted, {
+                for (var bl in UNMBot.room.blacklists) {
+                    if (UNMBot.settings.blacklistEnabled) {
+                        if (UNMBot.room.blacklists[bl].indexOf(mid) > -1) {
+                            API.sendChat(subChat(UNMBot.chat.isblacklisted, {
                                 blacklist: bl
                             }));
-                            if (UGMBot.settings.smartSkip) {
-                                return UGMBot.roomUtilities.smartSkip();
+                            if (UNMBot.settings.smartSkip) {
+                                return UNMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1035,14 +1035,14 @@
             }, 2000);
             var newMedia = obj.media;
             var timeLimitSkip = setTimeout(function() {
-                if (UGMBot.settings.timeGuard && newMedia.duration > UGMBot.settings.maximumSongLength * 60 && !UGMBot.room.roomevent) {
+                if (UNMBot.settings.timeGuard && newMedia.duration > UNMBot.settings.maximumSongLength * 60 && !UNMBot.room.roomevent) {
                     var name = obj.dj.username;
-                    API.sendChat(subChat(UGMBot.chat.timelimit, {
+                    API.sendChat(subChat(UNMBot.chat.timelimit, {
                         name: name,
-                        maxlength: UGMBot.settings.maximumSongLength
+                        maxlength: UNMBot.settings.maximumSongLength
                     }));
-                    if (UGMBot.settings.smartSkip) {
-                        return UGMBot.roomUtilities.smartSkip();
+                    if (UNMBot.settings.smartSkip) {
+                        return UNMBot.roomUtilities.smartSkip();
                     } else {
                         return API.moderateForceSkip();
                     }
@@ -1055,11 +1055,11 @@
                     $.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + cid + '&key=AIzaSyDcfWu9cGaDnTjPKhg_dy9mUh6H7i4ePZ0&part=snippet&callback=?', function(track) {
                         if (typeof(track.items[0]) === 'undefined') {
                             var name = obj.dj.username;
-                            API.sendChat(subChat(UGMBot.chat.notavailable, {
+                            API.sendChat(subChat(UNMBot.chat.notavailable, {
                                 name: name
                             }));
-                            if (UGMBot.settings.smartSkip) {
-                                return UGMBot.roomUtilities.smartSkip();
+                            if (UNMBot.settings.smartSkip) {
+                                return UNMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1069,11 +1069,11 @@
                     var checkSong = SC.get('/tracks/' + cid, function(track) {
                         if (typeof track.title === 'undefined') {
                             var name = obj.dj.username;
-                            API.sendChat(subChat(UGMBot.chat.notavailable, {
+                            API.sendChat(subChat(UNMBot.chat.notavailable, {
                                 name: name
                             }));
-                            if (UGMBot.settings.smartSkip) {
-                                return UGMBot.roomUtilities.smartSkip();
+                            if (UNMBot.settings.smartSkip) {
+                                return UNMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1082,41 +1082,41 @@
                 }
             }, 2000);
             clearTimeout(historySkip);
-            if (UGMBot.settings.historySkip) {
+            if (UNMBot.settings.historySkip) {
                 var alreadyPlayed = false;
                 var apihistory = API.getHistory();
                 var name = obj.dj.username;
                 var historySkip = setTimeout(function() {
                     for (var i = 0; i < apihistory.length; i++) {
                         if (apihistory[i].media.cid === obj.media.cid) {
-                            UGMBot.room.historyList[i].push(+new Date());
+                            UNMBot.room.historyList[i].push(+new Date());
                             alreadyPlayed = true;
-                            API.sendChat(subChat(UGMBot.chat.songknown, {
+                            API.sendChat(subChat(UNMBot.chat.songknown, {
                                 name: name
                             }));
-                            if (UGMBot.settings.smartSkip) {
-                                return UGMBot.roomUtilities.smartSkip();
+                            if (UNMBot.settings.smartSkip) {
+                                return UNMBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
                         }
                     }
                     if (!alreadyPlayed) {
-                        UGMBot.room.historyList.push([obj.media.cid, +new Date()]);
+                        UNMBot.room.historyList.push([obj.media.cid, +new Date()]);
                     }
                 }, 2000);
             }
             if (user.ownSong) {
-                API.sendChat(subChat(UGMBot.chat.permissionownsong, {
+                API.sendChat(subChat(UNMBot.chat.permissionownsong, {
                     name: user.username
                 }));
                 user.ownSong = false;
             }
-            clearTimeout(UGMBot.room.autoskipTimer);
-            if (UGMBot.settings.autoskip) {
+            clearTimeout(UNMBot.room.autoskipTimer);
+            if (UNMBot.settings.autoskip) {
                 var remaining = obj.media.duration * 1000;
                 var startcid = API.getMedia().cid;
-                UGMBot.room.autoskipTimer = setTimeout(function() {
+                UNMBot.room.autoskipTimer = setTimeout(function() {
                     var endcid = API.getMedia().cid;
                     if (startcid === endcid) {
                         //API.sendChat('Song stuck, skipping...');
