@@ -249,8 +249,8 @@
     var managers = ["",""];
     var CoHosts = ["Fixtya","3954255"];
     var UNMBot = {
-        version: "3.16.8.6",
-        status: false,
+        version: "3.16.8.7",
+        status: true,
         name: "UNMBot",
         loggedInID: "20168147",
         scriptLink: "https://rawgit.com/xUndisputed/UNMBot/master/UNMBot.js",
@@ -268,14 +268,14 @@
             roomLock: false, // Requires an extension to re-load the script
             startupCap: 10, // 1-200
             startupVolume: 0, // 0-100
-            startupEmoji: false, // true or false
+            startupEmoji: true, // true or false
             autowoot: true,
             autoskip: false,
             smartSkip: true,
             cmdDeletion: true,
-            maximumAfk: 500,
+            maximumAfk: 120,
             afkRemoval: true,
-            maximumDc: 60,
+            maximumDc: 240,
             bouncerPlus: true,
             blacklistEnabled: false,
             lockdownEnabled: false,
@@ -287,9 +287,9 @@
             voteSkipLimit: 10,
             historySkip: false,
             timeGuard: true,
-            maximumSongLength: 10,
+            maximumSongLength: 8,
             autodisable: false,
-            commandCooldown: 10,
+            commandCooldown: 30,
             usercommandsEnabled: true,
             thorCommand: false,
             thorCooldown: 10,
@@ -306,9 +306,9 @@
             afkpositionCheck: 30,
             afkRankCheck: "ambassador",
             motdEnabled: true,
-            motdInterval: 60,
-            motd: "Check our social media and follow us, instagram: https://goo.gl/PSN5US twitter: https://goo.gl/Gznrkx",
-            filterChat: true,
+            motdInterval: 30,
+            motd: "Thank you for making our community so great. <3",
+            filterChat: false,
             etaRestriction: false,
             welcome: true,
             opLink: null,
