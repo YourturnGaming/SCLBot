@@ -1236,7 +1236,7 @@
                     }
                 }
                  **/
-                if (msg.indexOf('http://adf.ly/') > -1) {
+                if (msg.indexOf("http://adf.ly/") > -1) {
                     API.moderateDeleteChat(chat.cid);
                     API.sendChat(subChat(UNMBot.chat.adfly, {
                         name: chat.un
@@ -1251,11 +1251,11 @@
                 var rlJoinChat = UNMBot.chat.roulettejoin;
                 var rlLeaveChat = UNMBot.chat.rouletteleave;
 
-                var joinedroulette = rlJoinChat.split('%%NAME%%');
+                var joinedroulette = rlJoinChat.split("%%NAME%%");
                 if (joinedroulette[1].length > joinedroulette[0].length) joinedroulette = joinedroulette[1];
                 else joinedroulette = joinedroulette[0];
 
-                var leftroulette = rlLeaveChat.split('%%NAME%%');
+                var leftroulette = rlLeaveChat.split("%%NAME%%");
                 if (leftroulette[1].length > leftroulette[0].length) leftroulette = leftroulette[1];
                 else leftroulette = leftroulette[0];
 
