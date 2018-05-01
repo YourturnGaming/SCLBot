@@ -112,7 +112,7 @@
 
     var loadChat = function(cb) {
         if (!cb) cb = function() {};
-        $.get("https://rawgit.com/xUndisputed/titanmusic/master/langIndex.json", function(json) {
+        $.get("https://rawgit.com/xUndisputed/UNMBot/master/langIndex.json", function(json) {
             var link = UNMBot.chatLink;
             if (json !== null && typeof json !== 'undefined') {
                 langIndex = json;
@@ -250,13 +250,13 @@
     var managers = ["",""];
     var CoHosts = ["",""];
     var UNMBot = {
-        version: "3.16.8.2",
+        version: "3.16.8.5",
         status: true,
         name: "UNMBot",
         loggedInID: "20168147",
-        scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UNMBot.js",
+        scriptLink: "https://rawgit.com/xUndisputed/UNMBot/master/UNMBot.js",
         cmdLink: "https://goo.gl/4BQP8Y",
-        chatLink: "https://rawgit.com/xUndisputed/titanmusic/master/langIndex.json",
+        chatLink: "https://rawgit.com/xUndisputed/UNMBot/master/langIndex.json",
         chat: null,
         loadChat: loadChat,
         retrieveSettings: retrieveSettings,
@@ -264,14 +264,14 @@
         settings: {
             botName: "UNMBot",
             language: "english",
-            chatLink: "https://rawgit.com/xUndisputed/titanmusic/master/langIndex.json",
-            scriptLink: "https://rawgit.com/xUndisputed/titanmusic/master/UNMBot.js",
+            chatLink: "https://rawgit.com/xUndisputed/UNMBot/master/langIndex.json",
+            scriptLink: "https://rawgit.com/xUndisputed/UNMBot/master/UNMBot.js",
             roomLock: false, // Requires an extension to re-load the script
             startupCap: 10, // 1-200
             startupVolume: 0, // 0-100
-            startupEmoji: false, // true or false
+            startupEmoji: true, // true or false
             autowoot: true,
-            autoskip: false,
+            autoskip: true,
             smartSkip: true,
             cmdDeletion: true,
             maximumAfk: 500,
@@ -279,8 +279,8 @@
             maximumDc: 60,
             bouncerPlus: true,
             blacklistEnabled: true,
-            lockdownEnabled: false,
-            lockGuard: false,
+            lockdownEnabled: true,
+            lockGuard: true,
             maximumLocktime: 10,
             cycleGuard: true,
             maximumCycletime: 10,
@@ -289,8 +289,8 @@
             historySkip: true,
             timeGuard: true,
             maximumSongLength: 10,
-            autodisable: false,
-            commandCooldown: 30,
+            autodisable: true,
+            commandCooldown: 10,
             usercommandsEnabled: true,
             thorCommand: true,
             thorCooldown: 10,
@@ -307,16 +307,16 @@
             afkpositionCheck: 30,
             afkRankCheck: "ambassador",
             motdEnabled: true,
-            motdInterval: 30,
-            motd: "Check our social media and follow us, instagram: https://goo.gl/GPhGFq twitter: https://goo.gl/E8USu3",
+            motdInterval: 60,
+            motd: "Check our social media and follow us, instagram: https://goo.gl/PSN5US twitter: https://goo.gl/Gznrkx",
             filterChat: true,
             etaRestriction: true,
             welcome: true,
             opLink: null,
-            rulesLink: "We have on disocrd rules.ttps://discord.gg/zq5RnBx",
+            rulesLink: "We have on disocrd rules. https://goo.gl/2yihn1",
             themeLink: null,
-            fbLink: "Our fb page: https://goo.gl/4TMJGw and fb group: https://goo.gl/Blw9dV",
-            youtubeLink: "https://www.youtube.com/channel/UCy0RpumtkdJVuseanqnrzsg",
+            fbLink: "Our fb page: https://goo.gl/czcnHz and fb group: https://goo.gl/tYBE1L",
+            youtubeLink: "Subscribe me pls! https://goo.gl/eGVzck",
             website: null,
             intervalMessages: [],
             messageInterval: 5,
