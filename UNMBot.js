@@ -3421,7 +3421,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("Soon :D");
+                            API.sendChat("Soon");
                     }
                 }
             },
@@ -3457,7 +3457,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("plug3: https://goo.gl/UB67zH discord: https://discord.gg/AXVZjT");
+                            API.sendChat("plug3: https://goo.gl/UB67zH discord: https://discord.gg/DEnpCzP");
                     }
                 }
             },
