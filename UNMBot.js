@@ -249,7 +249,7 @@
     var managers = ["",""];
     var CoHosts = ["Fixtya","3954255"];
     var UNMBot = {
-        version: "3.16.8.9",
+        version: "3.16.9.2",
         status: true,
         name: "UNMBot",
         loggedInID: "20168147",
@@ -1533,11 +1533,6 @@
                         API.chatLog('error assigning minimum permission');
                 }
                 return perm >= minPerm;
-
-	    },
-            bot.on(PlugAPI.events.DJ_LIST_LOCKED, (data) => {
-                console.log(`${data.user.username} ${data.locked ? 'Locked' : 'Unlocked'} the waitList and ${data.clear ? 'Did' : "didn't"} clear the waitList`);
-            }); 
 		    
             },
             /*
@@ -3394,7 +3389,7 @@
                     }
                 }
             },
-	        discordCommand: {
+	    discordCommand: {
                 command: 'discord',
                 rank: 'user',
                 type: 'exact',
@@ -3406,7 +3401,7 @@
                     }
                 }
             },
-	        stayCommand: {
+	    stayCommand: {
                 command: 'stay',
                 rank: 'bouncer',
                 type: 'exact',
@@ -3418,7 +3413,7 @@
                     }
                 }
             },
-	        eventCommand: {
+	    eventCommand: {
                 command: 'event',
                 rank: 'bouncer',
                 type: 'exact',
@@ -3430,7 +3425,7 @@
                     }
                 }
             },
-	        plugdjCommand: {
+	    plugdjCommand: {
                 command: 'plugdj',
                 rank: 'user',
                 type: 'exact',
@@ -3442,7 +3437,7 @@
                     }
                 }
             },	
-	        plugitCommand: {
+	    plugitCommand: {
                 command: 'Plugit',
                 rank: 'user',
                 type: 'exact',
@@ -4165,8 +4160,16 @@
                                     var rank = 'Host';
                                 }
 
+                                if (rawrank.gRole == 750) {
+                                    var rank = 'pLoT Member';
+                                if (rawrank.gRole == 2000) {
+                                    var rank = 'Promoter';
+                                if (rawrank.gRole == 25000) {
+                                    var rank = 'Site Moderator';
                                 if (rawrank.gRole == 3000) {
                                     var rank = 'Brand Ambassador';
+                                if (rawrank.gRole == 4000) {
+                                    var rank = 'Leader';
                                 } else if (rawrank.gRole == 5000) {
                                     var rank = 'Admin';
                                 }
