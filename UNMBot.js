@@ -1250,7 +1250,7 @@
                 var rlJoinChat = UNMBot.chat.roulettejoin;
                 var rlLeaveChat = UNMBot.chat.rouletteleave;
 
-                var joinedroulette = rlJoinChat.split('%%NAME%%ä');
+                var joinedroulette = rlJoinChat.split('%%NAME%%');
                 if (joinedroulette[1].length > joinedroulette[0].length) joinedroulette = joinedroulette[1];
                 else joinedroulette = joinedroulette[0];
 
