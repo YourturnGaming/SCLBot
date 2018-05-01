@@ -2689,12 +2689,12 @@
                         }));
                         var argument = msg.substring(cmd.length + 1);
 
-                        $.get('https://rawgit.com/xUndisputed/titanmusic/master/langIndex.json', function(json) {
+                        $.get('https://rawgit.com/xUndisputed/UNMBot/master/langIndex.json', function(json) {
                             var langIndex = json;
                             var link = langIndex[argument.toLowerCase()];
                             if (typeof link === 'undefined') {
                                 API.sendChat(subChat(UNMBot.chat.langerror, {
-                                    link: 'https://github.com/xUndisputed/titanmusic/blob/master/langIndex.json'
+                                    link: 'https://github.com/xUndisputed/UNMBot/blob/master/langIndex.json'
                                 }));
                             } else {
                                 UNMBot.settings.language = argument;
@@ -3385,7 +3385,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
                     if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat('/me titanmusic is an open-source bot for plug.dj. More info can be found here: https://github.com/TitanMusicDev/titanmusic');
+                        API.sendChat('/me xUndisputed is an open-source bot for plug.dj. More info can be found here: https://github.com/xUndisputed/UNMBot');
                     }
                 }
             },
@@ -3395,7 +3395,7 @@
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!bot.commands.executable(this.rank, chat)) return void (0);
+                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
                             API.sendChat("/me Ultra Night Music public discord: https://discord.gg/zq5RnBx");
                     }
@@ -3421,7 +3421,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("Event is here:");
+                            API.sendChat("Soon :D");
                     }
                 }
             },
