@@ -30,7 +30,7 @@
     var kill = function() {
         clearInterval(UNMBot.room.autodisableInterval);
         clearInterval(UNMBot.room.afkInterval);
-        UNMBot.status = true;
+        UNMBot.status = false;
     };
 
     // This socket server is used solely for statistical and troubleshooting purposes.
@@ -244,14 +244,13 @@
     var botCreator = "xUndisputed";
     var botMaintainer = "xUndisputed";
     var botCreatorIDs = ["3669054", "20168147"];
-    var users = ["",""];
     var resdjs = ["",""];
     var bouncers = ["",""];
     var managers = ["",""];
-    var CoHosts = ["",""];
+    var CoHosts = ["Fixtya","3954255"];
     var UNMBot = {
-        version: "3.16.8.5",
-        status: true,
+        version: "3.16.8.6",
+        status: false,
         name: "UNMBot",
         loggedInID: "20168147",
         scriptLink: "https://rawgit.com/xUndisputed/UNMBot/master/UNMBot.js",
@@ -269,30 +268,30 @@
             roomLock: false, // Requires an extension to re-load the script
             startupCap: 10, // 1-200
             startupVolume: 0, // 0-100
-            startupEmoji: true, // true or false
+            startupEmoji: false, // true or false
             autowoot: true,
-            autoskip: true,
+            autoskip: false,
             smartSkip: true,
             cmdDeletion: true,
             maximumAfk: 500,
             afkRemoval: true,
             maximumDc: 60,
             bouncerPlus: true,
-            blacklistEnabled: true,
-            lockdownEnabled: true,
-            lockGuard: true,
+            blacklistEnabled: false,
+            lockdownEnabled: false,
+            lockGuard: false,
             maximumLocktime: 10,
             cycleGuard: true,
             maximumCycletime: 10,
-            voteSkip: true,
+            voteSkip: false,
             voteSkipLimit: 10,
-            historySkip: true,
+            historySkip: false,
             timeGuard: true,
             maximumSongLength: 10,
-            autodisable: true,
+            autodisable: false,
             commandCooldown: 10,
             usercommandsEnabled: true,
-            thorCommand: true,
+            thorCommand: false,
             thorCooldown: 10,
             skipPosition: 3,
             skipReasons: [
@@ -310,13 +309,13 @@
             motdInterval: 60,
             motd: "Check our social media and follow us, instagram: https://goo.gl/PSN5US twitter: https://goo.gl/Gznrkx",
             filterChat: true,
-            etaRestriction: true,
+            etaRestriction: false,
             welcome: true,
             opLink: null,
-            rulesLink: "We have on disocrd rules. https://goo.gl/2yihn1",
+            rulesLink: "We have on disocrd rules: https://goo.gl/2yihn1",
             themeLink: null,
             fbLink: "Our fb page: https://goo.gl/czcnHz and fb group: https://goo.gl/tYBE1L",
-            youtubeLink: "Subscribe me pls! https://goo.gl/eGVzck",
+            youtubeLink: "Subscribe me pls: https://goo.gl/eGVzck",
             website: null,
             intervalMessages: [],
             messageInterval: 5,
@@ -417,7 +416,7 @@
                 curate: 0
             };
             this.lastEta = null;
-            this.afkWarningCount = 0;
+            this.afkWarningCount = 1;
             this.afkCountdown = null;
             this.inRoom = true;
             this.isMuted = false;
@@ -1251,11 +1250,11 @@
                 var rlJoinChat = UNMBot.chat.roulettejoin;
                 var rlLeaveChat = UNMBot.chat.rouletteleave;
 
-                var joinedroulette = rlJoinChat.split("%%NAME%%");
+                var joinedroulette = rlJoinChat.split('%%NAME%%ä');
                 if (joinedroulette[1].length > joinedroulette[0].length) joinedroulette = joinedroulette[1];
                 else joinedroulette = joinedroulette[0];
 
-                var leftroulette = rlLeaveChat.split("%%NAME%%");
+                var leftroulette = rlLeaveChat.split('%%NAME%%');
                 if (leftroulette[1].length > leftroulette[0].length) leftroulette = leftroulette[1];
                 else leftroulette = leftroulette[0];
 
