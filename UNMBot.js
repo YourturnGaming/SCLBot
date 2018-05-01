@@ -249,7 +249,7 @@
     var managers = ["",""];
     var CoHosts = ["Fixtya","3954255"];
     var UNMBot = {
-        version: "3.16.8.7",
+        version: "3.16.8.9",
         status: true,
         name: "UNMBot",
         loggedInID: "20168147",
@@ -1404,7 +1404,7 @@
             var Check;
 
             console.log(UNMBot.room.name);
-
+		
             var detect = function() {
                 if (UNMBot.room.name != window.location.pathname) {
                     console.log('Killing bot after room change. <3');
@@ -1534,6 +1534,11 @@
                 }
                 return perm >= minPerm;
 
+	    },
+            bot.on(PlugAPI.events.DJ_LIST_LOCKED, (data) => {
+                console.log(`${data.user.username} ${data.locked ? 'Locked' : 'Unlocked'} the waitList and ${data.clear ? 'Did' : "didn't"} clear the waitList`);
+            }); 
+		    
             },
             /*
             command: {
