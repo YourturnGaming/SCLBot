@@ -4163,19 +4163,19 @@
 				var rawrank = API.getUser(id);
 				    
 				if (rawrank.gRole == 0) {
-                                    var rank = 'None';   
-                                } else if (rawrank.gRole == 750) {
+                                    var rank = 'None';
+			        } else if (rawrank.gRole == 750) {
                                     var rank = 'pLoT Member';
-                                } else if (rawrank.gRole == 2000) {
+                                } else if (rawrank.gRole == 500) {
                                     var rank = 'Promoter';
                                 } else if (rawrank.gRole == 25000) {
                                     var rank = 'Site Moderator';
                                 } else if (rawrank.gRole == 3000) {
                                     var rank = 'Brand Ambassador';
                                 } else if (rawrank.gRole == 4000) {
-                                    var rank = 'Leader';
-                                } else if (rawrank.gRole == 5000) {
                                     var rank = 'Admin';
+                                } else if (rawrank.gRole == 5000) {
+                                    var rank = 'Leader';
                                 }
 
                                 var slug = API.getUser(id).slug;
