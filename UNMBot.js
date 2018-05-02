@@ -4146,29 +4146,33 @@
 
                                 var rawrank = API.getUser(id);
 
-                                if (rawrank.role == API.ROLE.NONE) {
+                                if (rawrank.role == 0 {
                                     var rank = 'User';
-                                } else if (rawrank.role == API.ROLE.DJ) {
+                                } else if (rawrank.role == 1000 {
                                     var rank = 'Resident DJ';
-                                } else if (rawrank.role == API.ROLE.BOUNCER) {
+                                } else if (rawrank.role == 2000 {
                                     var rank = 'Bouncer';
-                                } else if (rawrank.role == API.ROLE.MANAGER) {
+                                } else if (rawrank.role == 3000 {
                                     var rank = 'Manager';
-                                } else if (rawrank.role == API.ROLE.COHOST) {
+                                } else if (rawrank.role == 4000 {
                                     var rank = 'Co-Host';
-                                } else if (rawrank.role == API.ROLE.HOST) {
+                                } else if (rawrank.role == 5000 {
                                     var rank = 'Host';
                                 }
-
-                                if (rawrank.gRole == 750) {
+				    
+				var rawrank = API.getUser(id);
+				    
+				if (rawrank.gRole == 0) {
+                                    var rank = 'None';   
+                                } else if (rawrank.gRole == 750) {
                                     var rank = 'pLoT Member';
-                                if (rawrank.gRole == 2000) {
+                                } else if (rawrank.gRole == 2000) {
                                     var rank = 'Promoter';
-                                if (rawrank.gRole == 25000) {
+                                } else if (rawrank.gRole == 25000) {
                                     var rank = 'Site Moderator';
-                                if (rawrank.gRole == 3000) {
+                                } else if (rawrank.gRole == 3000) {
                                     var rank = 'Brand Ambassador';
-                                if (rawrank.gRole == 4000) {
+                                } else if (rawrank.gRole == 4000) {
                                     var rank = 'Leader';
                                 } else if (rawrank.gRole == 5000) {
                                     var rank = 'Admin';
