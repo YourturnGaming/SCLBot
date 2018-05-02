@@ -747,7 +747,7 @@
                 if (waitlistlength == 50) {
                     UNMBot.roomUtilities.booth.lockBooth();
                     locked = true;
-            }
+            },
             setTimeout(function(id) {
                 API.moderateForceSkip();
                     setTimeout(function() {
