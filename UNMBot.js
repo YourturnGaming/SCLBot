@@ -4146,7 +4146,7 @@
 
                                 var rawrank = API.getUser(id);
 
-                                if (rawrank.role == 0 {
+                                } else if (rawrank.role == 0 {
                                     var rank = 'User';
                                 } else if (rawrank.role == 1000 {
                                     var rank = 'Resident DJ';
@@ -4162,7 +4162,7 @@
 				    
 				var rawrank = API.getUser(id);
 				    
-				if (rawrank.gRole == 0) {
+				} else if (rawrank.gRole == 0) {
                                     var rank = 'None';
 			        } else if (rawrank.gRole == 750) {
                                     var rank = 'pLoT Member';
