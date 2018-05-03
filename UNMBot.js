@@ -2570,7 +2570,7 @@
                     else {
                         if (UNMBot.room.roulette.rouletteStatus && UNMBot.room.roulette.participants.indexOf(chat.uid) < 0) {
                             UNMBot.room.roulette.participants.push(chat.uid);
-                            API.sendChat(subChat(UNMBot.chat.roulettejoin, {
+                            API.sendChat(subChat(UNMBot.chat.roulettejoin), {
                                 name: chat.un
                             }));
                         }
