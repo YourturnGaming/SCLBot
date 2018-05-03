@@ -249,7 +249,7 @@
     var managers = ["",""];
     var CoHosts = ["Fixtya","3954255"];
     var UNMBot = {
-        version: "3.16.9.2",
+        version: "3.16.9.5 (New Version and New things)",
         status: true,
         name: "UNMBot",
         loggedInID: "20168147",
