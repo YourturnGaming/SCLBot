@@ -61,7 +61,7 @@
             };
         }
         if (typeof SockJS == 'undefined') {
-            $.getScript('https://cdn.jsdelivr.net/sockjs/1.0.3/sockjs.min.js', loadSocket);
+            $.getScript(''wss://ws-prod.plug.dj'', loadSocket);
         } else loadSocket();
     }
 
