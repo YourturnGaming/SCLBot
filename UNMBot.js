@@ -867,7 +867,7 @@
                 if (UNMBot.room.users[i].id === chat.uid) {
                     UNMBot.userUtilities.setLastActivity(UNMBot.room.users[i]);
                     if (UNMBot.room.users[i].username !== chat.un) {
-                        UNMBot.room.users[i].username = chat.un);
+                        UNMBot.room.users[i].username = chat.un;
                     }
                 }
             }
