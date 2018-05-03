@@ -4146,29 +4146,29 @@
 
                                 var rawrank = API.getUser(id);
 
-                                } else if (rawrank.role == 0 {
+                                if (rawrank.role == 0 {
                                     var rank = 'User';
-                                } else if (rawrank.role == 1000 {
+                                } else if (rawrank.role == 1000) {
                                     var rank = 'Resident DJ';
-                                } else if (rawrank.role == 2000 {
+                                } else if (rawrank.role == 2000) {
                                     var rank = 'Bouncer';
-                                } else if (rawrank.role == 3000 {
+                                } else if (rawrank.role == 3000) {
                                     var rank = 'Manager';
-                                } else if (rawrank.role == 4000 {
+                                } else if (rawrank.role == 4000) {
                                     var rank = 'Co-Host';
-                                } else if (rawrank.role == 5000 {
+                                } else if (rawrank.role == 5000) {
                                     var rank = 'Host';
                                 }
 				    
 				var rawrank = API.getUser(id);
 				    
-				} else if (rawrank.gRole == 0) {
+				if (rawrank.gRole == 0) {
                                     var rank = 'None';
+		                } else if (rawrank.gRole == 500) {
+                                    var rank = 'Promoter';
 			        } else if (rawrank.gRole == 750) {
                                     var rank = 'pLoT Member';
-                                } else if (rawrank.gRole == 500) {
-                                    var rank = 'Promoter';
-                                } else if (rawrank.gRole == 25000) {
+                                } else if (rawrank.gRole == 2500) {
                                     var rank = 'Site Moderator';
                                 } else if (rawrank.gRole == 3000) {
                                     var rank = 'Brand Ambassador';
