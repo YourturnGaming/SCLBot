@@ -61,7 +61,7 @@
             };
         }
         if (typeof SockJS == 'undefined') {
-            $.getScript(''wss://ws-prod.plug.dj'', loadSocket);
+            $.getScript('wss://ws-prod.plug.dj', loadSocket);
         } else loadSocket();
     }
 
