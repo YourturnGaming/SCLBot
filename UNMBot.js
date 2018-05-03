@@ -4146,7 +4146,7 @@
 
                                 var rawrank = API.getUser(id);
 
-                                if (rawrank.role == 0 {
+                                if (rawrank.role == 0) {
                                     var rank = 'User';
                                 } else if (rawrank.role == 1000) {
                                     var rank = 'Resident DJ';
