@@ -43,6 +43,8 @@
 | !unlock | — | unlock the waitlist. |
 | !welcome | — | toggle the welcome message on user join. |
 | !woot | — | makes the bot woot the current song. |
+| !showplaylists / !botpls | - | makes the bot list its playlists. (See Bot DJ section of README.md) |
+| !switchplaylist / !botpl | @playlistID | playlistID can be either the full playlist name, or the id of the playlist in the list displayed by !showplaylists (See Bot DJ section of README.md) |
 
 ### Bouncer
 
