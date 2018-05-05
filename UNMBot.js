@@ -249,7 +249,7 @@
     var managers = ["",""];
     var CoHosts = ["Fixtya","3954255"];
     var UNMBot = {
-        version: "3.16.9.8 (New Version and New things)",
+        version: "3.17.0.2 (New Version and New things)",
         status: true,
         name: "UNMBot",
         loggedInID: "20168147",
@@ -3277,7 +3277,35 @@
                         }));
                     }
                 }
+	    },
+	    switchPlaylistCommand: {
+                 command: ['switchplaylist', 'botpl'],
+                 rank: 'bouncer',
+                 type: 'startsWith',
+                 functionality: function(chat, cmd) {
+                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
+                     if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                     else {
+                         var msg = chat.message;
+                         if (msg.length === cmd.length) return;
+ 
+                         var listname = msg.substring(cmd.length + 1);
+                         UNMBot.botInterfaceUtilities.switchPlaylist(listname);
+                     }
+                 }
             },
+	    showplaylistsCommand: {
+                 command: ['showplaylists', 'botpls'],
+                 rank: 'bouncer',
+                 type: 'exact',
+                 functionality: function(chat, cmd) {
+                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
+                     if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                     else {
+                         UNMBot.botInterfaceUtilities.showplaylists();
+                     }
+                 }
+	    },
             skipCommand: {
                 command: ['skip', 'smartskip'],
                 rank: 'bouncer',
