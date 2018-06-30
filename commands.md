@@ -50,7 +50,7 @@
 
 | Command | Arguments | Description |
 |:-------:|:---------:|:-----------:|
-| !stay |	— | bot says that enjoy your stay in Titan Music.
+| !stay |	— | bot says that enjoy your stay in #SquadColdLava.
 | !active | (X) | shows how many users chatted in the past X minutes. If no X specified, 60 is set as default. |
 | !afkreset | @user | resets the AFK time of user. |
 | !afktime | @user | shows how long user has been AFK. |
@@ -100,13 +100,13 @@
 |:-------:|:---------:|:-----------:|
 | !rcs | - | link to rcs script/plugin to use for autowooting. |
 | !event | - | There are events coming up pretty soon!. |
-| !guide | - | There are events coming up pretty soon!. |
+| !guide | - | plug.dj guide picture. |
 | !8ball / !ask | (message) | ask the bot a question, the bot will return random variations of a yes or no answer. |
 | !autowoot | — | links to PlugCubed, the advised script/plugin to use for autowooting. |
 | !ba | — | explains the Brand Ambassador rank. |
 | !commands | — | gives a link to the commands. |
 | !cookie | (@user) | give a cookie to user. |
-| !discord | — | Links an invite for the UltraNigtMusic Discord. |
+| !discord | — | Links an invite for the #SquadColdLava Discord. |
 | !dclookup / !dc | — | use dclookup on yourself. |
 | !emoji | — | returns a link the emoji list. |
 | !eta | — | shows how long before you will reach the booth. |
