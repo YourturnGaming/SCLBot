@@ -69,7 +69,7 @@ Developers
 
 | Developers |
 |:----------:|
-| [![xUndisputed]()](https://github.com/xUndisputed) |
+| [![xUndisputed](https://i.imgur.com/tMXvsgY.png)](https://github.com/xUndisputed) |
 | **[xUndisputed](https://github.com/xUndisputed)** |
 
 Special thanks ✨
