@@ -126,4 +126,4 @@
 | !website | — | links to the room's website (if set in the settings). |
 | !youtube | — | links to the room's youtube page (if set in the settings). |
 
-| Copyright © 2017-2018 SCLBot.|
+| Copyright © 2017-2018 SCLBot. |
