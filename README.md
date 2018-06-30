@@ -76,7 +76,7 @@ I would like to thank the following people:
 
 |Language | Translator|
 |:------:|:---------:|
-||[]()|
+||[xUndisputed](English/Estonia)|
 ||[]()|
 
 __I would also like to thank everyone who contributed in translating the bot via the [translation centre]()__
