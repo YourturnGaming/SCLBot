@@ -1,6 +1,6 @@
 /**
 
- Copyright © 2017-2018 UNMBot
+ Copyright © 2017-2018 SCLBot
 
  Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
  This software is not for profit, any extension, or unauthorised person providing this software is not authorised to be in a position of any monetary gain from this use of this software. Any and all money gained under the use of the software (which includes donations) must be passed on to the original author.
@@ -247,11 +247,11 @@
     var resdjs = ["",""];
     var bouncers = ["",""];
     var managers = ["",""];
-    var CoHosts = ["Fixtya","3954255"];
+    var CoHosts = ["",""];
     var UNMBot = {
-        version: "3.17.0.2 (New Version and New things)",
+        version: "3.18.0.4 (New Version and New things, Soon is all fixed)",
         status: true,
-        name: "UNMBot",
+        name: "SCLBot",
         loggedInID: "20168147",
         scriptLink: "https://rawgit.com/xUndisputed/UNMBot/master/UNMBot.js",
         cmdLink: "https://goo.gl/4BQP8Y",
@@ -261,7 +261,7 @@
         retrieveSettings: retrieveSettings,
         retrieveFromStorage: retrieveFromStorage,
         settings: {
-            botName: "UNMBot",
+            botName: "SCLBot",
             language: "english",
             chatLink: "https://rawgit.com/xUndisputed/UNMBot/master/langIndex.json",
             scriptLink: "https://rawgit.com/xUndisputed/UNMBot/master/UNMBot.js",
