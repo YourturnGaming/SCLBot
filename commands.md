@@ -125,3 +125,5 @@
 | !thor | — | users get moved to position 1 in the waitlist if they're worthy of Thor's hammer. |
 | !website | — | links to the room's website (if set in the settings). |
 | !youtube | — | links to the room's youtube page (if set in the settings). |
+
+| Copyright © 2017-2018 SCLBot.|
