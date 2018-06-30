@@ -65,8 +65,14 @@ Developers
  Thanks you all! who help me etc :D
 
 
-Credits
---------
+### Credits
+
+| Developers |
+|:----------:|
+| [![xUndisputed]()](https://github.com/xUndisputed) |
+| **[xUndisputed](https://github.com/xUndisputed)** |
+
+Special thanks ✨
 
 I would like to thank the following people:
 
@@ -80,10 +86,10 @@ I would like to thank the following people:
 
 - ♠•P H A N T Ø M Bø¥•♠: text is coming here :D.
 
-|Language | Translator|
-|:------:|:---------:|
-||[xUndisputed](English)|
-||[]()|
+| Translator | Languages |
+|:----------:|:---------:|
+| xUndisputed | English/Estonia |
+|  |  |
 
 __I would also like to thank everyone who contributed in translating the bot via the [translation centre]()__
 
