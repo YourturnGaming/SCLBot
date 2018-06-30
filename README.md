@@ -82,7 +82,7 @@ I would like to thank the following people:
 
 |Language | Translator|
 |:------:|:---------:|
-||[English/Estonia](xUndisputed)|
+||[English](xUndisputed)|
 ||[]()|
 
 __I would also like to thank everyone who contributed in translating the bot via the [translation centre]()__
