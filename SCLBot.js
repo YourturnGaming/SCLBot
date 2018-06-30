@@ -112,7 +112,7 @@
 
     var loadChat = function(cb) {
         if (!cb) cb = function() {};
-        $.get("https://rawgit.com/xUndisputed/UNMBot/master/langIndex.json", function(json) {
+        $.get("https://rawgit.com/xUndisputed/SCLBot/master/langIndex.json", function(json) {
             var link = UNMBot.chatLink;
             if (json !== null && typeof json !== 'undefined') {
                 langIndex = json;
@@ -253,9 +253,9 @@
         status: true,
         name: "SCLBot",
         loggedInID: "20168147",
-        scriptLink: "https://rawgit.com/xUndisputed/UNMBot/master/UNMBot.js",
+        scriptLink: "https://rawgit.com/xUndisputed/SCLBot/master/UNMBot.js",
         cmdLink: "https://goo.gl/4BQP8Y",
-        chatLink: "https://rawgit.com/xUndisputed/UNMBot/master/langIndex.json",
+        chatLink: "https://rawgit.com/xUndisputed/SCLBot/master/langIndex.json",
         chat: null,
         loadChat: loadChat,
         retrieveSettings: retrieveSettings,
@@ -263,8 +263,8 @@
         settings: {
             botName: "SCLBot",
             language: "english",
-            chatLink: "https://rawgit.com/xUndisputed/UNMBot/master/langIndex.json",
-            scriptLink: "https://rawgit.com/xUndisputed/UNMBot/master/UNMBot.js",
+            chatLink: "https://rawgit.com/xUndisputed/SCLBot/master/langIndex.json",
+            scriptLink: "https://rawgit.com/xUndisputed/SCLBot/master/SCLBot.js",
             roomLock: false, // Requires an extension to re-load the script
             startupCap: 10, // 1-200
             startupVolume: 0, // 0-100
