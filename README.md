@@ -71,12 +71,18 @@ Credits
 I would like to thank the following people:
 
 - xUndisputed: His SCLBot has been a source of inspiration for most of the features, and his help with coding problems has been invaluable to make this bot.
+
 - Trigstur, and other SCLBot contributors: Their SCLBot has inspired features like Roulette.
+
 - xUndisputed: Never knew this undertaking would give me a friend too.
+
+- YourturnGaming: text is coming here :D.
+
+- ♠•P H A N T Ø M Bø¥•♠: text is coming here :D.
 
 |Language | Translator|
 |:------:|:---------:|
-||[xUndisputed](English/Estonia)|
+||[English/Estonia](xUndisputed)|
 ||[]()|
 
 __I would also like to thank everyone who contributed in translating the bot via the [translation centre]()__
