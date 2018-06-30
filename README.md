@@ -1,4 +1,4 @@
-# UNMBot (source)
+# SCLBot (source)
 
 [![Discord](http://is1.mzstatic.com/image/thumb/Purple117/v4/a1/d8/3a/a1d83a42-e84e-5965-c006-610fb8a1fd45/source/300x300bb.jpg)](https://discord.gg/jse3qhg) [![facebook group](https://img.shields.io/badge/facebook-group-3b5998.svg?style=flat)](https://goo.gl/tYBE1L) [![twitter](https://img.shields.io/twitter/follow/UltraNightMusic.svg?style=social)](https://goo.gl/Gznrkx)
 
@@ -9,10 +9,10 @@ Usage
 Bookmark the following code. To run the bot, run the bookmark.
 
 ```
-javascript:(function(){$.getScript('https://rawgit.com/xUndisputed/UNMBot/master/UNMBot.js');})();
+javascript:(function(){$.getScript('https://rawgit.com/xUndisputed/SCLBot/master/SCLBot.js');})();
 ```
 
-If this does not work, go to https://raw.githubusercontent.com/xUndisputed/UNMBot/master/UNMBot.js and copy paste its content into your console (accessible in chrome by pressing F12) when on plug.dj in your community.
+If this does not work, go to https://raw.githubusercontent.com/xUndisputed/SCLBot/master/SCLBot.js and copy paste its content into your console (accessible in chrome by pressing F12) when on plug.dj in your community.
 
 
 Commands
@@ -43,13 +43,13 @@ You can add blacklists in the settings of the bot via the methods given in that 
 
 Extending functionality and custom default settings
 ---------------------------------------------------
-UNMBot can be customized to fit your needs. Please refer to [the customization repository](https://github.com/xUndisputed/UNMBot) for more info.
+SCLBot can be customized to fit your needs. Please refer to [the customization repository](https://github.com/xUndisputed/SCLBot) for more info.
 Please do not try to if you are not confident in your javascript capabilities.
 
 
-UNMBot Chrome Extension
+SCLBot Chrome Extension
 -------------------------
-[Get the Official UNMBot Chrome Extension is coming]()
+[Get the Official SCLBot Chrome Extension is coming soon]()
 
 
 Developers
@@ -57,6 +57,12 @@ Developers
  - [xUndisputed](https://github.com/xUndisputed) __(Maintainer)__
 
  - [Trigstur]() __(Helper)__
+ 
+ - [YourturnGaming]() __(Helper)__
+ 
+ - [♠•P H A N T Ø M Bø¥•♠)]() __(Helper)__
+ 
+ Thanks you all! who help me etc :D
 
 
 Credits
@@ -64,8 +70,8 @@ Credits
 
 I would like to thank the following people:
 
-- xUndisputed: His UNMBot has been a source of inspiration for most of the features, and his help with coding problems has been invaluable to make this bot.
-- Trigstur, and other UNMBot contributors: Their UNMBot has inspired features like Roulette.
+- xUndisputed: His SCLBot has been a source of inspiration for most of the features, and his help with coding problems has been invaluable to make this bot.
+- Trigstur, and other SCLBot contributors: Their SCLBot has inspired features like Roulette.
 - xUndisputed: Never knew this undertaking would give me a friend too.
 
 |Language | Translator|
@@ -78,7 +84,7 @@ __I would also like to thank everyone who contributed in translating the bot via
 
 ### Copyright
 
-Copyright &copy; 2017-2018 UNMBot
+Copyright &copy; 2017-2018 SCLBot
 
 Modifications (including forks) of the code to fit personal needs are allowed only for personal use and should refer back to the original source.
 
