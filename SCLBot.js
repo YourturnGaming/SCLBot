@@ -10,7 +10,7 @@
 (function() {
 
     /*window.onerror = function() {
-        var room = JSON.parse(localStorage.getItem('UNMBotRoom'));
+        var room = JSON.parse(localStorage.getItem('SCLBotRoom'));
         window.location = 'https://plug.dj' + room.name;
     };*/
 
