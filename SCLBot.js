@@ -3365,7 +3365,7 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         API.sendChat('/me xUndisputed is an open-source bot for plug.dj. More info can be found here: https://github.com/xUndisputed/SCLBot');
                     }
@@ -3379,7 +3379,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("/me #SquadColdLava public discord: https://discord.gg/zq5RnBx");
+                            API.sendChat("/me #SquadColdLava public discord: https://discord.gg/NAKRC2m");
                     }
                 }
             },
@@ -3389,7 +3389,7 @@
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void (0);
                     else {
                             API.sendChat("Enjoy your stay in #SquadColdLava!");
                     }
@@ -3401,9 +3401,9 @@
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("Soon");
+                            API.sendChat("Summer Event currently, chill etc");
                     }
                 }
             },
@@ -3413,7 +3413,7 @@
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void (0);
                     else {
                             API.sendChat("plugdj: discord: https://discord.gg/plugdj");
                     }
@@ -3425,7 +3425,7 @@
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void (0);
                     else {
                             API.sendChat("PlugIt: discord: https://discord.gg//DptCswA");
                     }
@@ -3437,9 +3437,9 @@
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("plug3: https://goo.gl/UB67zH discord: https://discord.gg/DEnpCzP");
+                            API.sendChat("plug3: https://goo.gl/UB67zH discord: https://plugcubed.net/discord");
                     }
                 }
             },
@@ -3449,9 +3449,9 @@
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("rcs: https://goo.gl/o6sD2H discord: https://discord.gg/QHvpfNP");
+                            API.sendChat("rcs: https://goo.gl/o6sD2H discord: https://discord.gg/PKDN5Cb");
                     }
                 }
             },
@@ -3461,7 +3461,7 @@
                  type: 'exact',
                  functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void (0);
                     else {
                             API.sendChat("plug.dj guide: http://i.imgur.com/ZeRR07N.png");
                     }
@@ -3473,74 +3473,74 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var from = chat.un;
                         var msg = '[@' + from + '] ';
 
-                        msg += UNMBot.chat.afkremoval + ': ';
-                        if (UNMBot.settings.afkRemoval) msg += 'ON';
+                        msg += SCLBot.chat.afkremoval + ': ';
+                        if (SCLBot.settings.afkRemoval) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
-                        msg += UNMBot.chat.afksremoved + ': ' + UNMBot.room.afkList.length + '. ';
-                        msg += UNMBot.chat.afklimit + ': ' + UNMBot.settings.maximumAfk + '. ';
+                        msg += SCLBot.chat.afksremoved + ': ' + SCLBot.room.afkList.length + '. ';
+                        msg += SCLBot.chat.afklimit + ': ' + SCLBot.settings.maximumAfk + '. ';
 
                         msg += 'Bouncer+: ';
-                        if (UNMBot.settings.bouncerPlus) msg += 'ON';
+                        if (SCLBot.settings.bouncerPlus) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += UNMBot.chat.blacklist + ': ';
-                        if (UNMBot.settings.blacklistEnabled) msg += 'ON';
+                        msg += SCLBot.chat.blacklist + ': ';
+                        if (SCLBot.settings.blacklistEnabled) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += UNMBot.chat.lockguard + ': ';
-                        if (UNMBot.settings.lockGuard) msg += 'ON';
+                        msg += SCLBot.chat.lockguard + ': ';
+                        if (SCLBot.settings.lockGuard) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += UNMBot.chat.cycleguard + ': ';
-                        if (UNMBot.settings.cycleGuard) msg += 'ON';
+                        msg += SCLBot.chat.cycleguard + ': ';
+                        if (SCLBot.settings.cycleGuard) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += UNMBot.chat.timeguard + ': ';
-                        if (UNMBot.settings.timeGuard) msg += 'ON';
+                        msg += SCLBot.chat.timeguard + ': ';
+                        if (SCLBot.settings.timeGuard) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += UNMBot.chat.chatfilter + ': ';
-                        if (UNMBot.settings.filterChat) msg += 'ON';
+                        msg += SCLBot.chat.chatfilter + ': ';
+                        if (SCLBot.settings.filterChat) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += UNMBot.chat.historyskip + ': ';
-                        if (UNMBot.settings.historySkip) msg += 'ON';
+                        msg += SCLBot.chat.historyskip + ': ';
+                        if (SCLBot.settings.historySkip) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += UNMBot.chat.voteskip + ': ';
-                        if (UNMBot.settings.voteSkip) msg += 'ON';
+                        msg += SCLBot.chat.voteskip + ': ';
+                        if (SCLBot.settings.voteSkip) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += UNMBot.chat.cmddeletion + ': ';
-                        if (UNMBot.settings.cmdDeletion) msg += 'ON';
+                        msg += SCLBot.chat.cmddeletion + ': ';
+                        if (SCLBot.settings.cmdDeletion) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
-                        msg += UNMBot.chat.autoskip + ': ';
-                        if (UNMBot.settings.autoskip) msg += 'ON';
+                        msg += SCLBot.chat.autoskip + ': ';
+                        if (SCLBot.settings.autoskip) msg += 'ON';
                         else msg += 'OFF';
                         msg += '. ';
 
                         // TODO: Display more toggleable bot settings.
 
-                        var launchT = UNMBot.room.roomstats.launchTime;
+                        var launchT = SCLBot.room.roomstats.launchTime;
                         var durationOnline = Date.now() - launchT;
-                        var since = UNMBot.roomUtilities.msToStr(durationOnline);
-                        msg += subChat(UNMBot.chat.activefor, {
+                        var since = SCLBot.roomUtilities.msToStr(durationOnline);
+                        msg += subChat(SCLBot.chat.activefor, {
                             time: since
                         });
 
@@ -3582,52 +3582,52 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(UNMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(SCLBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var firstSpace = msg.indexOf(' ');
                         var lastSpace = msg.lastIndexOf(' ');
                         var name1 = msg.split('@')[1].trim();
                         var name2 = msg.split('@')[2].trim();
-                        var user1 = UNMBot.userUtilities.lookupUserName(name1);
-                        var user2 = UNMBot.userUtilities.lookupUserName(name2);
-                        if (typeof user1 === 'boolean' || typeof user2 === 'boolean') return API.sendChat(subChat(UNMBot.chat.swapinvalid, {
+                        var user1 = SCLBot.userUtilities.lookupUserName(name1);
+                        var user2 = SCLBot.userUtilities.lookupUserName(name2);
+                        if (typeof user1 === 'boolean' || typeof user2 === 'boolean') return API.sendChat(subChat(SCLBot.chat.swapinvalid, {
                             name: chat.un
                         }));
-                        if (user1.id === UNMBot.loggedInID || user2.id === UNMBot.loggedInID) return API.sendChat(subChat(UNMBot.chat.addbottowaitlist, {
+                        if (user1.id === SCLBot.loggedInID || user2.id === SCLBot.loggedInID) return API.sendChat(subChat(SCLBot.chat.addbottowaitlist, {
                             name: chat.un
                         }));
                         var p1 = API.getWaitListPosition(user1.id) + 1;
                         var p2 = API.getWaitListPosition(user2.id) + 1;
-                        if (p1 < 0 && p2 < 0) return API.sendChat(subChat(UNMBot.chat.swapwlonly, {
+                        if (p1 < 0 && p2 < 0) return API.sendChat(subChat(SCLBot.chat.swapwlonly, {
                             name: chat.un
                         }));
-                        API.sendChat(subChat(UNMBot.chat.swapping, {
+                        API.sendChat(subChat(SCLBot.chat.swapping, {
                             'name1': name1,
                             'name2': name2
                         }));
                         if (p1 === -1) {
                             API.moderateRemoveDJ(user2.id);
                             setTimeout(function(user1, p2) {
-                                UNMBot.userUtilities.moveUser(user1.id, p2, true);
+                                SCLBot.userUtilities.moveUser(user1.id, p2, true);
                             }, 2000, user1, p2);
                         } else if (p2 === -1) {
                             API.moderateRemoveDJ(user1.id);
                             setTimeout(function(user2, p1) {
-                                UNMBot.userUtilities.moveUser(user2.id, p1, true);
+                                SCLBot.userUtilities.moveUser(user2.id, p1, true);
                             }, 2000, user2, p1);
                         } else if (p1 < p2) {
-                            UNMBot.userUtilities.moveUser(user2.id, p1, false);
+                            SCLBot.userUtilities.moveUser(user2.id, p1, false);
                             setTimeout(function(user1, p2) {
-                                UNMBot.userUtilities.moveUser(user1.id, p2, false);
+                                SCLBot.userUtilities.moveUser(user1.id, p2, false);
                             }, 2000, user1, p2);
                         } else {
-                            UNMBot.userUtilities.moveUser(user1.id, p2, false);
+                            SCLBot.userUtilities.moveUser(user1.id, p2, false);
                             setTimeout(function(user2, p1) {
-                                UNMBot.userUtilities.moveUser(user2.id, p1, false);
+                                SCLBot.userUtilities.moveUser(user2.id, p1, false);
                             }, 2000, user2, p1);
                         }
                     }
