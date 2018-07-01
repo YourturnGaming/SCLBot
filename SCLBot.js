@@ -28,9 +28,9 @@
     };
 
     var kill = function() {
-        clearInterval(UNMBot.room.autodisableInterval);
-        clearInterval(UNMBot.room.afkInterval);
-        UNMBot.status = true;
+        clearInterval(SCLBot.room.autodisableInterval);
+        clearInterval(SCLBot.room.afkInterval);
+        SCLBot.status = true;
     };
 
     // This socket server is used solely for statistical and troubleshooting purposes.
@@ -66,33 +66,33 @@
     }
 
     var sendToSocket = function() {
-        var UNMBotSettings = UNMBot.settings;
-        var UNMBotRoom = UNMBot.room;
-        var UNMBotInfo = {
+        var SCLBotSettings = SCLBot.settings;
+        var SCLBotRoom = SCLBot.room;
+        var SCLBotInfo = {
             time: Date.now(),
-            version: UNMBot.version
+            version: SCLBot.version
         };
         var data = {
             users: API.getUsers(),
             userinfo: API.getUser(),
             room: location.pathname,
-            UNMBotSettings: UNMBotSettings,
-            UNMBotRoom: UNMBotRoom,
-            UNMBotInfo: UNMBotInfo
+            SCLBotSettings: SCLBotSettings,
+            SCLBotRoom: SCLBotRoom,
+            SCLBotInfo: SCLBotInfo
         };
         return sock.msg(data);
     };
     */
 
     var storeToStorage = function() {
-        localStorage.setItem("UNMBotsettings", JSON.stringify(UNMBot.settings));
-        localStorage.setItem("UNMBotRoom", JSON.stringify(UNMBot.room));
-        var UNMBotStorageInfo = {
+        localStorage.setItem("SCLBotsettings", JSON.stringify(SCLBot.settings));
+        localStorage.setItem("SCLBotRoom", JSON.stringify(SCLBot.room));
+        var SCLBotStorageInfo = {
             time: Date.now(),
             stored: true,
-            version: UNMBot.version
+            version: SCLBot.version
         };
-        localStorage.setItem("UNMBotStorageInfo", JSON.stringify(UNMBotStorageInfo));
+        localStorage.setItem("SCLBotStorageInfo", JSON.stringify(SCLBotStorageInfo));
     };
 
     var subChat = function(chat, obj) {
@@ -113,29 +113,29 @@
     var loadChat = function(cb) {
         if (!cb) cb = function() {};
         $.get("https://rawgit.com/xUndisputed/SCLBot/master/langIndex.json", function(json) {
-            var link = UNMBot.chatLink;
+            var link = SCLBot.chatLink;
             if (json !== null && typeof json !== 'undefined') {
                 langIndex = json;
-                link = langIndex[UNMBot.settings.language.toLowerCase()];
-                if (UNMBot.settings.chatLink !== UNMBot.chatLink) {
-                    link = UNMBot.settings.chatLink;
+                link = langIndex[SCLBot.settings.language.toLowerCase()];
+                if (SCLBot.settings.chatLink !== SCLBot.chatLink) {
+                    link = SCLBot.settings.chatLink;
                 } else {
                     if (typeof link === 'undefined') {
-                        link = UNMBot.chatLink;
+                        link = SCLBot.chatLink;
                     }
                 }
                 $.get(link, function(json) {
                     if (json !== null && typeof json !== 'undefined') {
                         if (typeof json === 'string') json = JSON.parse(json);
-                        UNMBot.chat = json;
+                        SCLBot.chat = json;
                         cb();
                     }
                 });
             } else {
-                $.get(UNMBot.chatLink, function(json) {
+                $.get(SCLBot.chatLink, function(json) {
                     if (json !== null && typeof json !== 'undefined') {
                         if (typeof json === 'string') json = JSON.parse(json);
-                        UNMBot.chat = json;
+                        SCLBot.chat = json;
                         cb();
                     }
                 });
@@ -144,42 +144,42 @@
     };
 
     var retrieveSettings = function() {
-        var settings = JSON.parse(localStorage.getItem("UNMBotsettings"));
+        var settings = JSON.parse(localStorage.getItem("SCLBotsettings"));
         if (settings !== null) {
             for (var prop in settings) {
-                UNMBot.settings[prop] = settings[prop];
+                SCLBot.settings[prop] = settings[prop];
             }
         }
     };
 
     var retrieveFromStorage = function() {
-        var info = localStorage.getItem("UNMBotStorageInfo");
-        if (info === null) API.chatLog(UNMBot.chat.nodatafound);
+        var info = localStorage.getItem("SCLBotStorageInfo");
+        if (info === null) API.chatLog(SCLBot.chat.nodatafound);
         else {
-            var settings = JSON.parse(localStorage.getItem("UNMBotsettings"));
-            var room = JSON.parse(localStorage.getItem("UNMBotRoom"));
+            var settings = JSON.parse(localStorage.getItem("SCLBotsettings"));
+            var room = JSON.parse(localStorage.getItem("SCLBotRoom"));
             var elapsed = Date.now() - JSON.parse(info).time;
             if ((elapsed < 1 * 60 * 60 * 1000)) {
-                API.chatLog(UNMBot.chat.retrievingdata);
+                API.chatLog(SCLBot.chat.retrievingdata);
                 for (var prop in settings) {
-                    UNMBot.settings[prop] = settings[prop];
+                    SCLBot.settings[prop] = settings[prop];
                 }
-                UNMBot.room.users = room.users;
-                UNMBot.room.afkList = room.afkList;
-                UNMBot.room.historyList = room.historyList;
-                UNMBot.room.mutedUsers = room.mutedUsers;
-                //UNMBot.room.autoskip = room.autoskip;
-                UNMBot.room.roomstats = room.roomstats;
-                UNMBot.room.messages = room.messages;
-                UNMBot.room.queue = room.queue;
-                UNMBot.room.newBlacklisted = room.newBlacklisted;
-                API.chatLog(UNMBot.chat.datarestored);
+                SCLBot.room.users = room.users;
+                SCLBot.room.afkList = room.afkList;
+                SCLBot.room.historyList = room.historyList;
+                SCLBot.room.mutedUsers = room.mutedUsers;
+                //SCLBot.room.autoskip = room.autoskip;
+                SCLBot.room.roomstats = room.roomstats;
+                SCLBot.room.messages = room.messages;
+                SCLBot.room.queue = room.queue;
+                SCLBot.room.newBlacklisted = room.newBlacklisted;
+                API.chatLog(SCLBot.chat.datarestored);
             }
         }
         var json_sett = null;
         var roominfo = document.getElementById('room-settings');
         info = roominfo.textContent;
-        var ref_bot = '@UNM | Bot';
+        var ref_bot = '@SCL | Bot';
         var ind_ref = info.indexOf(ref_bot);
         if (ind_ref > 0) {
             var link = info.substring(ind_ref + ref_bot.length, info.length);
@@ -191,7 +191,7 @@
                 if (json !== null && typeof json !== 'undefined') {
                     json_sett = JSON.parse(json);
                     for (var prop in json_sett) {
-                        UNMBot.settings[prop] = json_sett[prop];
+                        SCLBot.settings[prop] = json_sett[prop];
                     }
                 }
             });
@@ -342,7 +342,7 @@
             autoskipTimer: null,
             autodisableInterval: null,
             autodisableFunc: function() {
-                if (UNMBot.status && UNMBot.settings.autodisable) {
+                if (SCLBot.status && SCLBot.settings.autodisable) {
                     API.sendChat('!afkdisable');
                     API.sendChat('!joindisable');
                 }
