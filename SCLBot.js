@@ -1400,21 +1400,21 @@
                 })
             };
 
-            UNMBot.room.name = window.location.pathname;
+            SCLBot.room.name = window.location.pathname;
             var Check;
 
-            console.log(UNMBot.room.name);
+            console.log(SCLBot.room.name);
 		
             var detect = function() {
-                if (UNMBot.room.name != window.location.pathname) {
+                if (SCLBot.room.name != window.location.pathname) {
                     console.log('Killing bot after room change. <3');
                     storeToStorage();
-                    UNMBot.disconnectAPI();
+                    SCLBot.disconnectAPI();
                     setTimeout(function() {
                         kill();
                     }, 1000);
-                    if (UNMBot.settings.roomLock) {
-                        window.location = UNMBot.room.name;
+                    if (SCLBot.settings.roomLock) {
+                        window.location = SCLBot.room.name;
                     } else {
                         clearInterval(Check);
                     }
@@ -1484,12 +1484,12 @@
                 }
                 API.chatLog('Emojis disabled.');
             }
-            API.chatLog('Avatars capped at ' + UNMBot.settings.startupCap);
-            API.chatLog('Volume set to ' + UNMBot.settings.startupVolume);
+            API.chatLog('Avatars capped at ' + SCLBot.settings.startupCap);
+            API.chatLog('Volume set to ' + SCLBot.settings.startupVolume);
             //socket();
-            loadChat(API.sendChat(subChat(UNMBot.chat.online, {
-                botname: UNMBot.settings.botName,
-                version: UNMBot.version
+            loadChat(API.sendChat(subChat(SCLBot.chat.online, {
+                botname: SCLBot.settings.botName,
+                version: SCLBot.version
             })));
         },
         commands: {
@@ -1784,7 +1784,7 @@
             },
             autowootCommand: {
                 command: 'autowoot',
-                rank: 'user',
+                rank: 'bouncer',
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
@@ -2176,52 +2176,6 @@
                     }
                 }
             },
-            /*
-            // This does not work anymore.
-            deletechatCommand: {
-                command: 'deletechat',
-                rank: 'mod',
-                type: 'startsWith',
-                functionality: function (chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
-                    else {
-                        var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(UNMBot.chat.nouserspecified, {name: chat.un}));
-                        var name = msg.substring(cmd.length + 2);
-                        var user = UNMBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(UNMBot.chat.invaliduserspecified, {name: chat.un}));
-                        var chats = $('.from');
-                        var message = $('.message');
-                        var emote = $('.emote');
-                        var from = $('.un.clickable');
-                        for (var i = 0; i < chats.length; i++) {
-                            var n = from[i].textContent;
-                            if (name.trim() === n.trim()) {
-
-                                // var messagecid = $(message)[i].getAttribute('data-cid');
-                                // var emotecid = $(emote)[i].getAttribute('data-cid');
-                                // API.moderateDeleteChat(messagecid);
-
-                                // try {
-                                //     API.moderateDeleteChat(messagecid);
-                                // }
-                                // finally {
-                                //     API.moderateDeleteChat(emotecid);
-                                // }
-
-                                if (typeof $(message)[i].getAttribute('data-cid') == 'undefined'){
-                                    API.moderateDeleteChat($(emote)[i].getAttribute('data-cid')); // works well with normal messages but not with emotes due to emotes and messages are seperate.
-                                } else {
-                                    API.moderateDeleteChat($(message)[i].getAttribute('data-cid'));
-                                }
-                            }
-                        }
-                        API.sendChat(subChat(UNMBot.chat.deletechat, {name: chat.un, username: name}));
-                    }
-                }
-            },
-            */
             deletechatCommand: {
                 command: 'deletechat',
                 rank: 'mod',
@@ -2689,12 +2643,12 @@
                         }));
                         var argument = msg.substring(cmd.length + 1);
 
-                        $.get('https://rawgit.com/xUndisputed/UNMBot/master/langIndex.json', function(json) {
+                        $.get('https://rawgit.com/xUndisputed/SCLBot/master/langIndex.json', function(json) {
                             var langIndex = json;
                             var link = langIndex[argument.toLowerCase()];
                             if (typeof link === 'undefined') {
                                 API.sendChat(subChat(UNMBot.chat.langerror, {
-                                    link: 'https://github.com/xUndisputed/UNMBot/blob/master/langIndex.json'
+                                    link: 'https://github.com/xUndisputed/SCLBot/blob/master/langIndex.json'
                                 }));
                             } else {
                                 UNMBot.settings.language = argument;
@@ -3413,7 +3367,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
                     if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat('/me xUndisputed is an open-source bot for plug.dj. More info can be found here: https://github.com/xUndisputed/UNMBot');
+                        API.sendChat('/me xUndisputed is an open-source bot for plug.dj. More info can be found here: https://github.com/xUndisputed/SCLBot');
                     }
                 }
             },
@@ -3425,7 +3379,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("/me Ultra Night Music public discord: https://discord.gg/zq5RnBx");
+                            API.sendChat("/me #SquadColdLava public discord: https://discord.gg/zq5RnBx");
                     }
                 }
             },
@@ -3437,7 +3391,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("Enjoy your stay in Ultra Night Music!");
+                            API.sendChat("Enjoy your stay in #SquadColdLava!");
                     }
                 }
             },
@@ -3461,7 +3415,7 @@
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                     if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                            API.sendChat("plugdj: discord: https://discord.gg/RE8fkzE");
+                            API.sendChat("plugdj: discord: https://discord.gg/plugdj");
                     }
                 }
             },	
@@ -4259,5 +4213,5 @@
             }
         }
     };
-    loadChat(UNMBot.startup);
+    loadChat(SCLBot.startup);
 }).call(this);
