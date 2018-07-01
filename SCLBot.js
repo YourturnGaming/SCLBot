@@ -380,26 +380,26 @@
                 participants: [],
                 countdown: null,
                 startRoulette: function() {
-                    UNMBot.room.roulette.rouletteStatus = true;
-                    UNMBot.room.roulette.countdown = setTimeout(function() {
-                        UNMBot.room.roulette.endRoulette();
+                    SCLBot.room.roulette.rouletteStatus = true;
+                    SCLBot.room.roulette.countdown = setTimeout(function() {
+                        SCLBot.room.roulette.endRoulette();
                     }, 60 * 1000);
-                    API.sendChat(UNMBot.chat.isopen);
+                    API.sendChat(SCLBot.chat.isopen);
                 },
                 endRoulette: function() {
-                    UNMBot.room.roulette.rouletteStatus = false;
-                    var ind = Math.floor(Math.random() * UNMBot.room.roulette.participants.length);
-                    var winner = UNMBot.room.roulette.participants[ind];
-                    UNMBot.room.roulette.participants = [];
+                    SCLBot.room.roulette.rouletteStatus = false;
+                    var ind = Math.floor(Math.random() * SCLBot.room.roulette.participants.length);
+                    var winner = SCLBot.room.roulette.participants[ind];
+                    SCLBot.room.roulette.participants = [];
                     var pos = Math.floor((Math.random() * API.getWaitList().length) + 1);
-                    var user = UNMBot.userUtilities.lookupUser(winner);
+                    var user = SCLBot.userUtilities.lookupUser(winner);
                     var name = user.username;
-                    API.sendChat(subChat(UNMBot.chat.winnerpicked, {
+                    API.sendChat(subChat(SCLBot.chat.winnerpicked, {
                         name: name,
                         position: pos
                     }));
                     setTimeout(function(winner, pos) {
-                        UNMBot.userUtilities.moveUser(winner, pos, false);
+                        SCLBot.userUtilities.moveUser(winner, pos, false);
                     }, 1 * 1000, winner, pos);
                 }
             },
@@ -440,7 +440,7 @@
             updateDC: function(user) {
                 user.lastDC.time = Date.now();
                 user.lastDC.position = user.lastKnownPosition;
-                user.lastDC.songCount = UNMBot.room.roomstats.songCount;
+                user.lastDC.songCount = SCLBot.room.roomstats.songCount;
             },
             setLastActivity: function(user) {
                 user.lastActivity = Date.now();
@@ -457,24 +457,24 @@
                 user.afkWarningCount = value;
             },
             lookupUser: function(id) {
-                for (var i = 0; i < UNMBot.room.users.length; i++) {
-                    if (UNMBot.room.users[i].id === id) {
-                        return UNMBot.room.users[i];
+                for (var i = 0; i < SCLBot.room.users.length; i++) {
+                    if (SCLBot.room.users[i].id === id) {
+                        return SCLBot.room.users[i];
                     }
                 }
                 return false;
             },
             lookupUserName: function(name) {
-                for (var i = 0; i < UNMBot.room.users.length; i++) {
-                    var match = UNMBot.room.users[i].username.trim() == name.trim();
+                for (var i = 0; i < SCLBot.room.users.length; i++) {
+                    var match = SCLBot.room.users[i].username.trim() == name.trim();
                     if (match) {
-                        return UNMBot.room.users[i];
+                        return SCLBot.room.users[i];
                     }
                 }
                 return false;
             },
             voteRatio: function(id) {
-                var user = UNMBot.userUtilities.lookupUser(id);
+                var user = SCLBot.userUtilities.lookupUser(id);
                 var votes = user.votes;
                 if (votes.meh === 0) votes.ratio = 1;
                 else votes.ratio = (votes.woot / votes.meh).toFixed(2);
@@ -499,7 +499,7 @@
                 return 0;
             },
             moveUser: function(id, pos, priority) {
-                var user = UNMBot.userUtilities.lookupUser(id);
+                var user = SCLBot.userUtilities.lookupUser(id);
                 var wlist = API.getWaitList();
                 if (API.getWaitListPosition(id) === -1) {
                     if (wlist.length < 50) {
@@ -509,54 +509,54 @@
                         }, 1250, id, pos);
                     } else {
                         var alreadyQueued = -1;
-                        for (var i = 0; i < UNMBot.room.queue.id.length; i++) {
-                            if (UNMBot.room.queue.id[i] === id) alreadyQueued = i;
+                        for (var i = 0; i < SCLBot.room.queue.id.length; i++) {
+                            if (SCLBot.room.queue.id[i] === id) alreadyQueued = i;
                         }
                         if (alreadyQueued !== -1) {
-                            UNMBot.room.queue.position[alreadyQueued] = pos;
-                            return API.sendChat(subChat(UNMBot.chat.alreadyadding, {
-                                position: UNMBot.room.queue.position[alreadyQueued]
+                            SCLBot.room.queue.position[alreadyQueued] = pos;
+                            return API.sendChat(subChat(SCLBot.chat.alreadyadding, {
+                                position: SCLBot.room.queue.position[alreadyQueued]
                             }));
                         }
-                        UNMBot.roomUtilities.booth.lockBooth();
+                        SCLBot.roomUtilities.booth.lockBooth();
                         if (priority) {
-                            UNMBot.room.queue.id.unshift(id);
-                            UNMBot.room.queue.position.unshift(pos);
+                            SCLBot.room.queue.id.unshift(id);
+                            SCLBot.room.queue.position.unshift(pos);
                         } else {
-                            UNMBot.room.queue.id.push(id);
-                            UNMBot.room.queue.position.push(pos);
+                            SCLBot.room.queue.id.push(id);
+                            SCLBot.room.queue.position.push(pos);
                         }
                         var name = user.username;
-                        return API.sendChat(subChat(UNMBot.chat.adding, {
+                        return API.sendChat(subChat(SCLBot.chat.adding, {
                             name: name,
-                            position: UNMBot.room.queue.position.length
+                            position: SCLBot.room.queue.position.length
                         }));
                     }
                 } else API.moderateMoveDJ(id, pos);
             },
             dclookup: function(id) {
-                var user = UNMBot.userUtilities.lookupUser(id);
-                if (typeof user === 'boolean') return UNMBot.chat.usernotfound;
+                var user = SCLBot.userUtilities.lookupUser(id);
+                if (typeof user === 'boolean') return SCLBot.chat.usernotfound;
                 var name = user.username;
-                if (user.lastDC.time === null) return subChat(UNMBot.chat.notdisconnected, {
+                if (user.lastDC.time === null) return subChat(SCLBot.chat.notdisconnected, {
                     name: name
                 });
                 var dc = user.lastDC.time;
                 var pos = user.lastDC.position;
-                if (pos === null) return UNMBot.chat.noposition;
+                if (pos === null) return SCLBot.chat.noposition;
                 var timeDc = Date.now() - dc;
                 var validDC = false;
-                if (UNMBot.settings.maximumDc * 60 * 1000 > timeDc) {
+                if (SCLBot.settings.maximumDc * 60 * 1000 > timeDc) {
                     validDC = true;
                 }
-                var time = UNMBot.roomUtilities.msToStr(timeDc);
-                if (!validDC) return (subChat(UNMBot.chat.toolongago, {
-                    name: UNMBot.userUtilities.getUser(user).username,
+                var time = SCLBot.roomUtilities.msToStr(timeDc);
+                if (!validDC) return (subChat(SCLBot.chat.toolongago, {
+                    name: SCLBot.userUtilities.getUser(user).username,
                     time: time
                 }));
-                var songsPassed = UNMBot.room.roomstats.songCount - user.lastDC.songCount;
+                var songsPassed = SCLBot.room.roomstats.songCount - user.lastDC.songCount;
                 var afksRemoved = 0;
-                var afkList = UNMBot.room.afkList;
+                var afkList = SCLBot.room.afkList;
                 for (var i = 0; i < afkList.length; i++) {
                     var timeAfk = afkList[i][1];
                     var posAfk = afkList[i][2];
@@ -565,15 +565,15 @@
                     }
                 }
                 var newPosition = user.lastDC.position - songsPassed - afksRemoved;
-                if (newPosition <= 0) return subChat(UNMBot.chat.notdisconnected, {
+                if (newPosition <= 0) return subChat(SCLBot.chat.notdisconnected, {
                     name: name
                 });
-                var msg = subChat(UNMBot.chat.valid, {
-                    name: UNMBot.userUtilities.getUser(user).username,
+                var msg = subChat(SCLBot.chat.valid, {
+                    name: SCLBot.userUtilities.getUser(user).username,
                     time: time,
                     position: newPosition
                 });
-                UNMBot.userUtilities.moveUser(user.id, newPosition, true);
+                SCLBot.userUtilities.moveUser(user.id, newPosition, true);
                 return msg;
             }
         },
@@ -861,19 +861,19 @@
             chat.message = decodeEntities(chat.message);
             chat.message = chat.message.trim();
 
-            UNMBot.room.chatMessages.push([chat.cid, chat.message, chat.sub, chat.timestamp, chat.type, chat.uid, chat.un]);
+            SCLBot.room.chatMessages.push([chat.cid, chat.message, chat.sub, chat.timestamp, chat.type, chat.uid, chat.un]);
 
-            for (var i = 0; i < UNMBot.room.users.length; i++) {
-                if (UNMBot.room.users[i].id === chat.uid) {
-                    UNMBot.userUtilities.setLastActivity(UNMBot.room.users[i]);
-                    if (UNMBot.room.users[i].username !== chat.un) {
-                        UNMBot.room.users[i].username = chat.un;
+            for (var i = 0; i < SCLBot.room.users.length; i++) {
+                if (SCLBot.room.users[i].id === chat.uid) {
+                    SCLBot.userUtilities.setLastActivity(SCLBot.room.users[i]);
+                    if (SCLBot.room.users[i].username !== chat.un) {
+                        SCLBot.room.users[i].username = chat.un;
                     }
                 }
             }
-            if (UNMBot.chatUtilities.chatFilter(chat)) return void(0);
-            if (!UNMBot.chatUtilities.commandCheck(chat))
-                UNMBot.chatUtilities.action(chat);
+            if (SCLBot.chatUtilities.chatFilter(chat)) return void(0);
+            if (!SCLBot.chatUtilities.commandCheck(chat))
+                SCLBot.chatUtilities.action(chat);
         },
         eventUserjoin: function(user) {
             var known = false;
