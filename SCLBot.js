@@ -3941,17 +3941,17 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var cd = msg.substring(cmd.length + 1);
                         if (!isNaN(cd)) {
-                            UNMBot.settings.commandCooldown = cd;
-                            return API.sendChat(subChat(UNMBot.chat.commandscd, {
+                            SCLBot.settings.commandCooldown = cd;
+                            return API.sendChat(subChat(SCLBot.chat.commandscd, {
                                 name: chat.un,
-                                time: UNMBot.settings.commandCooldown
+                                time: SCLBot.settings.commandCooldown
                             }));
-                        } else return API.sendChat(subChat(UNMBot.chat.invalidtime, {
+                        } else return API.sendChat(subChat(SCLBot.chat.invalidtime, {
                             name: chat.un
                         }));
                     }
@@ -3963,20 +3963,20 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (UNMBot.settings.usercommandsEnabled) {
-                            API.sendChat(subChat(UNMBot.chat.toggleoff, {
+                        if (SCLBot.settings.usercommandsEnabled) {
+                            API.sendChat(subChat(SCLBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': UNMBot.chat.usercommands
+                                'function': SCLBot.chat.usercommands
                             }));
-                            UNMBot.settings.usercommandsEnabled = !UNMBot.settings.usercommandsEnabled;
+                            SCLBot.settings.usercommandsEnabled = !SCLBot.settings.usercommandsEnabled;
                         } else {
-                            API.sendChat(subChat(UNMBot.chat.toggleon, {
+                            API.sendChat(subChat(SCLBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': UNMBot.chat.usercommands
+                                'function': SCLBot.chat.usercommands
                             }));
-                            UNMBot.settings.usercommandsEnabled = !UNMBot.settings.usercommandsEnabled;
+                            SCLBot.settings.usercommandsEnabled = !SCLBot.settings.usercommandsEnabled;
                         }
                     }
                 }
@@ -3987,20 +3987,20 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(UNMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(SCLBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = UNMBot.userUtilities.lookupUserName(name);
-                        if (user === false) return API.sendChat(subChat(UNMBot.chat.invaliduserspecified, {
+                        var user = SCLBot.userUtilities.lookupUserName(name);
+                        if (user === false) return API.sendChat(subChat(SCLBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
                         var vratio = user.votes;
                         var ratio = vratio.woot / vratio.meh;
-                        API.sendChat(subChat(UNMBot.chat.voteratio, {
+                        API.sendChat(subChat(SCLBot.chat.voteratio, {
                             name: chat.un,
                             username: name,
                             woot: vratio.woot,
@@ -4016,24 +4016,24 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length <= cmd.length + 1) return API.sendChat(subChat(UNMBot.chat.voteskiplimit, {
+                        if (msg.length <= cmd.length + 1) return API.sendChat(subChat(SCLBot.chat.voteskiplimit, {
                             name: chat.un,
-                            limit: UNMBot.settings.voteSkipLimit
+                            limit: SCLBot.settings.voteSkipLimit
                         }));
                         var argument = msg.substring(cmd.length + 1);
-                        if (!UNMBot.settings.voteSkip) UNMBot.settings.voteSkip = !UNMBot.settings.voteSkip;
+                        if (!SCLBot.settings.voteSkip) SCLBot.settings.voteSkip = !SCLBot.settings.voteSkip;
                         if (isNaN(argument)) {
-                            API.sendChat(subChat(UNMBot.chat.voteskipinvalidlimit, {
+                            API.sendChat(subChat(SCLBot.chat.voteskipinvalidlimit, {
                                 name: chat.un
                             }));
                         } else {
-                            UNMBot.settings.voteSkipLimit = argument;
-                            API.sendChat(subChat(UNMBot.chat.voteskipsetlimit, {
+                            SCLBot.settings.voteSkipLimit = argument;
+                            API.sendChat(subChat(SCLBot.chat.voteskipsetlimit, {
                                 name: chat.un,
-                                limit: UNMBot.settings.voteSkipLimit
+                                limit: SCLBot.settings.voteSkipLimit
                             }));
                         }
                     }
@@ -4045,11 +4045,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof UNMBot.settings.website === 'string')
-                            API.sendChat(subChat(UNMBot.chat.website, {
-                                link: UNMBot.settings.website
+                        if (typeof SCLBot.settings.website === 'string')
+                            API.sendChat(subChat(SCLBot.chat.website, {
+                                link: SCLBot.settings.website
                             }));
                     }
                 }
@@ -4060,19 +4060,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (UNMBot.settings.welcome) {
-                            UNMBot.settings.welcome = !UNMBot.settings.welcome;
-                            return API.sendChat(subChat(UNMBot.chat.toggleoff, {
+                        if (SCLBot.settings.welcome) {
+                            SCLBot.settings.welcome = !SCLBot.settings.welcome;
+                            return API.sendChat(subChat(SCLBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': UNMBot.chat.welcomemsg
+                                'function': SCLBot.chat.welcomemsg
                             }));
                         } else {
-                            UNMBot.settings.welcome = !UNMBot.settings.welcome;
-                            return API.sendChat(subChat(UNMBot.chat.toggleon, {
+                            SCLBot.settings.welcome = !SCLBot.settings.welcome;
+                            return API.sendChat(subChat(SCLBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': UNMBot.chat.welcomemsg
+                                'function': SCLBot.chat.welcomemsg
                             }));
                         }
                     }
@@ -4084,7 +4084,7 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var name;
@@ -4167,7 +4167,7 @@
                                     var profile = '~';
                                 }
 
-                                API.sendChat(subChat(UNMBot.chat.whois, {
+                                API.sendChat(subChat(SCLBot.chat.whois, {
                                     name1: chat.un,
                                     name2: name,
                                     id: id,
@@ -4189,7 +4189,7 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         $('#woot').click();
                     }
@@ -4201,12 +4201,12 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof UNMBot.settings.youtubeLink === 'string')
-                            API.sendChat(subChat(UNMBot.chat.youtube, {
+                        if (typeof SCLBot.settings.youtubeLink === 'string')
+                            API.sendChat(subChat(SCLBot.chat.youtube, {
                                 name: chat.un,
-                                link: UNMBot.settings.youtubeLink
+                                link: SCLBot.settings.youtubeLink
                             }));
                     }
                 }
