@@ -661,40 +661,40 @@
                 lockTimer: setTimeout(function() {}, 1000),
                 locked: false,
                 lockBooth: function() {
-                    API.moderateLockWaitList(!UNMBot.roomUtilities.booth.locked);
-                    UNMBot.roomUtilities.booth.locked = false;
-                    if (UNMBot.settings.lockGuard) {
-                        UNMBot.roomUtilities.booth.lockTimer = setTimeout(function() {
-                            API.moderateLockWaitList(UNMBot.roomUtilities.booth.locked);
-                        }, UNMBot.settings.maximumLocktime * 60 * 1000);
+                    API.moderateLockWaitList(!SCLBot.roomUtilities.booth.locked);
+                    SCLBot.roomUtilities.booth.locked = false;
+                    if (SCLBot.settings.lockGuard) {
+                        SCLBot.roomUtilities.booth.lockTimer = setTimeout(function() {
+                            API.moderateLockWaitList(USCLBot.roomUtilities.booth.locked);
+                        }, SCLBot.settings.maximumLocktime * 60 * 1000);
                     }
                 },
                 unlockBooth: function() {
-                    API.moderateLockWaitList(UNMBot.roomUtilities.booth.locked);
-                    clearTimeout(UNMBot.roomUtilities.booth.lockTimer);
+                    API.moderateLockWaitList(SCLBot.roomUtilities.booth.locked);
+                    clearTimeout(SCLBot.roomUtilities.booth.lockTimer);
                 }
             },
             afkCheck: function() {
-                if (!UNMBot.status || !UNMBot.settings.afkRemoval) return void(0);
-                var rank = UNMBot.roomUtilities.rankToNumber(UNMBot.settings.afkRankCheck);
+                if (!SCLBot.status || !SCLBot.settings.afkRemoval) return void(0);
+                var rank = SCLBot.roomUtilities.rankToNumber(SCLBot.settings.afkRankCheck);
                 var djlist = API.getWaitList();
-                var lastPos = Math.min(djlist.length, UNMBot.settings.afkpositionCheck);
+                var lastPos = Math.min(djlist.length, SCLBot.settings.afkpositionCheck);
                 if (lastPos - 1 > djlist.length) return void(0);
                 for (var i = 0; i < lastPos; i++) {
                     if (typeof djlist[i] !== 'undefined') {
                         var id = djlist[i].id;
-                        var user = UNMBot.userUtilities.lookupUser(id);
+                        var user = SCLBot.userUtilities.lookupUser(id);
                         if (typeof user !== 'boolean') {
-                            var plugUser = UNMBot.userUtilities.getUser(user);
-                            if (rank !== null && UNMBot.userUtilities.getPermission(plugUser) <= rank) {
+                            var plugUser = SCLBot.userUtilities.getUser(user);
+                            if (rank !== null && SCLBot.userUtilities.getPermission(plugUser) <= rank) {
                                 var name = plugUser.username;
-                                var lastActive = UNMBot.userUtilities.getLastActivity(user);
+                                var lastActive = SCLBot.userUtilities.getLastActivity(user);
                                 var inactivity = Date.now() - lastActive;
-                                var time = UNMBot.roomUtilities.msToStr(inactivity);
+                                var time = SCLBot.roomUtilities.msToStr(inactivity);
                                 var warncount = user.afkWarningCount;
-                                if (inactivity > UNMBot.settings.maximumAfk * 60 * 1000) {
+                                if (inactivity > SCLBot.settings.maximumAfk * 60 * 1000) {
                                     if (warncount === 0) {
-                                        API.sendChat(subChat(UNMBot.chat.warning1, {
+                                        API.sendChat(subChat(SCLBot.chat.warning1, {
                                             name: name,
                                             time: time
                                         }));
@@ -703,7 +703,7 @@
                                             userToChange.afkWarningCount = 1;
                                         }, 90 * 1000, user);
                                     } else if (warncount === 1) {
-                                        API.sendChat(subChat(UNMBot.chat.warning2, {
+                                        API.sendChat(subChat(SCLBot.chat.warning2, {
                                             name: name
                                         }));
                                         user.afkWarningCount = 3;
@@ -714,7 +714,7 @@
                                         var pos = API.getWaitListPosition(id);
                                         if (pos !== -1) {
                                             pos++;
-                                            UNMBot.room.afkList.push([id, Date.now(), pos]);
+                                            SCLBot.room.afkList.push([id, Date.now(), pos]);
                                             user.lastDC = {
                                              
                                                 time: null,
@@ -722,11 +722,11 @@
                                                 songCount: 0
                                             };
                                             API.moderateRemoveDJ(id);
-                                            API.sendChat(subChat(UNMBot.chat.afkremove, {
+                                            API.sendChat(subChat(SCLBot.chat.afkremove, {
                                                 name: name,
                                                 time: time,
                                                 position: pos,
-                                                maximumafk: UNMBot.settings.maximumAfk
+                                                maximumafk: SCLBot.settings.maximumAfk
                                             }));
                                         }
                                         user.afkWarningCount = 0;
@@ -742,10 +742,10 @@
                 var id = dj.id;
                 var waitlistlength = API.getWaitList().length;
                 var locked = false;
-                UNMBot.room.queueable = false;
+                SCLBot.room.queueable = false;
 
                 if (waitlistlength == 50) {
-                    UNMBot.roomUtilities.booth.lockBooth();
+                    SCLBot.roomUtilities.booth.lockBooth();
                     locked = true;
             }
             setTimeout(function(id) {
@@ -755,16 +755,16 @@
                             API.sendChat(reason);
                         }
                     }, 500);
-                    UNMBot.room.skippable = false;
+                    SCLBot.room.skippable = false;
                     setTimeout(function() {
-                        UNMBot.room.skippable = true
+                        SCLBot.room.skippable = true
                     }, 5 * 1000);
                     setTimeout(function(id) {
-                        UNMBot.userUtilities.moveUser(id, UNMBot.settings.skipPosition, false);
-                        UNMBot.room.queueable = true;
+                        SCLBot.userUtilities.moveUser(id, SCLBot.settings.skipPosition, false);
+                        SCLBot.room.queueable = true;
                         if (locked) {
                             setTimeout(function() {
-                                UNMBot.roomUtilities.booth.unlockBooth();
+                                SCLBot.roomUtilities.booth.unlockBooth();
                             }, 1000);
                         }
                     }, 1500, id);
@@ -774,13 +774,13 @@
                 $.getJSON('/_/rooms/state', function(data) {
                     if (data.data[0].booth.shouldCycle) { // checks if shouldCycle is true
                         API.moderateDJCycle(false); // Disables the DJ Cycle
-                        clearTimeout(UNMBot.room.cycleTimer); // Clear the cycleguard timer
+                        clearTimeout(SCLBot.room.cycleTimer); // Clear the cycleguard timer
                     } else { // If cycle is already disable; enable it
-                        if (UNMBot.settings.cycleGuard) { // Is cycle guard on?
+                        if (SCLBot.settings.cycleGuard) { // Is cycle guard on?
                             API.moderateDJCycle(true); // Enables DJ cycle
-                            UNMBot.room.cycleTimer = setTimeout(function() { // Start timer
+                            SCLBot.room.cycleTimer = setTimeout(function() { // Start timer
                                 API.moderateDJCycle(false); // Disable cycle
-                            }, UNMBot.settings.maximumCycletime * 60 * 1000); // The time
+                            }, SCLBot.settings.maximumCycletime * 60 * 1000); // The time
                         } else { // So cycleguard is not on?
                             API.moderateDJCycle(true); // Enables DJ cycle
                         }
@@ -4213,5 +4213,7 @@
             }
         }
     };
+
     loadChat(SCLBot.startup);
 }).call(this);
+
