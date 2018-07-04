@@ -244,12 +244,8 @@
     var botCreator = "xUndisputed";
     var botMaintainer = "xUndisputed";
     var botCreatorIDs = ["3669054", "20168147"];
-    var resdjs = ["",""];
-    var bouncers = ["",""];
-    var managers = ["",""];
-    var CoHosts = ["",""];
     var SCLBot = {
-        version: "3.18.1.6 (New Version and New things, Soon is all fixed)",
+        version: "3.18.1.9 (New Version and New things, Soon is all fixed)",
         status: true,
         name: "SCLBot",
         loggedInID: "20168147",
@@ -1427,51 +1423,51 @@
 
             retrieveSettings();
             retrieveFromStorage();
-            window.bot = UNMBot;
-            UNMBot.roomUtilities.updateBlacklists();
-            setInterval(UNMBot.roomUtilities.updateBlacklists, 60 * 60 * 1000);
-            UNMBot.getNewBlacklistedSongs = UNMBot.roomUtilities.exportNewBlacklistedSongs;
-            UNMBot.logNewBlacklistedSongs = UNMBot.roomUtilities.logNewBlacklistedSongs;
-            if (UNMBot.room.roomstats.launchTime === null) {
-                UNMBot.room.roomstats.launchTime = Date.now();
+            window.bot = SCLBot;
+            SCLBot.roomUtilities.updateBlacklists();
+            setInterval(SCLBot.roomUtilities.updateBlacklists, 60 * 60 * 1000);
+            SCLBot.getNewBlacklistedSongs = SCLBot.roomUtilities.exportNewBlacklistedSongs;
+            SCLBot.logNewBlacklistedSongs = SCLBot.roomUtilities.logNewBlacklistedSongs;
+            if (SCLBot.room.roomstats.launchTime === null) {
+                SCLBot.room.roomstats.launchTime = Date.now();
             }
 
-            for (var j = 0; j < UNMBot.room.users.length; j++) {
-                UNMBot.room.users[j].inRoom = false;
+            for (var j = 0; j < SCLBot.room.users.length; j++) {
+                SCLBot.room.users[j].inRoom = false;
             }
             var userlist = API.getUsers();
             for (var i = 0; i < userlist.length; i++) {
                 var known = false;
                 var ind = null;
-                for (var j = 0; j < UNMBot.room.users.length; j++) {
-                    if (UNMBot.room.users[j].id === userlist[i].id) {
+                for (var j = 0; j < SCLBot.room.users.length; j++) {
+                    if (SCLBot.room.users[j].id === userlist[i].id) {
                         known = true;
                         ind = j;
                     }
                 }
                 if (known) {
-                    UNMBot.room.users[ind].inRoom = true;
+                    SCLBot.room.users[ind].inRoom = true;
                 } else {
-                    UNMBot.room.users.push(new UNMBot.User(userlist[i].id, userlist[i].username));
-                    ind = UNMBot.room.users.length - 1;
+                    SCLBot.room.users.push(new SCLBot.User(userlist[i].id, userlist[i].username));
+                    ind = SCLBot.room.users.length - 1;
                 }
-                var wlIndex = API.getWaitListPosition(UNMBot.room.users[ind].id) + 1;
-                UNMBot.userUtilities.updatePosition(UNMBot.room.users[ind], wlIndex);
+                var wlIndex = API.getWaitListPosition(SCLBot.room.users[ind].id) + 1;
+                SCLBot.userUtilities.updatePosition(SCLBot.room.users[ind], wlIndex);
             }
-            UNMBot.room.afkInterval = setInterval(function() {
-                UNMBot.roomUtilities.afkCheck()
+            SCLBot.room.afkInterval = setInterval(function() {
+                SCLBot.roomUtilities.afkCheck()
             }, 10 * 1000);
-            UNMBot.room.autodisableInterval = setInterval(function() {
-                UNMBot.room.autodisableFunc();
+            SCLBot.room.autodisableInterval = setInterval(function() {
+                SCLBot.room.autodisableFunc();
             }, 60 * 60 * 1000);
-            UNMBot.loggedInID = API.getUser().id;
-            UNMBot.status = true;
-            API.sendChat('/cap ' + UNMBot.settings.startupCap);
-            API.setVolume(UNMBot.settings.startupVolume);
-            if (UNMBot.settings.autowoot) {
+            SCLBot.loggedInID = API.getUser().id;
+            SCLBot.status = true;
+            API.sendChat('/cap ' + SCLBot.settings.startupCap);
+            API.setVolume(SCLBot.settings.startupVolume);
+            if (SCLBot.settings.autowoot) {
                 $('#woot').click();
             }
-            if (UNMBot.settings.startupEmoji) {
+            if (SCLBot.settings.startupEmoji) {
                 var emojibuttonoff = $('.icon-emoji-off');
                 if (emojibuttonoff.length > 0) {
                     emojibuttonoff[0].click();
@@ -1495,7 +1491,7 @@
         commands: {
             executable: function(minRank, chat) {
                 var id = chat.uid;
-                var perm = UNMBot.userUtilities.getPermission(id);
+                var perm = SCLBot.userUtilities.getPermission(id);
                 var minPerm;
                 switch (minRank) {
                     case 'admin':
@@ -1514,7 +1510,7 @@
                         minPerm = API.ROLE.MANAGER;
                         break;
                     case 'mod':
-                        if (UNMBot.settings.bouncerPlus) {
+                        if (SCLBot.settings.bouncerPlus) {
                             minPerm = API.ROLE.BOUNCER;
                         } else {
                             minPerm = API.ROLE.MANAGER;
@@ -1542,7 +1538,7 @@
                 type: 'startsWith/exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
 
                     }
