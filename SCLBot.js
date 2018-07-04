@@ -248,12 +248,12 @@
     var bouncers = ["",""];
     var managers = ["",""];
     var CoHosts = ["",""];
-    var UNMBot = {
-        version: "3.18.0.4 (New Version and New things, Soon is all fixed)",
+    var SCLBot = {
+        version: "3.18.1.6 (New Version and New things, Soon is all fixed)",
         status: true,
         name: "SCLBot",
         loggedInID: "20168147",
-        scriptLink: "https://rawgit.com/xUndisputed/SCLBot/master/UNMBot.js",
+        scriptLink: "https://rawgit.com/xUndisputed/SCLBot/master/SCLBot.js",
         cmdLink: "https://goo.gl/4BQP8Y",
         chatLink: "https://rawgit.com/xUndisputed/SCLBot/master/langIndex.json",
         chat: null,
