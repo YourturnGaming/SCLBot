@@ -1017,14 +1017,14 @@
 
             var blacklistSkip = setTimeout(function() {
                 var mid = obj.media.format + ':' + obj.media.cid;
-                for (var bl in UNMBot.room.blacklists) {
-                    if (UNMBot.settings.blacklistEnabled) {
-                        if (UNMBot.room.blacklists[bl].indexOf(mid) > -1) {
-                            API.sendChat(subChat(UNMBot.chat.isblacklisted, {
+                for (var bl in SCLBot.room.blacklists) {
+                    if (SCLBot.settings.blacklistEnabled) {
+                        if (SCLBot.room.blacklists[bl].indexOf(mid) > -1) {
+                            API.sendChat(subChat(SCLBot.chat.isblacklisted, {
                                 blacklist: bl
                             }));
-                            if (UNMBot.settings.smartSkip) {
-                                return UNMBot.roomUtilities.smartSkip();
+                            if (SCLBot.settings.smartSkip) {
+                                return SCLBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1034,14 +1034,14 @@
             }, 2000);
             var newMedia = obj.media;
             var timeLimitSkip = setTimeout(function() {
-                if (UNMBot.settings.timeGuard && newMedia.duration > UNMBot.settings.maximumSongLength * 60 && !UNMBot.room.roomevent) {
+                if (SCLBot.settings.timeGuard && newMedia.duration > SCLBot.settings.maximumSongLength * 60 && !SCLBot.room.roomevent) {
                     var name = obj.dj.username;
-                    API.sendChat(subChat(UNMBot.chat.timelimit, {
+                    API.sendChat(subChat(SCLBot.chat.timelimit, {
                         name: name,
-                        maxlength: UNMBot.settings.maximumSongLength
+                        maxlength: SCLBot.settings.maximumSongLength
                     }));
-                    if (UNMBot.settings.smartSkip) {
-                        return UNMBot.roomUtilities.smartSkip();
+                    if (SCLBot.settings.smartSkip) {
+                        return SCLBot.roomUtilities.smartSkip();
                     } else {
                         return API.moderateForceSkip();
                     }
@@ -1054,11 +1054,11 @@
                     $.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + cid + '&key=AIzaSyDcfWu9cGaDnTjPKhg_dy9mUh6H7i4ePZ0&part=snippet&callback=?', function(track) {
                         if (typeof(track.items[0]) === 'undefined') {
                             var name = obj.dj.username;
-                            API.sendChat(subChat(UNMBot.chat.notavailable, {
+                            API.sendChat(subChat(SCLBot.chat.notavailable, {
                                 name: name
                             }));
-                            if (UNMBot.settings.smartSkip) {
-                                return UNMBot.roomUtilities.smartSkip();
+                            if (SCLBot.settings.smartSkip) {
+                                return SCLBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1068,11 +1068,11 @@
                     var checkSong = SC.get('/tracks/' + cid, function(track) {
                         if (typeof track.title === 'undefined') {
                             var name = obj.dj.username;
-                            API.sendChat(subChat(UNMBot.chat.notavailable, {
+                            API.sendChat(subChat(SCLBot.chat.notavailable, {
                                 name: name
                             }));
-                            if (UNMBot.settings.smartSkip) {
-                                return UNMBot.roomUtilities.smartSkip();
+                            if (SCLBot.settings.smartSkip) {
+                                return SCLBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
@@ -1081,41 +1081,41 @@
                 }
             }, 2000);
             clearTimeout(historySkip);
-            if (UNMBot.settings.historySkip) {
+            if (SCLBot.settings.historySkip) {
                 var alreadyPlayed = false;
                 var apihistory = API.getHistory();
                 var name = obj.dj.username;
                 var historySkip = setTimeout(function() {
                     for (var i = 0; i < apihistory.length; i++) {
                         if (apihistory[i].media.cid === obj.media.cid) {
-                            UNMBot.room.historyList[i].push(+new Date());
+                            SCLBot.room.historyList[i].push(+new Date());
                             alreadyPlayed = true;
-                            API.sendChat(subChat(UNMBot.chat.songknown, {
+                            API.sendChat(subChat(SCLBot.chat.songknown, {
                                 name: name
                             }));
-                            if (UNMBot.settings.smartSkip) {
-                                return UNMBot.roomUtilities.smartSkip();
+                            if (SCLBot.settings.smartSkip) {
+                                return SCLBot.roomUtilities.smartSkip();
                             } else {
                                 return API.moderateForceSkip();
                             }
                         }
                     }
                     if (!alreadyPlayed) {
-                        UNMBot.room.historyList.push([obj.media.cid, +new Date()]);
+                        SCLBot.room.historyList.push([obj.media.cid, +new Date()]);
                     }
                 }, 2000);
             }
             if (user.ownSong) {
-                API.sendChat(subChat(UNMBot.chat.permissionownsong, {
+                API.sendChat(subChat(SCLBot.chat.permissionownsong, {
                     name: user.username
                 }));
                 user.ownSong = false;
             }
-            clearTimeout(UNMBot.room.autoskipTimer);
-            if (UNMBot.settings.autoskip) {
+            clearTimeout(SCLBot.room.autoskipTimer);
+            if (SCLBot.settings.autoskip) {
                 var remaining = obj.media.duration * 1000;
                 var startcid = API.getMedia().cid;
-                UNMBot.room.autoskipTimer = setTimeout(function() {
+                SCLBot.room.autoskipTimer = setTimeout(function() {
                     var endcid = API.getMedia().cid;
                     if (startcid === endcid) {
                         //API.sendChat('Song stuck, skipping...');
@@ -1128,37 +1128,37 @@
         },
         eventWaitlistupdate: function(users) {
             if (users.length < 50) {
-                if (UNMBot.room.queue.id.length > 0 && UNMBot.room.queueable) {
-                    UNMBot.room.queueable = false;
+                if (SCLBot.room.queue.id.length > 0 && SCLBot.room.queueable) {
+                    SCLBot.room.queueable = false;
                     setTimeout(function() {
-                        UNMBot.room.queueable = true;
+                        SCLBot.room.queueable = true;
                     }, 500);
-                    UNMBot.room.queueing++;
+                    SCLBot.room.queueing++;
                     var id, pos;
                     setTimeout(
                         function() {
-                            id = UNMBot.room.queue.id.splice(0, 1)[0];
-                            pos = UNMBot.room.queue.position.splice(0, 1)[0];
+                            id = SCLBot.room.queue.id.splice(0, 1)[0];
+                            pos = SCLBot.room.queue.position.splice(0, 1)[0];
                             API.moderateAddDJ(id, pos);
                             setTimeout(
                                 function(id, pos) {
                                     API.moderateMoveDJ(id, pos);
-                                    UNMBot.room.queueing--;
-                                    if (UNMBot.room.queue.id.length === 0) setTimeout(function() {
-                                        UNMBot.roomUtilities.booth.unlockBooth();
+                                    SCLBot.room.queueing--;
+                                    if (SCLBot.room.queue.id.length === 0) setTimeout(function() {
+                                        SCLBot.roomUtilities.booth.unlockBooth();
                                     }, 1000);
                                 }, 1000, id, pos);
-                        }, 1000 + UNMBot.room.queueing * 2500);
+                        }, 1000 + SCLBot.room.queueing * 2500);
                 }
             }
             for (var i = 0; i < users.length; i++) {
-                var user = UNMBot.userUtilities.lookupUser(users[i].id);
-                UNMBot.userUtilities.updatePosition(user, API.getWaitListPosition(users[i].id) + 1);
+                var user = SCLBot.userUtilities.lookupUser(users[i].id);
+                SCLBot.userUtilities.updatePosition(user, API.getWaitListPosition(users[i].id) + 1);
             }
         },
         chatcleaner: function(chat) {
-            if (!UNMBot.settings.filterChat) return false;
-            if (UNMBot.userUtilities.getPermission(chat.uid) >= API.ROLE.BOUNCER) return false;
+            if (!SCLBot.settings.filterChat) return false;
+            if (SCLBot.userUtilities.getPermission(chat.uid) >= API.ROLE.BOUNCER) return false;
             var msg = chat.message;
             var containsLetters = false;
             for (var i = 0; i < msg.length; i++) {
@@ -1177,21 +1177,21 @@
                 if (ch >= 'A' && ch <= 'Z') capitals++;
             }
             if (capitals >= 40) {
-                API.sendChat(subChat(UNMBot.chat.caps, {
+                API.sendChat(subChat(SCLBot.chat.caps, {
                     name: chat.un
                 }));
                 return true;
             }
             msg = msg.toLowerCase();
             if (msg === 'skip') {
-                API.sendChat(subChat(UNMBot.chat.askskip, {
+                API.sendChat(subChat(SCLBot.chat.askskip, {
                     name: chat.un
                 }));
                 return true;
             }
-            for (var j = 0; j < UNMBot.chatUtilities.spam.length; j++) {
-                if (msg === UNMBot.chatUtilities.spam[j]) {
-                    API.sendChat(subChat(UNMBot.chat.spam, {
+            for (var j = 0; j < SCLBot.chatUtilities.spam.length; j++) {
+                if (msg === SCLBot.chatUtilities.spam[j]) {
+                    API.sendChat(subChat(SCLBot.chat.spam, {
                         name: chat.un
                     }));
                     return true;
@@ -1202,34 +1202,34 @@
         chatUtilities: {
             chatFilter: function(chat) {
                 var msg = chat.message;
-                var perm = UNMBot.userUtilities.getPermission(chat.uid);
-                var user = UNMBot.userUtilities.lookupUser(chat.uid);
+                var perm = SCLBot.userUtilities.getPermission(chat.uid);
+                var user = SCLBot.userUtilities.lookupUser(chat.uid);
                 var isMuted = false;
-                for (var i = 0; i < UNMBot.room.mutedUsers.length; i++) {
-                    if (UNMBot.room.mutedUsers[i] === chat.uid) isMuted = true;
+                for (var i = 0; i < SCLBot.room.mutedUsers.length; i++) {
+                    if (SCLBot.room.mutedUsers[i] === chat.uid) isMuted = true;
                 }
                 if (isMuted) {
                     API.moderateDeleteChat(chat.cid);
                     return true;
                 }
-                if (UNMBot.settings.lockdownEnabled) {
+                if (SCLBot.settings.lockdownEnabled) {
                     if (perm === API.ROLE.NONE) {
                         API.moderateDeleteChat(chat.cid);
                         return true;
                     }
                 }
-                if (UNMBot.chatcleaner(chat)) {
+                if (SCLBot.chatcleaner(chat)) {
                     API.moderateDeleteChat(chat.cid);
                     return true;
                 }
-                if (UNMBot.settings.cmdDeletion && msg.startsWith(UNMBot.settings.commandLiteral)) {
+                if (SCLBot.settings.cmdDeletion && msg.startsWith(SCLBot.settings.commandLiteral)) {
                     API.moderateDeleteChat(chat.cid);
                 }
                 /**
                  var plugRoomLinkPatt = /(\bhttps?:\/\/(www.)?plug\.dj[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
                  if (plugRoomLinkPatt.exec(msg)) {
                     if (perm === API.ROLE.NONE) {
-                        API.sendChat(subChat(UNMBot.chat.roomadvertising, {name: chat.un}));
+                        API.sendChat(subChat(SCLBot.chat.roomadvertising, {name: chat.un}));
                         API.moderateDeleteChat(chat.cid);
                         return true;
                     }
@@ -1237,7 +1237,7 @@
                  **/
                 if (msg.indexOf("http://adf.ly/") > -1) {
                     API.moderateDeleteChat(chat.cid);
-                    API.sendChat(subChat(UNMBot.chat.adfly, {
+                    API.sendChat(subChat(SCLBot.chat.adfly, {
                         name: chat.un
                     }));
                     return true;
@@ -1247,8 +1247,8 @@
                     return true;
                 }
 
-                var rlJoinChat = UNMBot.chat.roulettejoin;
-                var rlLeaveChat = UNMBot.chat.rouletteleave;
+                var rlJoinChat = SCLBot.chat.roulettejoin;
+                var rlLeaveChat = SCLBot.chat.rouletteleave;
 
                 var joinedroulette = rlJoinChat.split('%%NAME%%');
                 if (joinedroulette[1].length > joinedroulette[0].length) joinedroulette = joinedroulette[1];
@@ -1258,7 +1258,7 @@
                 if (leftroulette[1].length > leftroulette[0].length) leftroulette = leftroulette[1];
                 else leftroulette = leftroulette[0];
 
-                if ((msg.indexOf(joinedroulette) > -1 || msg.indexOf(leftroulette) > -1) && chat.uid === UNMBot.loggedInID) {
+                if ((msg.indexOf(joinedroulette) > -1 || msg.indexOf(leftroulette) > -1) && chat.uid === SCLBot.loggedInID) {
                     setTimeout(function(id) {
                         API.moderateDeleteChat(id);
                     }, 5 * 1000, chat.cid);
@@ -1268,21 +1268,21 @@
             },
             commandCheck: function(chat) {
                 var cmd;
-                if (chat.message.charAt(0) === UNMBot.settings.commandLiteral) {
+                if (chat.message.charAt(0) === SCLBot.settings.commandLiteral) {
                     var space = chat.message.indexOf(' ');
                     if (space === -1) {
                         cmd = chat.message;
                     } else cmd = chat.message.substring(0, space);
                 } else return false;
-                var userPerm = UNMBot.userUtilities.getPermission(chat.uid);
+                var userPerm = SCLBot.userUtilities.getPermission(chat.uid);
                 //console.log('name: ' + chat.un + ', perm: ' + userPerm);
-                if (chat.message !== UNMBot.settings.commandLiteral + 'join' && chat.message !== UNMBot.settings.commandLiteral + 'leave') {       
-                    if (userPerm === API.ROLE.NONE && !UNMBot.room.usercommand) return void(0);
-                    if (!UNMBot.room.allcommand) return void(0);
+                if (chat.message !== SCLBot.settings.commandLiteral + 'join' && chat.message !== SCLBot.settings.commandLiteral + 'leave') {       
+                    if (userPerm === API.ROLE.NONE && !SCLBot.room.usercommand) return void(0);
+                    if (!SCLBot.room.allcommand) return void(0);
                 }
-                if (chat.message === UNMBot.settings.commandLiteral + 'eta' && UNMBot.settings.etaRestriction) {
+                if (chat.message === SCLBot.settings.commandLiteral + 'eta' && SCLBot.settings.etaRestriction) {
                     if (userPerm < API.ROLE.BOUNCER) {
-                        var u = UNMBot.userUtilities.lookupUser(chat.uid);
+                        var u = SCLBot.userUtilities.lookupUser(chat.uid);
                         if (u.lastEta !== null && (Date.now() - u.lastEta) < 1 * 60 * 60 * 1000) {
                             API.moderateDeleteChat(chat.cid);
                             return void(0);
@@ -1291,14 +1291,14 @@
                 }
                 var executed = false;
 
-                for (var comm in UNMBot.commands) {
-                    var cmdCall = UNMBot.commands[comm].command;
+                for (var comm in SCLBot.commands) {
+                    var cmdCall = SCLBot.commands[comm].command;
                     if (!Array.isArray(cmdCall)) {
                         cmdCall = [cmdCall]
                     }
                     for (var i = 0; i < cmdCall.length; i++) {
-                        if (UNMBot.settings.commandLiteral + cmdCall[i] === cmd) {
-                            UNMBot.commands[comm].functionality(chat, UNMBot.settings.commandLiteral + cmdCall[i]);
+                        if (SCLBot.settings.commandLiteral + cmdCall[i] === cmd) {
+                            SCLBot.commands[comm].functionality(chat, SCLBot.settings.commandLiteral + cmdCall[i]);
                             executed = true;
                             break;
                         }
@@ -1306,34 +1306,34 @@
                 }
 
                 if (executed && userPerm === API.ROLE.NONE) {
-                    UNMBot.room.usercommand = false;
+                    SCLBot.room.usercommand = false;
                     setTimeout(function() {
-                        UNMBot.room.usercommand = true;
-                    }, UNMBot.settings.commandCooldown * 1000);
+                        SCLBot.room.usercommand = true;
+                    }, SCLBot.settings.commandCooldown * 1000);
                 }
                 if (executed) {
-                    /*if (UNMBot.settings.cmdDeletion) {
+                    /*if (SCLBot.settings.cmdDeletion) {
                         API.moderateDeleteChat(chat.cid);
                     }*/
 
-                    //UNMBot.room.allcommand = false;
+                    //SCLBot.room.allcommand = false;
                     //setTimeout(function () {
-                    UNMBot.room.allcommand = true;
+                    SCLBot.room.allcommand = true;
                     //}, 5 * 1000);
                 }
                 return executed;
             },
             action: function(chat) {
-                var user = UNMBot.userUtilities.lookupUser(chat.uid);
+                var user = SCLBot.userUtilities.lookupUser(chat.uid);
                 if (chat.type === 'message') {
-                    for (var j = 0; j < UNMBot.room.users.length; j++) {
-                        if (UNMBot.userUtilities.getUser(UNMBot.room.users[j]).id === chat.uid) {
-                            UNMBot.userUtilities.setLastActivity(UNMBot.room.users[j]);
+                    for (var j = 0; j < SCLBot.room.users.length; j++) {
+                        if (SCLBot.userUtilities.getUser(SCLBot.room.users[j]).id === chat.uid) {
+                            SCLBot.userUtilities.setLastActivity(SCLBot.room.users[j]);
                         }
 
                     }
                 }
-                UNMBot.room.roomstats.chatmessages++;
+                SCLBot.room.roomstats.chatmessages++;
             },
             spam: [
 
@@ -1390,9 +1390,9 @@
         },
         startup: function() {
             var u = API.getUser();
-            if (UNMBot.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(UNMBot.chat.greyuser);
-            if (UNMBot.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(UNMBot.chat.bouncer);
-            UNMBot.connectAPI();
+            if (SCLBot.userUtilities.getPermission(u) < API.ROLE.BOUNCER) return API.chatLog(SCLBot.chat.greyuser);
+            if (SCLBot.userUtilities.getPermission(u) === API.ROLE.BOUNCER) API.chatLog(SCLBot.chat.bouncer);
+            SCLBot.connectAPI();
             API.moderateDeleteChat = function(cid) {
                 $.ajax({
                     url: '/_/chat/' + cid,
