@@ -1551,31 +1551,31 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var now = Date.now();
                         var chatters = 0;
                         var time;
 
-                        var launchT = UNMBot.room.roomstats.launchTime;
+                        var launchT = SCLBot.room.roomstats.launchTime;
                         var durationOnline = Date.now() - launchT;
                         var since = durationOnline / 1000;
 
                         if (msg.length === cmd.length) time = since;
                         else {
                             time = msg.substring(cmd.length + 1);
-                            if (isNaN(time)) return API.sendChat(subChat(UNMBot.chat.invalidtime, {
+                            if (isNaN(time)) return API.sendChat(subChat(SCLBot.chat.invalidtime, {
                                 name: chat.un
                             }));
                         }
-                        for (var i = 0; i < UNMBot.room.users.length; i++) {
-                            userTime = UNMBot.userUtilities.getLastActivity(UNMBot.room.users[i]);
+                        for (var i = 0; i < SCLBot.room.users.length; i++) {
+                            userTime = SCLBot.userUtilities.getLastActivity(SCLBot.room.users[i]);
                             if ((now - userTime) <= (time * 60 * 1000)) {
                                 chatters++;
                             }
                         }
-                        API.sendChat(subChat(UNMBot.chat.activeusersintime, {
+                        API.sendChat(subChat(SCLBot.chat.activeusersintime, {
                             name: chat.un,
                             amount: chatters,
                             time: time
@@ -1589,21 +1589,21 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(UNMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(SCLBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substr(cmd.length + 2);
-                        var user = UNMBot.userUtilities.lookupUserName(name);
+                        var user = SCLBot.userUtilities.lookupUserName(name);
                         if (msg.length > cmd.length + 2) {
                             if (typeof user !== 'undefined') {
-                                if (UNMBot.room.roomevent) {
-                                    UNMBot.room.eventArtists.push(user.id);
+                                if (SCLBot.room.roomevent) {
+                                    SCLBot.room.eventArtists.push(user.id);
                                 }
                                 API.moderateAddDJ(user.id);
-                            } else API.sendChat(subChat(UNMBot.chat.invaliduserspecified, {
+                            } else API.sendChat(subChat(SCLBot.chat.invaliduserspecified, {
                                 name: chat.un
                             }));
                         }
@@ -1616,20 +1616,20 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(UNMBot.chat.nolimitspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(SCLBot.chat.nolimitspecified, {
                             name: chat.un
                         }));
                         var limit = msg.substring(cmd.length + 1);
                         if (!isNaN(limit)) {
-                            UNMBot.settings.maximumAfk = parseInt(limit, 10);
-                            API.sendChat(subChat(UNMBot.chat.maximumafktimeset, {
+                            SCLBot.settings.maximumAfk = parseInt(limit, 10);
+                            API.sendChat(subChat(SCLBot.chat.maximumafktimeset, {
                                 name: chat.un,
-                                time: UNMBot.settings.maximumAfk
+                                time: SCLBot.settings.maximumAfk
                             }));
-                        } else API.sendChat(subChat(UNMBot.chat.invalidlimitspecified, {
+                        } else API.sendChat(subChat(SCLBot.chat.invalidlimitspecified, {
                             name: chat.un
                         }));
                     }
@@ -1641,23 +1641,23 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (UNMBot.settings.afkRemoval) {
-                            UNMBot.settings.afkRemoval = !UNMBot.settings.afkRemoval;
+                        if (SCLBot.settings.afkRemoval) {
+                            SCLBot.settings.afkRemoval = !SCLBot.settings.afkRemoval;
                             clearInterval(UNMBpt.room.afkInterval);
-                            API.sendChat(subChat(UNMBot.chat.toggleoff, {
+                            API.sendChat(subChat(SCLBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': UNMBot.chat.afkremoval
+                                'function': SCLBot.chat.afkremoval
                             }));
                         } else {
-                            UNMBot.settings.afkRemoval = !UNMBot.settings.afkRemoval;
-                            UNMBot.room.afkInterval = setInterval(function() {
-                                UNMBot.roomUtilities.afkCheck()
+                            SCLBot.settings.afkRemoval = !SCLBot.settings.afkRemoval;
+                            SCLBot.room.afkInterval = setInterval(function() {
+                                SCLBot.roomUtilities.afkCheck()
                             }, 2 * 1000);
-                            API.sendChat(subChat(UNMBot.chat.toggleon, {
+                            API.sendChat(subChat(SCLBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': UNMBot.chat.afkremoval
+                                'function': SCLBot.chat.afkremoval
                             }));
                         }
                     }
@@ -1669,19 +1669,19 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(UNMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(SCLBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = UNMBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(UNMBot.chat.invaliduserspecified, {
+                        var user = SCLBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(SCLBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        UNMBot.userUtilities.setLastActivity(user);
-                        API.sendChat(subChat(UNMBot.chat.afkstatusreset, {
+                        SCLBot.userUtilities.setLastActivity(user);
+                        API.sendChat(subChat(SCLBot.chat.afkstatusreset, {
                             name: chat.un,
                             username: name
                         }));
@@ -1694,32 +1694,32 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
-                        if (msg.length === cmd.length) return API.sendChat(subChat(UNMBot.chat.nouserspecified, {
+                        if (msg.length === cmd.length) return API.sendChat(subChat(SCLBot.chat.nouserspecified, {
                             name: chat.un
                         }));
                         var name = msg.substring(cmd.length + 2);
-                        var user = UNMBot.userUtilities.lookupUserName(name);
-                        if (typeof user === 'boolean') return API.sendChat(subChat(UNMBot.chat.invaliduserspecified, {
+                        var user = SCLBot.userUtilities.lookupUserName(name);
+                        if (typeof user === 'boolean') return API.sendChat(subChat(SCLBot.chat.invaliduserspecified, {
                             name: chat.un
                         }));
-                        var lastActive = UNMBot.userUtilities.getLastActivity(user);
+                        var lastActive = SCLBot.userUtilities.getLastActivity(user);
                         var inactivity = Date.now() - lastActive;
-                        var time = UNMBot.roomUtilities.msToStr(inactivity);
+                        var time = SCLBot.roomUtilities.msToStr(inactivity);
 
-                        var launchT = UNMBot.room.roomstats.launchTime;
+                        var launchT = SCLBot.room.roomstats.launchTime;
                         var durationOnline = Date.now() - launchT;
 
                         if (inactivity == durationOnline) {
-                            API.sendChat(subChat(UNMBot.chat.inactivelonger, {
-                                botname: UNMBot.settings.botName,
+                            API.sendChat(subChat(SCLBot.chat.inactivelonger, {
+                                botname: SCLBot.settings.botName,
                                 name: chat.un,
                                 username: name
                             }));
                         } else {
-                            API.sendChat(subChat(UNMBot.chat.inactivefor, {
+                            API.sendChat(subChat(SCLBot.chat.inactivefor, {
                                 name: chat.un,
                                 username: name,
                                 time: time
@@ -1784,9 +1784,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(UNMBot.chat.autowoot);
+                        API.sendChat(SCLBot.chat.autowoot);
                     }
                 }
             },
@@ -1796,9 +1796,9 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        API.sendChat(UNMBot.chat.brandambassador);
+                        API.sendChat(SCLBot.chat.brandambassador);
                     }
                 }
             },
