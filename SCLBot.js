@@ -3266,9 +3266,9 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (UNMBot.room.skippable) {
+                        if (SCLBot.room.skippable) {
 
                             var timeLeft = API.getTimeRemaining();
                             var timeElapsed = API.getTimeElapsed();
@@ -3277,11 +3277,11 @@
                             var msgSend = '@' + name + ', ';
 
                             if (chat.message.length === cmd.length) {
-                                API.sendChat(subChat(UNMBot.chat.usedskip, {
+                                API.sendChat(subChat(SCLBot.chat.usedskip, {
                                     name: chat.un
                                 }));
-                                if (UNMBot.settings.smartSkip && timeLeft > timeElapsed) {
-                                    UNMBot.roomUtilities.smartSkip();
+                                if (SCLBot.settings.smartSkip && timeLeft > timeElapsed) {
+                                    SCLBot.roomUtilities.smartSkip();
                                 } else {
                                     API.moderateForceSkip();
                                 }
@@ -3289,19 +3289,19 @@
                             var validReason = false;
                             var msg = chat.message;
                             var reason = msg.substring(cmd.length + 1);
-                            for (var i = 0; i < UNMBot.settings.skipReasons.length; i++) {
-                                var r = UNMBot.settings.skipReasons[i][0];
+                            for (var i = 0; i < SCLBot.settings.skipReasons.length; i++) {
+                                var r = SCLBot.settings.skipReasons[i][0];
                                 if (reason.indexOf(r) !== -1) {
                                     validReason = true;
-                                    msgSend += UNMBot.settings.skipReasons[i][1];
+                                    msgSend += SCLBot.settings.skipReasons[i][1];
                                 }
                             }
                             if (validReason) {
-                                API.sendChat(subChat(UNMBot.chat.usedskip, {
+                                API.sendChat(subChat(SCLBot.chat.usedskip, {
                                     name: chat.un
                                 }));
-                                if (UNMBot.settings.smartSkip && timeLeft > timeElapsed) {
-                                    UNMBot.roomUtilities.smartSkip(msgSend);
+                                if (SCLBot.settings.smartSkip && timeLeft > timeElapsed) {
+                                    SCLBot.roomUtilities.smartSkip(msgSend);
                                 } else {
                                     API.moderateForceSkip();
                                     setTimeout(function() {
@@ -3319,17 +3319,17 @@
                 type: 'startsWith',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var msg = chat.message;
                         var pos = msg.substring(cmd.length + 1);
                         if (!isNaN(pos)) {
-                            UNMBot.settings.skipPosition = pos;
-                            return API.sendChat(subChat(UNMBot.chat.skippos, {
+                            SCLBot.settings.skipPosition = pos;
+                            return API.sendChat(subChat(SCLBot.chat.skippos, {
                                 name: chat.un,
-                                position: UNMBot.settings.skipPosition
+                                position: SCLBot.settings.skipPosition
                             }));
-                        } else return API.sendChat(subChat(UNMBot.chat.invalidpositionspecified, {
+                        } else return API.sendChat(subChat(SCLBot.chat.invalidpositionspecified, {
                             name: chat.un
                         }));
                     }
@@ -3341,19 +3341,19 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (UNMBot.settings.songstats) {
-                            UNMBot.settings.songstats = !UNMBot.settings.songstats;
-                            return API.sendChat(subChat(UNMBot.chat.toggleoff, {
+                        if (SCLBot.settings.songstats) {
+                            SCLBot.settings.songstats = !SCLBot.settings.songstats;
+                            return API.sendChat(subChat(SCLBot.chat.toggleoff, {
                                 name: chat.un,
-                                'function': UNMBot.chat.songstats
+                                'function': SCLBot.chat.songstats
                             }));
                         } else {
-                            UNMBot.settings.songstats = !UNMBot.settings.songstats;
-                            return API.sendChat(subChat(UNMBot.chat.toggleon, {
+                            SCLBot.settings.songstats = !SCLBot.settings.songstats;
+                            return API.sendChat(subChat(SCLBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': UNMBot.chat.songstats
+                                'function': SCLBot.chat.songstats
                             }));
                         }
                     }
@@ -3377,7 +3377,7 @@
                 type: 'exact',
                 functionality: function (chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void (0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void (0);
                     else {
                             API.sendChat("/me #SquadColdLava public discord: https://discord.gg/NAKRC2m");
                     }
