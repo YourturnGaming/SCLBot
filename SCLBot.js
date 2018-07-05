@@ -61,7 +61,7 @@
             };
         }
         if (typeof SockJS == 'undefined') {
-            $.getScript('wss://ws-prod.plug.dj', loadSocket);
+            $.getScript('https://cdn.jsdelivr.net/sockjs/1.0.3/sockjs.min.js', loadSocket);
         } else loadSocket();
     }
 
@@ -244,8 +244,9 @@
     var botCreator = "xUndisputed";
     var botMaintainer = "xUndisputed";
     var botCreatorIDs = ["3669054", "20168147"];
+	
     var SCLBot = {
-        version: "3.18.2.4 (New Version and New things, All is Fixed and old things removed)",
+        version: "3.18.2.7 (New Version and New things, All is Fixed and old things removed)",
         status: true,
         name: "SCLBot",
         loggedInID: "20168147",
@@ -283,6 +284,7 @@
             voteSkipLimit: 10,
             historySkip: false,
             timeGuard: true,
+	    strictTimeGuard: true,	
             maximumSongLength: 8,
             autodisable: false,
             commandCooldown: 30,
@@ -348,7 +350,8 @@
             currentDJID: null,
             historyList: [],
             cycleTimer: setTimeout(function() {}, 1),
-            roomstats: {
+	    tgSkip: null,
+	    roomstats: {
                 accountName: null,
                 totalWoots: 0,
                 totalCurates: 0,
@@ -1030,17 +1033,25 @@
                 }
             }, 2000);
             var newMedia = obj.media;
+            clearTimeout(SCLBot.room.tgSkip);
             var timeLimitSkip = setTimeout(function() {
                 if (SCLBot.settings.timeGuard && newMedia.duration > SCLBot.settings.maximumSongLength * 60 && !SCLBot.room.roomevent) {
-                    var name = obj.dj.username;
-                    API.sendChat(subChat(SCLBot.chat.timelimit, {
-                        name: name,
-                        maxlength: SCLBot.settings.maximumSongLength
-                    }));
-                    if (SCLBot.settings.smartSkip) {
-                        return SCLBot.roomUtilities.smartSkip();
+                    if (typeof SCLBot.settings.strictTimeGuard === 'undefined' || SCLBot.settings.strictTimeGuard) {
+                        var name = obj.dj.username;
+                        API.sendChat(subChat(SCLBot.chat.timelimit, {
+                            name: name,
+                            maxlength: SCLBot.settings.maximumSongLength
+                        }));
+                        if (SCLBot.settings.smartSkip) {
+                            return SCLBot.roomUtilities.smartSkip();
+                        } else {
+                            return API.moderateForceSkip();
+                        }
                     } else {
-                        return API.moderateForceSkip();
+                        SCLBot.room.tgSkip = setTimeout(function() {
+                            if (SCLBot.settings.timeGuard) return API.moderateForceSkip();
+                            return;
+                        }, SCLBot.settings.maximumSongLength*60*1000);
                     }
                 }
             }, 2000);
