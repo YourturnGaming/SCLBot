@@ -245,7 +245,7 @@
     var botMaintainer = "xUndisputed";
     var botCreatorIDs = ["3669054", "20168147"];
     var SCLBot = {
-        version: "3.18.1.9 (New Version and New things, Soon is all fixed)",
+        version: "3.18.2.4 (New Version and New things, All is Fixed and old things removed)",
         status: true,
         name: "SCLBot",
         loggedInID: "20168147",
@@ -3198,11 +3198,11 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (typeof UNMBot.settings.rulesLink === 'string')
-                            return API.sendChat(subChat(UNMBot.chat.roomrules, {
-                                link: UNMBot.settings.rulesLink
+                        if (typeof SCLBot.settings.rulesLink === 'string')
+                            return API.sendChat(subChat(SCLBot.chat.roomrules, {
+                                link: SCLBot.settings.rulesLink
                             }));
                     }
                 }
@@ -3213,13 +3213,13 @@
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                     else {
                         var from = chat.un;
-                        var woots = UNMBot.room.roomstats.totalWoots;
-                        var mehs = UNMBot.room.roomstats.totalMehs;
-                        var grabs = UNMBot.room.roomstats.totalCurates;
-                        API.sendChat(subChat(UNMBot.chat.sessionstats, {
+                        var woots = SCLBot.room.roomstats.totalWoots;
+                        var mehs = SCLBot.room.roomstats.totalMehs;
+                        var grabs = SCLBot.room.roomstats.totalCurates;
+                        API.sendChat(subChat(SCLBot.chat.sessionstats, {
                             name: from,
                             woots: woots,
                             mehs: mehs,
@@ -3234,13 +3234,13 @@
                  type: 'startsWith',
                  functionality: function(chat, cmd) {
                      if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                     if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                     if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                      else {
                          var msg = chat.message;
                          if (msg.length === cmd.length) return;
  
                          var listname = msg.substring(cmd.length + 1);
-                         UNMBot.botInterfaceUtilities.switchPlaylist(listname);
+                         SCLBot.botInterfaceUtilities.switchPlaylist(listname);
                      }
                  }
             },
@@ -3250,9 +3250,9 @@
                  type: 'exact',
                  functionality: function(chat, cmd) {
                      if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                     if (!UNMBot.commands.executable(this.rank, chat)) return void(0);
+                     if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
                      else {
-                         UNMBot.botInterfaceUtilities.showplaylists();
+                         SCLBot.botInterfaceUtilities.showplaylists();
                      }
                  }
 	    },
@@ -3816,10 +3816,10 @@
                                 'function': SCLBot.chat.voteskip
                             }));
                         } else {
-                            UNMBot.settings.voteSkip = !UNMBot.settings.voteSkip;
-                            API.sendChat(subChat(UNMBot.chat.toggleon, {
+                            SCLBot.settings.voteSkip = !SCLBot.settings.voteSkip;
+                            API.sendChat(subChat(SCLBot.chat.toggleon, {
                                 name: chat.un,
-                                'function': UNMBot.chat.voteskip
+                                'function': SCLBot.chat.voteskip
                             }));
                         }
                     }
