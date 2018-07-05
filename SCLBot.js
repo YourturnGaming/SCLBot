@@ -974,6 +974,7 @@
             }
         },
         eventDjadvance: function(obj) {
+            if (!obj.dj) return;
             if (SCLBot.settings.autowoot) {
                 $('#woot').click(); // autowoot
             }
@@ -1780,7 +1781,7 @@
             },
             autowootCommand: {
                 command: 'autowoot',
-                rank: 'bouncer',
+                rank: 'user',
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
