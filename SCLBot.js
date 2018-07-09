@@ -246,7 +246,7 @@
     var botCreatorIDs = ["3669054", "20168147"];
 	
     var SCLBot = {
-        version: "3.18.2.9 (New Version and New things, All is Fixed and old things removed)",
+        version: "3.19.3.2 (New Version and New things, All is Fixed and old things removed)",
         status: true,
         name: "SCLBot",
         loggedInID: "20168147",
@@ -1819,10 +1819,34 @@
                 rank: 'user',
                 type: 'exact',
                 functionality: function(chat, cmd) {
-                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
-                    if (!SCLBot.commands.executable(this.rank, chat)) return void(0);
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void (0);
                     else {
-                        API.sendChat(SCLBot.chat.sitemoderator);
+                            API.sendChat("Site Moderator info before if do apply, https://bit.ly/2zxwUTV and Apply, https://plugtechnologies.typeform.com/to/mtVRqJ");
+                    }
+                }
+	    },
+            pLoTCommand: {
+                command: 'pLoT',
+                rank: 'user',
+                type: 'exact',
+                functionality: function(chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("pLoT Members info before if do apply, https://bit.ly/2uimkKf and Apply, https://plugtechnologies.typeform.com/to/xgDqGa");
+                    }
+                }
+	    },
+            promoterCommand: {
+                command: 'promoter',
+                rank: 'user',
+                type: 'exact',
+                functionality: function(chat, cmd) {
+                    if (this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
+                    if (!SCLBot.commands.executable(this.rank, chat)) return void (0);
+                    else {
+                            API.sendChat("Promoter info before if do apply, http://bit.do/eo8ji and Apply, https://plugtechnologies.typeform.com/to/anOcZj");
                     }
                 }
             },
