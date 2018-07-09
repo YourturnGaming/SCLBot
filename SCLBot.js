@@ -246,7 +246,7 @@
     var botCreatorIDs = ["3669054", "20168147"];
 	
     var SCLBot = {
-        version: "3.18.2.7 (New Version and New things, All is Fixed and old things removed)",
+        version: "3.18.2.9 (New Version and New things, All is Fixed and old things removed)",
         status: true,
         name: "SCLBot",
         loggedInID: "20168147",
