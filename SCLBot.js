@@ -177,7 +177,7 @@
             }
         }
         var json_sett = null;
-        var roominfo = _.find(require.s.contexts._.defined, (m) => m && m.attributes && 'hostID' in m.attributes).get('description');
+        var roominfo = document.getElementById('room-settings');
         info = roominfo.textContent;
         var ref_bot = '@SCL | Bot';
         var ind_ref = info.indexOf(ref_bot);
