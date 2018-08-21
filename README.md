@@ -58,7 +58,7 @@ Developers
 
  - [DOVŪZĄ]() __(Editor/Contributor/helper)__
  
- - [YourturnGaming]() __(Helper)__
+ - [YourturnGaming](https://github.com/YourturnGaming) __(Helper)__
  
  - [Blexo_O)]() __(Editor/Contributor/helper)__
  
