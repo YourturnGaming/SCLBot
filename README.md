@@ -56,11 +56,11 @@ Developers
 ----------
  - [xUndisputed](https://github.com/xUndisputed) __(Maintainer)__
 
- - [Trigstur]() __(Helper)__
+ - [DOVŪZĄ]() __(Editor/Contributor/helper)__
  
  - [YourturnGaming]() __(Helper)__
  
- - [♠•P H A N T Ø M Bø¥•♠)]() __(Helper)__
+ - [Blexo_O)]() __(Editor/Contributor/helper)__
  
  Thanks you all! who help me etc :D
 
