@@ -177,7 +177,7 @@
             }
         }
         var json_sett = null;
-        var roominfo = document.getElementById('room-settings');
+        var roominfo = _.find(require.s.contexts._.defined, (m) => m && m.attributes && 'hostID' in m.attributes).get('description');
         info = roominfo.textContent;
         var ref_bot = '@SCL | Bot';
         var ind_ref = info.indexOf(ref_bot);
@@ -246,7 +246,7 @@
     var botCreatorIDs = ["3669054", "20168147"];
 	
     var SCLBot = {
-        version: "3.19.3.2 (New Version and New things, All is Fixed and old things removed)",
+        version: "3.20.4.3 (New Version and New things",
         status: true,
         name: "SCLBot",
         loggedInID: "20168147",
