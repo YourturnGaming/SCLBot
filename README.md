@@ -76,13 +76,13 @@ Special thanks ✨
 
 - xUndisputed: His SCLBot has been a source of inspiration for most of the features, and his help with coding problems has been invaluable to make this bot.
 
-- Trigstur, and other SCLBot contributors: Their SCLBot has inspired features like Roulette.
+- DOVŪZĄ, and other SCLBot contributors: Their SCLBot has inspired features like Roulette.
 
 - xUndisputed: Never knew this undertaking would give me a friend too.
 
-- YourturnGaming: text is coming here :D.
+- YourturnGaming: Best plug3 Ambassador.
 
-- ♠•P H A N T Ø M Bø¥•♠: text is coming here :D.
+- Blexo_O: changes things with me :D.
 
 Translations 🌐
 
